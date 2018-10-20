@@ -4,11 +4,11 @@ import actions.Collision;
 import data.CustomMath;
 import game.Gamestate;
 import game.Gamestate_e;
-import gui.Gui;
 
 public class Enemy {
 
 	private static int x, y;
+	private static int xAfterMove, yAfterMove; // coords of enemy after making next move
 	private static int width = 24, height = 24;
 	private static int faceDirection = 1;
 	private static double speed = 0.5; // time in seconds before enemy makes another move
@@ -24,28 +24,20 @@ public class Enemy {
 			if (isAlive) {
 				switch (direction) {
 				case 0:
-					if ((y - 33) > 0) { // don't leave the grid
-						turn(0);
-						y = y - 33; // move up
-					}
+					turn(0);
+					y = y - 33; // move up
 					break;
 				case 1:
-					if ((x + 33) < Gui.getGridwidth()) { // don't leave the grid
-						turn(1);
-						x = x + 33; // move right
-					}
+					turn(1);
+					x = x + 33; // move right
 					break;
 				case 2:
-					if ((y + 33) < Gui.getGridheight()) { // don't leave the grid
-						turn(2);
-						y = y + 33; // move down
-					}
+					turn(2);
+					y = y + 33; // move down
 					break;
 				case 3:
-					if ((x - 33) > 0) { // don't leave the grid
-						turn(3);
-						x = x - 33; // move left
-					}
+					turn(3);
+					x = x - 33; // move left
 					break;
 				}
 				if (Collision.cEnemyPlayer() == true) {
@@ -100,6 +92,22 @@ public class Enemy {
 
 	public static void setY(int y) {
 		Enemy.y = y;
+	}
+
+	public static int getxAfterMove() {
+		return xAfterMove;
+	}
+
+	public static void setxAfterMove(int xAfterMove) {
+		Enemy.xAfterMove = xAfterMove;
+	}
+
+	public static int getyAfterMove() {
+		return yAfterMove;
+	}
+
+	public static void setyAfterMove(int yAfterMove) {
+		Enemy.yAfterMove = yAfterMove;
 	}
 
 	public static int getWidth() {
