@@ -1,12 +1,20 @@
 package clocks;
 
+import actions.Collision;
+import actions.Main;
+import chars.Enemy;
+import chars.Player;
 import game.Gamestate;
 import game.Gamestate_e;
+import game.Korn;
+import game.Upgrade;
 import gui.Gui;
 
 public class GameLoop implements Runnable {
 
 	private boolean running = true;
+	private Player p;
+	private Enemy e;
 
 	@Override
 	public void run() {
@@ -24,13 +32,13 @@ public class GameLoop implements Runnable {
 			deltaTime += (currentTime - lastTime) / ns;
 			lastTime = currentTime;
 
-			if (deltaTime >= 1) { // wird alle 60 Ticks > 1
+			if (deltaTime >= 1) { // is every 60 Ticks greater than 1
 				update();
 				deltaTime--;
 				render();
 			}
 
-			if (System.currentTimeMillis() - timer > 1000) { // wird in diesem Projekt nicht wirklich verwendet
+			if (System.currentTimeMillis() - timer > 1000) { // not really used in this project
 				timer += 1000;
 			}
 		}
@@ -38,7 +46,44 @@ public class GameLoop implements Runnable {
 	}
 
 	public void update() {
+		p = Main.p;
+		e = Main.e;
+
+		/*
+		 * COLLISION CHECK
+		 */
+		new Collision();
+
 		if (Gamestate.state == Gamestate_e.ingame) {
+
+			/*
+			 * Consume Korn when colliding with Player
+			 */
+			if (Collision.cKorn(p.getX(), p.getY()) == true) {
+				for (Korn k : Korn_Creation.koerner) { // detect the specific Korn that was collided with
+					if (p.getX() == k.getX() && p.getY() == k.getY()) {
+						k.consume();
+						new Upgrade("Korn");
+						break;
+					}
+				}
+			}
+
+			/*
+			 * Kill enemy when colliding with Player
+			 */
+			if (Collision.cEnemyPlayer() == true) {
+				e.killEnemy();
+			}
+
+			/*
+			 * Remove all consumed Koerner
+			 */
+			for (int i = 0; i < Korn_Creation.koerner.size(); i++) {
+				if ((Korn_Creation.koerner.get(i)).isConsumed() == true) {
+					Korn_Creation.remove(i);
+				}
+			}
 		}
 	}
 

@@ -10,33 +10,54 @@ import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
 import actions.KeyPressed;
+import actions.KeyReleased;
+import actions.Main;
 import actions.MouseMoved;
 import actions.MousePressed;
+import chars.Enemy;
+import chars.Player;
 import draw.Draw_Main;
+import draw.IL;
 
 public class Gui {
+
+	public static Player p = Main.p;
+	public static Enemy e = Main.e;
 
 	public static Draw_Main dm;
 
 	public static GraphicsContext gc_main;
 
-	private static int width = 491, height = 331; // size of the window
-	private static int gridwidth = 331, gridheight = 331; // size of the grid
+	private static int width = 768, height = 432; // size of the window
 
-	public static Button[] buttons = new Button[3];
+	public static Button[] pausebuttons = new Button[3];
+	public static Button[] startmenubuttons = new Button[2];
+	public static Button[] gameendbuttons = new Button[2];
 
 	public void init() {
 
 		dm = new Draw_Main();
 
-		buttons[0] = new Button(getWidth() / 2 - 150, getHeight() / 2 - 125, 300, 50);
-		buttons[0].setText("Resume");
+		pausebuttons[0] = new Button(getWidth() / 2 - 150, getHeight() - 180, 300, 50);
+		pausebuttons[0].setText("Resume");
 
-		buttons[1] = new Button(getWidth() / 2 - 150, getHeight() / 2 - 25, 300, 50);
-		buttons[1].setText("(no effect)");
+		pausebuttons[1] = new Button(getWidth() / 2 - 150, getHeight() - 120, 300, 50);
+		pausebuttons[1].setText("Exit to Menu");
 
-		buttons[2] = new Button(getWidth() / 2 - 150, getHeight() / 2 + 75, 300, 50);
-		buttons[2].setText("Quit");
+		pausebuttons[2] = new Button(getWidth() / 2 - 150, getHeight() - 60, 300, 50);
+		pausebuttons[2].setText("Quit");
+
+		startmenubuttons[0] = new Button(getWidth() / 2 - 150, getHeight() - 120, 300, 50);
+		startmenubuttons[0].setText("Start New Game");
+
+		startmenubuttons[1] = new Button(getWidth() / 2 - 150, getHeight() - 60, 300, 50);
+		startmenubuttons[1].setText("Quit");
+
+		gameendbuttons[0] = new Button(getWidth() / 2 - 150, getHeight() - 120, 300, 50);
+		gameendbuttons[0].setText("Exit to Menu");
+
+		gameendbuttons[1] = new Button(getWidth() / 2 - 150, getHeight() - 60, 300, 50);
+		gameendbuttons[1].setText("Quit");
 	}
 
 	public void create(Stage stage) {
@@ -56,15 +77,17 @@ public class Gui {
 		 * KeyHandler
 		 */
 		scene.setOnKeyPressed(new KeyPressed());
+		scene.setOnKeyReleased(new KeyReleased());
 		scene.setOnMouseMoved(new MouseMoved());
 		scene.setOnMousePressed(new MousePressed());
 
 		/*
 		 * Window properties
 		 */
-		stage.setTitle("Python tötet Hamster");
+		stage.setTitle("Python sucht Hamster");
 		stage.setResizable(false);
 		stage.centerOnScreen();
+		stage.getIcons().add(IL.iplayerzunge0); // icon in upper left corner of the window
 
 		stage.setScene(scene);
 		stage.show();
@@ -96,22 +119,6 @@ public class Gui {
 
 	public static void setHeight(int height) {
 		Gui.height = height;
-	}
-
-	public static int getGridwidth() {
-		return gridwidth;
-	}
-
-	public static void setGridwidth(int gridwidth) {
-		Gui.gridwidth = gridwidth;
-	}
-
-	public static int getGridheight() {
-		return gridheight;
-	}
-
-	public static void setGridheight(int gridheight) {
-		Gui.gridheight = gridheight;
 	}
 
 }
