@@ -28,7 +28,7 @@ public class Gui {
 
 	public static GraphicsContext gc_main;
 
-	private static int width = 768, height = 432; // size of the window
+	private static int width = 632, height = 382; // size of the window
 
 	public static Button[] pausebuttons = new Button[3];
 	public static Button[] startmenubuttons = new Button[2];
