@@ -1,29 +1,35 @@
 package data;
 
+import actions.Collision;
+import actions.Main;
 import chars.Enemy;
 import chars.Player;
-import gui.Gui;
+import gui.Grid;
 
 public class EnemyAI {
 
-	/*
-	 * Area around the player that is blocked for enemy;
-	 * input: 1 = whole grid; 100 = 1 tile
-	 */
-	public static int playerMargin = CustomMath.calcPlayerMargin(4);
+	private Enemy e = Main.e;
+	private Player p = Main.p;
 
-	public static int moveRand;
+	/*
+	 * Area around the player that is blocked for enemy.
+	 * Input: 1 = whole grid; 100 = 1 tile
+	 */
+	public int playerMargin = CustomMath.calcPlayerMargin(4);
+
+	public int moveRand;
+	private boolean overwriteDirections = false;
 
 	public int moveDirection() {
 		do {
 			moveRand = randomMove(); // generate random direction
+			setCoords(moveRand);
 		} while (isValidMove() == false);
-		setCoords(moveRand);
 		return moveRand;
 
 	}
 
-	private static boolean isValidMove() {
+	private boolean isValidMove() {
 		boolean flag = false;
 
 		if (withinGridAfterMove() == true) {
@@ -35,55 +41,58 @@ public class EnemyAI {
 					flag = true;
 				}
 			}
+			if (Collision.cWall(e.getxAfterMove(), e.getyAfterMove()) == true) {
+				flag = false;
+			}
 		}
 
 		return flag;
 	}
 
-	private static void leavePlayerMargin() {
+	private void leavePlayerMargin() {
 
 		/*
 		 * Detect position relative to player
 		 */
 		int pos = 0;
 		/*
-		 * INT POS:
-		 * 0 = North;
-		 * 1 = Northeast;
-		 * 2 = East;
-		 * 3 = South-east;
-		 * 4 = South;
-		 * 5 = South-west;
-		 * 6 = West;
-		 * 7 = Northwest
+		 * int pos:
+		 * 0 = North.
+		 * 1 = Northeast.
+		 * 2 = East.
+		 * 3 = South-east.
+		 * 4 = South.
+		 * 5 = South-west.
+		 * 6 = West.
+		 * 7 = Northwest.
 		 */
-		if (Enemy.getY() < Player.getY()) { // if N of player
+		if (e.getY() < p.getY()) { // if N of player
 			pos = 0;
-			if (Enemy.getX() > Player.getX()) {
+			if (e.getX() > p.getX()) {
 				pos = 1;
 			}
-			if (Enemy.getX() < Player.getX()) {
+			if (e.getX() < p.getX()) {
 				pos = 7;
 			}
 		}
-		if (Enemy.getX() > Player.getX()) { // if E of player
+		if (e.getX() > p.getX()) { // if E of player
 			pos = 2;
 		}
-		if (Enemy.getY() > Player.getY()) { // if S of player
+		if (e.getY() > p.getY()) { // if S of player
 			pos = 4;
-			if (Enemy.getX() > Player.getX()) {
+			if (e.getX() > p.getX()) {
 				pos = 3;
 			}
-			if (Enemy.getX() < Player.getX()) {
+			if (e.getX() < p.getX()) {
 				pos = 5;
 			}
 		}
-		if (Enemy.getX() < Player.getX()) { // if W of player
+		if (e.getX() < p.getX()) { // if W of player
 			pos = 6;
 		}
 
 		/*
-		 * Generate random move number that won't move enemy towards player;
+		 * Generate random move number that won't move enemy towards player.
 		 * If pos == 1 || 3 || 5 || 7, that doesn't matter --> dir1 = 4 (don't care)
 		 */
 		switch (pos) {
@@ -115,31 +124,41 @@ public class EnemyAI {
 
 	}
 
-	private static void leavePlayerMargin(int dir1, int dir2, int dir3) { // dir1: preferred direction
+	private void leavePlayerMargin(int dir1, int dir2, int dir3) { // dir1: preferred direction
 		int rand = 0;
 		if (dir1 < 4) { // if dir1 != don't care
 			rand = dir1;
 		} else {
 			if (dir1 > 3) { // if dir1 == don't care (can also be because dir1 is blocked)
-				do {
+				if (overwriteDirections == false) {
+					do {
+						rand = (int) (Math.random() * 4);
+					} while (rand != dir2 && rand != dir3); // pick random from dir2 and dir3
+				} else {
 					rand = (int) (Math.random() * 4);
-				} while (rand != dir2 && rand != dir3); // take random from dir2 and dir3
+					overwriteDirections = false;
+				}
 			}
 		}
 		setCoords(rand);
-		if (withinGridAfterMove() == true) {
+		if (withinGridAfterMove() == true && Collision.cWall(e.getxAfterMove(), e.getyAfterMove()) == false) {
 			moveRand = rand;
-		} else {
-			leavePlayerMargin(4, dir2, dir3); // if dir1 is blocked, don't care about dir1 anymore
+		} else { // if dir1 is blocked (wall or end of grid)
+			try {
+				leavePlayerMargin(4, dir2, dir3); // don't care about dir1 anymore
+			} catch (StackOverflowError e) {
+				overwriteDirections = true; // if stuck, don't care about any directions anymore
+				leavePlayerMargin(4, dir2, dir3);
+			}
 		}
 	}
 
 	// check if enemy is within grid after moving
-	private static boolean withinGridAfterMove() {
+	private boolean withinGridAfterMove() {
 		boolean flag = false;
 
-		if (Enemy.getyAfterMove() > 0 && Enemy.getxAfterMove() < Gui.getGridwidth()
-				&& Enemy.getyAfterMove() < Gui.getGridheight() && Enemy.getxAfterMove() > 0) {
+		if (e.getyAfterMove() > 0 && e.getxAfterMove() < Grid.getWidth() && e.getyAfterMove() < Grid.getHeight()
+				&& e.getxAfterMove() > 0) {
 			flag = true;
 		}
 
@@ -147,11 +166,9 @@ public class EnemyAI {
 	}
 
 	// check if enemy is within playerMargin after moving
-	private static boolean nearPlayerAfterMove() {
-		if (Enemy.getxAfterMove() > (Player.getX() - playerMargin)
-				&& Enemy.getxAfterMove() < (Player.getX() + playerMargin)
-				&& Enemy.getyAfterMove() > (Player.getY() - playerMargin)
-				&& Enemy.getyAfterMove() < (Player.getY() + playerMargin)) {
+	private boolean nearPlayerAfterMove() {
+		if (e.getxAfterMove() > (p.getX() - playerMargin) && e.getxAfterMove() < (p.getX() + playerMargin)
+				&& e.getyAfterMove() > (p.getY() - playerMargin) && e.getyAfterMove() < (p.getY() + playerMargin)) {
 			return true;
 		} else {
 			return false;
@@ -160,9 +177,9 @@ public class EnemyAI {
 	}
 
 	// check if enemy is within playerMargin
-	private static boolean nearPlayer() {
-		if (Enemy.getX() > (Player.getX() - playerMargin) && Enemy.getX() < (Player.getX() + playerMargin)
-				&& Enemy.getY() > (Player.getY() - playerMargin) && Enemy.getY() < (Player.getY() + playerMargin)) {
+	private boolean nearPlayer() {
+		if (e.getX() > (p.getX() - playerMargin) && e.getX() < (p.getX() + playerMargin)
+				&& e.getY() > (p.getY() - playerMargin) && e.getY() < (p.getY() + playerMargin)) {
 			return true;
 		} else {
 			return false;
@@ -170,29 +187,29 @@ public class EnemyAI {
 
 	}
 
-	private static int randomMove() {
+	private int randomMove() {
 		int randomMove = (int) (Math.random() * 4); // generate random int 0-3
 		setCoords(randomMove);
 		return randomMove;
 	}
 
-	public static void setCoords(int direction) {
+	public void setCoords(int direction) {
 		switch (direction) {
 		case 0:
-			Enemy.setyAfterMove(Enemy.getY() - 33);
-			Enemy.setxAfterMove(Enemy.getX());
+			e.setyAfterMove(e.getY() - 33);
+			e.setxAfterMove(e.getX());
 			break;
 		case 1:
-			Enemy.setxAfterMove(Enemy.getX() + 33);
-			Enemy.setyAfterMove(Enemy.getY());
+			e.setxAfterMove(e.getX() + 33);
+			e.setyAfterMove(e.getY());
 			break;
 		case 2:
-			Enemy.setyAfterMove(Enemy.getY() + 33);
-			Enemy.setxAfterMove(Enemy.getX());
+			e.setyAfterMove(e.getY() + 33);
+			e.setxAfterMove(e.getX());
 			break;
 		case 3:
-			Enemy.setxAfterMove(Enemy.getX() - 33);
-			Enemy.setyAfterMove(Enemy.getY());
+			e.setxAfterMove(e.getX() - 33);
+			e.setyAfterMove(e.getY());
 			break;
 		default:
 			break;

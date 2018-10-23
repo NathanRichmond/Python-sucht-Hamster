@@ -1,153 +1,173 @@
 package chars;
 
 import actions.Collision;
+import clocks.Enemy_Movement;
 import data.CustomMath;
 import game.Gamestate;
 import game.Gamestate_e;
+import gui.Grid;
 
 public class Enemy {
 
-	private static int x, y;
-	private static int xAfterMove, yAfterMove; // coords of enemy after making next move
-	private static int width = 24, height = 24;
-	private static int faceDirection = 1;
-	private static double speed = 0.5; // time in seconds before enemy makes another move
-	private static boolean isAlive = true;
+	private int x, y;
+	private int xAfterMove, yAfterMove; // coords of enemy after making next move
+	private int width, height;
+	private int faceDirection;
+	private double speed;
+	private boolean isAlive;
+	public Enemy_Movement em;
 
-	public Enemy() { // spawns at random position
-		x = CustomMath.genRandom();
-		y = CustomMath.genRandom();
+	public Enemy() {
+		this.setValidSpawn(); // spawns at random position
+		this.width = 32;
+		this.height = 32;
+		this.faceDirection = 1;
+		this.speed = 0.4; // time in seconds before enemy makes another move
+		this.isAlive = true;
 	}
 
-	public static void move(int direction) {
+	private void setValidSpawn() {
+		/*
+		 * Generate random spawn point. Don't spawn inside a Wall.
+		 */
+		int x, y;
+		do {
+			x = CustomMath.genRandom();
+			y = CustomMath.genRandom();
+		} while (Collision.cWall(x, y) == true);
+		this.setX(Grid.getX() + x);
+		this.setY(Grid.getY() + y);
+	}
+
+	public void move(int direction) {
 		if (Gamestate.state == Gamestate_e.ingame || Gamestate.state == Gamestate_e.defeat) {
-			if (isAlive) {
+			if (this.isAlive == true) {
 				switch (direction) {
 				case 0:
-					turn(0);
-					y = y - 33; // move up
+					this.turn(0);
+					this.y = this.y - 33; // move up
 					break;
 				case 1:
-					turn(1);
-					x = x + 33; // move right
+					this.turn(1);
+					this.x = this.x + 33; // move right
 					break;
 				case 2:
-					turn(2);
-					y = y + 33; // move down
+					this.turn(2);
+					this.y = this.y + 33; // move down
 					break;
 				case 3:
-					turn(3);
-					x = x - 33; // move left
+					this.turn(3);
+					this.x = this.x - 33; // move left
 					break;
 				}
 				if (Collision.cEnemyPlayer() == true) {
-					killEnemy();
+					this.killEnemy();
 				}
 			}
 		}
 	}
 
-	private static void turn(int direction) {
+	private void turn(int direction) {
 		switch (direction) {
 		case 0: // turn upwards
-			faceDirection = 0;
+			this.faceDirection = 0;
 			break;
 		case 1: // turn right
-			faceDirection = 1;
+			this.faceDirection = 1;
 			break;
 		case 2: // turn downwards
-			faceDirection = 2;
+			this.faceDirection = 2;
 			break;
 		case 3: // turn left
-			faceDirection = 3;
+			this.faceDirection = 3;
 			break;
 		}
 	}
 
-	public static void killEnemy() {
-		isAlive = false;
+	public void killEnemy() {
+		this.isAlive = false;
 		Gamestate.state = Gamestate_e.victory;
 	}
 
-	public static void taunt() { // move to center square and spin
-		x = 170;
-		y = 170;
-		turn(2);
-		turn(3);
-		turn(0);
-		turn(1);
+	public void taunt() { // move to center square and spin
+		this.x = 170;
+		this.y = 170;
+		this.turn(2);
+		this.turn(3);
+		this.turn(0);
+		this.turn(1);
 	}
 
-	public static int getX() {
-		return x;
+	public int getX() {
+		return this.x;
 	}
 
-	public static void setX(int x) {
-		Enemy.x = x;
+	public void setX(int x) {
+		this.x = x;
 	}
 
-	public static int getY() {
-		return y;
+	public int getY() {
+		return this.y;
 	}
 
-	public static void setY(int y) {
-		Enemy.y = y;
+	public void setY(int y) {
+		this.y = y;
 	}
 
-	public static int getxAfterMove() {
-		return xAfterMove;
+	public int getxAfterMove() {
+		return this.xAfterMove;
 	}
 
-	public static void setxAfterMove(int xAfterMove) {
-		Enemy.xAfterMove = xAfterMove;
+	public void setxAfterMove(int xAfterMove) {
+		this.xAfterMove = xAfterMove;
 	}
 
-	public static int getyAfterMove() {
-		return yAfterMove;
+	public int getyAfterMove() {
+		return this.yAfterMove;
 	}
 
-	public static void setyAfterMove(int yAfterMove) {
-		Enemy.yAfterMove = yAfterMove;
+	public void setyAfterMove(int yAfterMove) {
+		this.yAfterMove = yAfterMove;
 	}
 
-	public static int getWidth() {
-		return width;
+	public int getWidth() {
+		return this.width;
 	}
 
 	public void setWidth(int width) {
-		Enemy.width = width;
+		this.width = width;
 	}
 
-	public static int getHeight() {
-		return height;
+	public int getHeight() {
+		return this.height;
 	}
 
-	public static void setHeight(int height) {
-		Enemy.height = height;
+	public void setHeight(int height) {
+		this.height = height;
 	}
 
-	public static int getFaceDirection() {
-		return faceDirection;
+	public int getFaceDirection() {
+		return this.faceDirection;
 	}
 
 	public void setFaceDirection(int faceDirection) {
-		Enemy.faceDirection = faceDirection;
+		this.faceDirection = faceDirection;
 	}
 
-	public static double getSpeed() {
-		return speed;
+	public double getSpeed() {
+		return this.speed;
 	}
 
-	public static void setSpeed(double speed) {
-		Enemy.speed = speed;
+	public void setSpeed(double speed) {
+		this.speed = speed;
 	}
 
-	public static boolean isAlive() {
-		return isAlive;
+	public boolean isAlive() {
+		return this.isAlive;
 	}
 
-	public static void setAlive(boolean isAlive) {
-		Enemy.isAlive = isAlive;
+	public void setAlive(boolean isAlive) {
+		this.isAlive = isAlive;
 	}
 
 }

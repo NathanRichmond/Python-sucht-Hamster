@@ -1,22 +1,42 @@
 package data;
 
-import gui.Gui;
+import gui.Grid;
 
 public class CustomMath {
 
 	/*
 	 * Generate a random int that matches character positioning within the grid:
-	 * 1. create random int between 0 and gridwidth-3
-	 * 2. repeat until that int can be divided by 33 (as this is the width of one square)
-	 * 3. add +5 to create offset (center character in square) and return
+	 * 1. create random int between 0 and gridwidth-3.
+	 * 2. repeat until that int can be divided by 33 (as this is the width of one square).
+	 * 3. add +5 to create offset (center character in square) and return.
 	 */
-
 	public static int genRandom() {
 		int random;
 		do {
-			random = (int) (Math.random() * Gui.getGridwidth() - 3);
+			random = (int) (Math.random() * Grid.getWidth() - 3);
 		} while (random % 33 != 0);
-		return random + 5;
+		return random + 1;
+	}
+
+	/* 
+	 * Round input to a multiple of 33.
+	 * Round down if difference is <16, round up otherwise
+	 */
+	public static int roundTo33(int input) {
+		int result = 0;
+		if (input % 33 <= 16) {
+			result = input - (input % 33);
+		} else {
+			result = input + (33-(input % 33));
+		}
+		return result;
+	}
+	
+	/*
+	 * Divide size of grid by input. Round that to a multiple of 33
+	 */
+	public static int calcPlayerMargin(double input) {
+		return roundTo33((int) Math.round((Grid.getWidth() - 1) / input))+1;
 	}
 
 }

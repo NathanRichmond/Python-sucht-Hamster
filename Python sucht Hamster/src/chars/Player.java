@@ -1,110 +1,179 @@
 package chars;
 
 import actions.Collision;
+import data.CustomMath;
 import game.Gamestate;
 import game.Gamestate_e;
-import gui.Gui;
+import gui.Grid;
 
 public class Player {
 
-	private static int x, y;
-	private static int width = 24, height = 24;
-	private static int faceDirection = 0;
+	private int x, y;
+	private int xAfterMove, yAfterMove;
+	private int width, height;
+	private int faceDirection;
+	private boolean isUpgraded;
 
 	public Player() {
-		x = 5;
-		y = Gui.getGridheight() - 29;
+		this.setValidSpawn(); // spawns at random position
+		this.width = 32;
+		this.height = 32;
+		this.faceDirection = 0;
+		this.isUpgraded = false;
 	}
 
-	public static void move(int direction) {
+	public void move(int direction) {
 		if (Gamestate.state == Gamestate_e.ingame) {
+			setCoords(direction);
 			switch (direction) {
 			case 0:
-				if ((y - 33) > 0) { // don't leave the grid
-					turn(0);
-					y = y - 33; // move up
+				if (this.yAfterMove > 0) { // don't leave the grid
+					this.turn(0);
+					if (Collision.cWall(this.x, this.yAfterMove) == false) { // don't walk into walls
+						this.y = this.yAfterMove; // move up
+					}
 				}
 				break;
 			case 1:
-				if ((x + 33) < Gui.getGridwidth()) { // don't leave the grid
-					turn(1);
-					x = x + 33; // move right
+				if (this.xAfterMove < Grid.getWidth()) { // don't leave the grid
+					this.turn(1);
+					if (Collision.cWall(this.xAfterMove, this.y) == false) { // don't walk into walls
+						this.x = this.xAfterMove; // move right
+					}
 				}
 				break;
 			case 2:
-				if ((y + 33) < Gui.getGridheight()) { // don't leave the grid
-					turn(2);
-					y = y + 33; // move down
+				if (this.yAfterMove < Grid.getHeight()) { // don't leave the grid
+					this.turn(2);
+					if (Collision.cWall(this.x, this.yAfterMove) == false) { // don't walk into walls
+						this.y = this.yAfterMove; // move down
+					}
 				}
 				break;
 			case 3:
-				if ((x - 33) > 0) { // don't leave the grid
-					turn(3);
-					x = x - 33; // move left
+				if (this.xAfterMove > 0) { // don't leave the grid
+					this.turn(3);
+					if (Collision.cWall(this.xAfterMove, this.y) == false) { // don't walk into walls
+						this.x = this.xAfterMove; // move left
+					}
 				}
 				break;
 			}
-			if (Collision.cEnemyPlayer() == true) {
-				Enemy.killEnemy();
-			}
 		}
 	}
 
-	private static void turn(int direction) {
+	private void setCoords(int direction) {
+		switch (direction) {
+		case 0:
+			this.yAfterMove = this.y - 33;
+			break;
+		case 1:
+			this.xAfterMove = this.x + 33;
+			break;
+		case 2:
+			this.yAfterMove = this.y + 33;
+			break;
+		case 3:
+			this.xAfterMove = this.x - 33;
+			break;
+		default:
+			break;
+		}
+
+	}
+
+	private void turn(int direction) {
 		switch (direction) {
 		case 0: // turn upwards
-			faceDirection = 0;
+			this.faceDirection = 0;
 			break;
 		case 1: // turn right
-			faceDirection = 1;
+			this.faceDirection = 1;
 			break;
 		case 2: // turn downwards
-			faceDirection = 2;
+			this.faceDirection = 2;
 			break;
 		case 3: // turn left
-			faceDirection = 3;
+			this.faceDirection = 3;
 			break;
 		}
 	}
 
-	public static int getX() {
+	private void setValidSpawn() {
+		/*
+		 * Generate random spawn point. Don't inside a Wall.
+		 */
+		int x, y;
+		do {
+			x = CustomMath.genRandom();
+			y = CustomMath.genRandom();
+		} while (Collision.cWall(x, y) == true);
+		this.setX(Grid.getX() + x);
+		this.setY(Grid.getY() + y);
+	}
+
+	public int getX() {
 		return x;
 	}
 
-	public static void setX(int x) {
-		Player.x = x;
+	public void setX(int x) {
+		this.x = x;
 	}
 
-	public static int getY() {
+	public int getY() {
 		return y;
 	}
 
-	public static void setY(int y) {
-		Player.y = y;
+	public void setY(int y) {
+		this.y = y;
 	}
 
-	public static int getWidth() {
+	public int getxAfterMove() {
+		return xAfterMove;
+	}
+
+	public void setxAfterMove(int xAfterMove) {
+		this.xAfterMove = xAfterMove;
+	}
+
+	public int getyAfterMove() {
+		return yAfterMove;
+	}
+
+	public void setyAfterMove(int yAfterMove) {
+		this.yAfterMove = yAfterMove;
+	}
+
+	public int getWidth() {
 		return width;
 	}
 
-	public static void setWidth(int width) {
-		Player.width = width;
+	public void setWidth(int width) {
+		this.width = width;
 	}
 
-	public static int getHeight() {
+	public int getHeight() {
 		return height;
 	}
 
-	public static void setHeight(int height) {
-		Player.height = height;
+	public void setHeight(int height) {
+		this.height = height;
 	}
 
-	public static int getFaceDirection() {
+	public int getFaceDirection() {
 		return faceDirection;
 	}
 
-	public static void setFaceDirection(int faceDirection) {
-		Player.faceDirection = faceDirection;
+	public void setFaceDirection(int faceDirection) {
+		this.faceDirection = faceDirection;
+	}
+
+	public boolean isUpgraded() {
+		return isUpgraded;
+	}
+
+	public void setUpgraded(boolean isUpgraded) {
+		this.isUpgraded = isUpgraded;
 	}
 
 }
