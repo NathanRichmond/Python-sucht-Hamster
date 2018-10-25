@@ -2,18 +2,18 @@ package clocks;
 
 import java.util.ArrayList;
 
+import actions.Game;
 import game.Korn;
 
 public class Korn_Creation {
 
 	public static ArrayList<Korn> koerner = new ArrayList<>();
-	private int numberOfKoerner = 5;
-
+	
 	public Korn_Creation() {
 		/*
-		 * Add a Korn until numberOfKoerner is reached
+		 * Add a Korn until nKoerner is reached
 		 */
-		for (int i = 0; i < numberOfKoerner; i++) {
+		for (int i = 0; i < Game.getnKoerner(); i++) {
 			koerner.add(new Korn());
 		}
 	}

@@ -1,6 +1,6 @@
 package chars;
 
-import actions.Collision;
+import data.Collision;
 import data.CustomMath;
 import game.Gamestate;
 import game.Gamestate_e;
@@ -24,35 +24,35 @@ public class Player {
 
 	public void move(int direction) {
 		if (Gamestate.state == Gamestate_e.ingame) {
-			setCoords(direction);
+			this.setCoords(direction);
 			switch (direction) {
 			case 0:
-				if (this.yAfterMove > 0) { // don't leave the grid
-					this.turn(0);
+				this.turn(0);
+				if (this.yAfterMove > Grid.getY()) { // don't leave the grid
 					if (Collision.cWall(this.x, this.yAfterMove) == false) { // don't walk into walls
 						this.y = this.yAfterMove; // move up
 					}
 				}
 				break;
 			case 1:
-				if (this.xAfterMove < Grid.getWidth()) { // don't leave the grid
-					this.turn(1);
+				this.turn(1);
+				if (this.xAfterMove < Grid.getX() + Grid.getWidth()) { // don't leave the grid
 					if (Collision.cWall(this.xAfterMove, this.y) == false) { // don't walk into walls
 						this.x = this.xAfterMove; // move right
 					}
 				}
 				break;
 			case 2:
-				if (this.yAfterMove < Grid.getHeight()) { // don't leave the grid
-					this.turn(2);
+				this.turn(2);
+				if (this.yAfterMove < Grid.getY() + Grid.getHeight()) { // don't leave the grid
 					if (Collision.cWall(this.x, this.yAfterMove) == false) { // don't walk into walls
 						this.y = this.yAfterMove; // move down
 					}
 				}
 				break;
 			case 3:
-				if (this.xAfterMove > 0) { // don't leave the grid
-					this.turn(3);
+				this.turn(3);
+				if (this.xAfterMove > Grid.getX()) { // don't leave the grid
 					if (Collision.cWall(this.xAfterMove, this.y) == false) { // don't walk into walls
 						this.x = this.xAfterMove; // move left
 					}
@@ -101,13 +101,11 @@ public class Player {
 
 	private void setValidSpawn() {
 		/*
-		 * Generate random spawn point. Don't inside a Wall.
+		 * Generate random spawn point.
 		 */
 		int x, y;
-		do {
-			x = CustomMath.genRandom();
-			y = CustomMath.genRandom();
-		} while (Collision.cWall(x, y) == true);
+		x = CustomMath.genRandomX();
+		y = CustomMath.genRandomY();
 		this.setX(Grid.getX() + x);
 		this.setY(Grid.getY() + y);
 	}

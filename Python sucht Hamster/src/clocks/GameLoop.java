@@ -1,9 +1,9 @@
 package clocks;
 
-import actions.Collision;
-import actions.Main;
+import actions.Game;
 import chars.Enemy;
 import chars.Player;
+import data.Collision;
 import game.Gamestate;
 import game.Gamestate_e;
 import game.Korn;
@@ -46,8 +46,8 @@ public class GameLoop implements Runnable {
 	}
 
 	public void update() {
-		p = Main.p;
-		e = Main.e;
+		p = Game.p;
+		e = Game.e;
 
 		/*
 		 * COLLISION CHECK
@@ -59,12 +59,14 @@ public class GameLoop implements Runnable {
 			/*
 			 * Consume Korn when colliding with Player
 			 */
-			if (Collision.cKorn(p.getX(), p.getY()) == true) {
-				for (Korn k : Korn_Creation.koerner) { // detect the specific Korn that was collided with
-					if (p.getX() == k.getX() && p.getY() == k.getY()) {
-						k.consume();
-						new Upgrade("Korn");
-						break;
+			if (Game.isFirstKeyPressInGame() == false) { // only when clocks are running
+				if (Collision.cKorn(p.getX(), p.getY()) == true) {
+					for (Korn k : Korn_Creation.koerner) { // detect the specific Korn that was collided with
+						if (p.getX() == k.getX() && p.getY() == k.getY()) {
+							k.consume();
+							new Upgrade("Korn");
+							break;
+						}
 					}
 				}
 			}
