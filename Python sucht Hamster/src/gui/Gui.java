@@ -9,9 +9,9 @@ import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
+import actions.Game;
 import actions.KeyPressed;
 import actions.KeyReleased;
-import actions.Main;
 import actions.MouseMoved;
 import actions.MousePressed;
 import chars.Enemy;
@@ -21,43 +21,25 @@ import draw.IL;
 
 public class Gui {
 
-	public static Player p = Main.p;
-	public static Enemy e = Main.e;
+	public static Player p = Game.p;
+	public static Enemy e = Game.e;
 
 	public static Draw_Main dm;
 
 	public static GraphicsContext gc_main;
 
-	private static int width = 632, height = 382; // size of the window
+	private static int width = 952, height = 702; // size of the window
+
+	private static int nLvls = 12; // number of levels
 
 	public static Button[] pausebuttons = new Button[3];
 	public static Button[] startmenubuttons = new Button[2];
 	public static Button[] gameendbuttons = new Button[2];
+	public static Button[] lvlselectbuttons = new Button[getnLvls()];
 
 	public void init() {
-
 		dm = new Draw_Main();
-
-		pausebuttons[0] = new Button(getWidth() / 2 - 150, getHeight() - 180, 300, 50);
-		pausebuttons[0].setText("Resume");
-
-		pausebuttons[1] = new Button(getWidth() / 2 - 150, getHeight() - 120, 300, 50);
-		pausebuttons[1].setText("Exit to Menu");
-
-		pausebuttons[2] = new Button(getWidth() / 2 - 150, getHeight() - 60, 300, 50);
-		pausebuttons[2].setText("Quit");
-
-		startmenubuttons[0] = new Button(getWidth() / 2 - 150, getHeight() - 120, 300, 50);
-		startmenubuttons[0].setText("Start New Game");
-
-		startmenubuttons[1] = new Button(getWidth() / 2 - 150, getHeight() - 60, 300, 50);
-		startmenubuttons[1].setText("Quit");
-
-		gameendbuttons[0] = new Button(getWidth() / 2 - 150, getHeight() - 120, 300, 50);
-		gameendbuttons[0].setText("Exit to Menu");
-
-		gameendbuttons[1] = new Button(getWidth() / 2 - 150, getHeight() - 60, 300, 50);
-		gameendbuttons[1].setText("Quit");
+		initButtons();
 	}
 
 	public void create(Stage stage) {
@@ -105,6 +87,66 @@ public class Gui {
 
 	}
 
+	private void initButtons() {
+		initPauseButtons();
+		initStartMenuButtons();
+		initGameEndButtons();
+		initLvlSelectButtons();
+	}
+
+	private void initLvlSelectButtons() {
+		int buttonWidth = 90;
+		int buttonHeight = 90;
+		int buttonMargin = 60; // space between window borders and outer buttons (bottom, right and left)
+		// space between individual buttons:
+		int innerSpace = (getWidth() - 2 * buttonMargin - buttonWidth * getnLvls() / 2) / (getnLvls() / 2 - 1);
+		int buttonX = buttonMargin; // x coordinate of the left column of buttons
+		int buttonY = 11 * (getHeight() / 20); // y coordinate of upper row of buttons: 11/20 of screen height
+		int j = 0;
+
+		for (int i = 0; i < getnLvls(); i++) {
+			if (i < getnLvls() / 2) {
+				j = i;
+			}
+			if (i >= getnLvls() / 2) {
+				j = i - getnLvls() / 2;
+				if (i == getnLvls() / 2) {
+					buttonY = buttonY + 4 * (getHeight() / 20);
+				}
+			}
+			buttonX = buttonMargin + (buttonWidth + innerSpace) * j;
+			lvlselectbuttons[i] = new Button(buttonX, buttonY, buttonWidth, buttonHeight);
+			lvlselectbuttons[i].setText("" + (i + 1));
+		}
+	}
+
+	private void initGameEndButtons() {
+		gameendbuttons[0] = new Button(getWidth() / 2 - 150, getHeight() - 120, 300, 50);
+		gameendbuttons[0].setText("Exit to Menu");
+
+		gameendbuttons[1] = new Button(getWidth() / 2 - 150, getHeight() - 60, 300, 50);
+		gameendbuttons[1].setText("Quit");
+	}
+
+	private void initStartMenuButtons() {
+		startmenubuttons[0] = new Button(getWidth() / 2 - 150, getHeight() - 120, 300, 50);
+		startmenubuttons[0].setText("Start New Game");
+
+		startmenubuttons[1] = new Button(getWidth() / 2 - 150, getHeight() - 60, 300, 50);
+		startmenubuttons[1].setText("Quit");
+	}
+
+	private void initPauseButtons() {
+		pausebuttons[0] = new Button(getWidth() / 2 - 150, getHeight() - 180, 300, 50);
+		pausebuttons[0].setText("Resume");
+
+		pausebuttons[1] = new Button(getWidth() / 2 - 150, getHeight() - 120, 300, 50);
+		pausebuttons[1].setText("Exit to Menu");
+
+		pausebuttons[2] = new Button(getWidth() / 2 - 150, getHeight() - 60, 300, 50);
+		pausebuttons[2].setText("Quit");
+	}
+
 	public static int getWidth() {
 		return width;
 	}
@@ -119,6 +161,10 @@ public class Gui {
 
 	public static void setHeight(int height) {
 		Gui.height = height;
+	}
+
+	public static int getnLvls() {
+		return nLvls;
 	}
 
 }

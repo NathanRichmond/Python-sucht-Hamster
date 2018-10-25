@@ -1,5 +1,6 @@
-package actions;
+package data;
 
+import actions.Game;
 import chars.Enemy;
 import chars.Player;
 import clocks.Korn_Creation;
@@ -16,8 +17,8 @@ public class Collision {
 	private static Enemy e;
 
 	public Collision() {
-		p = Main.p;
-		e = Main.e;
+		p = Game.p;
+		e = Game.e;
 	}
 
 	/*
@@ -32,8 +33,8 @@ public class Collision {
 	 * Check collision of Enemy and Player
 	 */
 	public static boolean cEnemyPlayer() {
-		p = Main.p;
-		e = Main.e;
+		p = Game.p;
+		e = Game.e;
 		boolean flag = false;
 		if (Gamestate.state == Gamestate_e.ingame) {
 			if (p.getX() == e.getX() && p.getY() == e.getY()) {
@@ -82,13 +83,28 @@ public class Collision {
 	 * Wall and Korn
 	 */
 	public static boolean cPlayerOrEnemy(int x, int y) {
-		p = Main.p;
-		e = Main.e;
+		p = Game.p;
+		e = Game.e;
 		boolean flag = false;
 		if ((x == p.getX() && y == p.getY()) || (x == e.getX() && y == e.getY())) {
 			flag = true;
 		} else {
 			flag = false;
+		}
+		return flag;
+	}
+
+	/*
+	 * Check collision with Player. Used for determining valid spawn of Enemy
+	 */
+	public static boolean cPlayer(int x, int y) {
+		p = Game.p;
+		boolean flag = false;
+		if (x == p.getX() && y == p.getY()) {
+			flag = true;
+		} else {
+			flag = false;
+
 		}
 		return flag;
 	}

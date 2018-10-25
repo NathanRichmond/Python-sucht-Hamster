@@ -1,6 +1,6 @@
 package game;
 
-import actions.Collision;
+import data.Collision;
 import data.CustomMath;
 import gui.Grid;
 
@@ -25,12 +25,15 @@ public class Korn {
 		 * Wall.
 		 */
 		int x, y;
-		do {
-			x = CustomMath.genRandom();
-			y = CustomMath.genRandom();
-		} while (Collision.cWall(x, y) == true || Collision.cPlayerOrEnemy(x, y) == true);
-		this.setX(Grid.getX() + x);
-		this.setY(Grid.getY() + y);
+		x = CustomMath.genRandom();
+		y = CustomMath.genRandom();
+		if (Collision.cWall(x, y) == false && Collision.cPlayerOrEnemy(x, y) == false
+				&& Collision.cKorn(x, y) == false) {
+			this.setX(Grid.getX() + x);
+			this.setY(Grid.getY() + y);
+		} else {
+			setValidSpawn();
+		}
 	}
 
 	public int getX() {

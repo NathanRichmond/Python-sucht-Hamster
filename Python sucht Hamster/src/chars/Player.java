@@ -1,6 +1,6 @@
 package chars;
 
-import actions.Collision;
+import data.Collision;
 import data.CustomMath;
 import game.Gamestate;
 import game.Gamestate_e;
@@ -101,13 +101,11 @@ public class Player {
 
 	private void setValidSpawn() {
 		/*
-		 * Generate random spawn point. Don't inside a Wall.
+		 * Generate random spawn point.
 		 */
 		int x, y;
-		do {
-			x = CustomMath.genRandom();
-			y = CustomMath.genRandom();
-		} while (Collision.cWall(x, y) == true);
+		x = CustomMath.genRandom();
+		y = CustomMath.genRandom();
 		this.setX(Grid.getX() + x);
 		this.setY(Grid.getY() + y);
 	}

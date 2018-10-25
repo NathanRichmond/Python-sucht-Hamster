@@ -1,6 +1,6 @@
 package game;
 
-import actions.Main;
+import actions.Game;
 import chars.Player;
 import clocks.Upgrade_Timer;
 
@@ -8,11 +8,11 @@ public class Upgrade {
 
 	private static Player p;
 
-	private static int type;
+	private static int type; // type of the Upgrade. Currently, there's only one type (Korn)
 	private static int duration;
 
 	public Upgrade(String type) {
-		p = Main.p;
+		p = Game.p;
 
 		switch (type) {
 		case "Korn":

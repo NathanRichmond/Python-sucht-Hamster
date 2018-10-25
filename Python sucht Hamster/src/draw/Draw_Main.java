@@ -1,11 +1,12 @@
 package draw;
 
+import javafx.geometry.VPos;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
-import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
 
-import actions.Main;
+import actions.Game;
 import chars.Enemy;
 import chars.Player;
 import clocks.Korn_Creation;
@@ -22,14 +23,12 @@ import gui.Gui;
 
 public class Draw_Main {
 
-	private Text text = new Text();
-
 	private static Player p;
 	private static Enemy e;
 
 	public void draw(GraphicsContext gc) {
-		p = Main.p;
-		e = Main.e;
+		p = Game.p;
+		e = Game.e;
 		GraphicsContext g = gc;
 
 		/*
@@ -40,10 +39,21 @@ public class Draw_Main {
 		}
 
 		/*
+		 * LEVEL SELECTION SCREEN
+		 */
+		if (Gamestate.state == Gamestate_e.lvlselect) {
+			drawLevelSelection(g);
+		}
+
+		/*
 		 * INGAME ELEMENTS
 		 */
 		if (Gamestate.state == Gamestate_e.ingame || Gamestate.state == Gamestate_e.pause
 				|| Gamestate.state == Gamestate_e.victory || Gamestate.state == Gamestate_e.defeat) {
+			/*
+			 * Note: Draw order is important! Example: Koerner are drawn before Characters
+			 * because Characters should be in front of Koerner.
+			 */
 
 			/*
 			 * BACKGROUND
@@ -82,18 +92,18 @@ public class Draw_Main {
 				g.setFill(new Color(0, 0, 0, 0.6));
 				g.fillRect(Grid.getX() + Grid.getWidth() + 145, Grid.getY(), 125, 40);
 
+				g.setTextAlign(TextAlignment.LEFT);
+				g.setTextBaseline(VPos.TOP);
+				g.setFont(new Font("Verdana Thin", 15));
 				g.setFill(Color.WHITE);
-				text.setText("Player Upgraded");
-				text.setFont(Font.font("Verdana", 48));
-
-				g.fillText("Player Upgraded", Grid.getX() + Grid.getWidth() + 147, Grid.getY() + 15);
+				g.fillText("Player Upgraded", Grid.getX() + Grid.getWidth() + 145, Grid.getY());
 				if (Upgrade.getDuration() + 1 > 1) {
-					g.fillText(Upgrade.getDuration() + 1 + " Sekunden", Grid.getX() + Grid.getWidth() + 147,
-							Grid.getY() + 35); // duration
+					g.fillText(Upgrade.getDuration() + 1 + " Sekunden", Grid.getX() + Grid.getWidth() + 145,
+							Grid.getY() + 20); // duration
 				} else {
 					if (Upgrade.getDuration() + 1 == 1) {
-						g.fillText(Upgrade.getDuration() + 1 + " Sekunde", Grid.getX() + Grid.getWidth() + 147,
-								Grid.getY() + 35); // duration
+						g.fillText(Upgrade.getDuration() + 1 + " Sekunde", Grid.getX() + Grid.getWidth() + 145,
+								Grid.getY() + 20); // duration
 					}
 				}
 
@@ -125,6 +135,78 @@ public class Draw_Main {
 
 	}
 
+	private void drawLevelSelection(GraphicsContext g) {
+		g.drawImage(IL.lvlselect, 0, 0, Gui.getWidth(), Gui.getHeight());
+
+		g.setStroke(Color.WHITE);
+
+		for (int i = 0; i < Gui.lvlselectbuttons.length; i++) {
+			Button b = Gui.lvlselectbuttons[i];
+			g.strokeRect(b.getX(), b.getY(), b.getWidth(), b.getHeight());
+
+			g.setFill(new Color(1, 1, 1, 0.2));
+			if (b.isHover()) {
+				g.fillRect(b.getX(), b.getY(), b.getWidth(), b.getHeight());
+
+				g.setTextAlign(TextAlignment.LEFT);
+				g.setFont(new Font("Verdana Italic", 26));
+				g.setFill(Color.WHITE);
+				drawLvlDesc(g, (i + 1));
+			}
+
+			g.setTextAlign(TextAlignment.CENTER);
+			g.setTextBaseline(VPos.CENTER);
+			g.setFont(new Font("Verdana", 26));
+			g.setFill(Color.WHITE);
+			g.fillText(b.getText(), b.getX() + b.getWidth() / 2, b.getY() + b.getHeight() / 2);
+
+		}
+	}
+
+	private void drawLvlDesc(GraphicsContext g, int level) {
+		int x = 60;
+		int y = 280;
+		switch (level) {
+		case 1:
+			g.fillText("[Description of level " + level + " here]", x, y);
+			break;
+		case 2:
+			g.fillText("[Description of level " + level + " here]", x, y);
+			break;
+		case 3:
+			g.fillText("[Description of level " + level + " here]", x, y);
+			break;
+		case 4:
+			g.fillText("[Description of level " + level + " here]", x, y);
+			break;
+		case 5:
+			g.fillText("[Description of level " + level + " here]", x, y);
+			break;
+		case 6:
+			g.fillText("[Description of level " + level + " here]", x, y);
+			break;
+		case 7:
+			g.fillText("[Description of level " + level + " here]", x, y);
+			break;
+		case 8:
+			g.fillText("[Description of level " + level + " here]", x, y);
+			break;
+		case 9:
+			g.fillText("[Description of level " + level + " here]", x, y);
+			break;
+		case 10:
+			g.fillText("[Description of level " + level + " here]", x, y);
+			break;
+		case 11:
+			g.fillText("[Description of level " + level + " here]", x, y);
+			break;
+		case 12:
+			g.fillText("[Description of level " + level + " here]", x, y);
+			break;
+		}
+
+	}
+
 	private void drawBackground(GraphicsContext g) {
 		/*
 		 * Grass background:
@@ -142,12 +224,10 @@ public class Draw_Main {
 		g.setFill(new Color(0, 0, 0, 0.5));
 		g.fillRect(0, 0, Gui.getWidth(), Gui.getHeight());
 
+		g.setFont(new Font("Verdana Bold", 40));
 		g.setFill(Color.WHITE);
-		text.setText("PAUSE");
-		text.setFont(Font.font("Verdana", 48));
 
-		g.fillText("PAUSE", Gui.getWidth() / 2 - text.getLayoutBounds().getWidth() / 4,
-				Gui.getHeight() / 4 + text.getLayoutBounds().getHeight() / 4);
+		g.fillText("PAUSE", Gui.getWidth() / 2, Gui.getHeight() / 4);
 
 		g.setStroke(Color.WHITE);
 		g.setFill(Color.WHITE);
@@ -160,13 +240,11 @@ public class Draw_Main {
 				g.fillRect(b.getX(), b.getY(), b.getWidth(), b.getHeight());
 			}
 
+			g.setTextAlign(TextAlignment.CENTER);
+			g.setTextBaseline(VPos.CENTER);
+			g.setFont(new Font("Verdana", 16));
 			g.setFill(Color.WHITE);
-
-			text.setText(b.getText());
-			text.setFont(Font.font("Veranda", 25));
-
-			g.fillText(b.getText(), b.getX() + b.getWidth() / 2 - text.getLayoutBounds().getWidth() / 4,
-					b.getY() + b.getHeight() / 2 + text.getLayoutBounds().getHeight() / 4);
+			g.fillText(b.getText(), b.getX() + b.getWidth() / 2, b.getY() + b.getHeight() / 2);
 
 		}
 	}
@@ -175,7 +253,7 @@ public class Draw_Main {
 		g.setFill(new Color(0, 0, 0, .5));
 		g.fillRect(0, 0, Gui.getWidth(), Gui.getHeight());
 
-		g.drawImage(IL.tdefeat, 0, 0, 491, 331);
+		g.drawImage(IL.tdefeat, 0, 0, Gui.getWidth(), 2 * (Gui.getHeight() / 3));
 
 		for (Button b : Gui.gameendbuttons) {
 			g.strokeRect(b.getX(), b.getY(), b.getWidth(), b.getHeight());
@@ -185,13 +263,11 @@ public class Draw_Main {
 				g.fillRect(b.getX(), b.getY(), b.getWidth(), b.getHeight());
 			}
 
+			g.setTextAlign(TextAlignment.CENTER);
+			g.setTextBaseline(VPos.CENTER);
+			g.setFont(new Font("Verdana", 16));
 			g.setFill(Color.WHITE);
-
-			text.setText(b.getText());
-			text.setFont(Font.font("Verdana", 25));
-
-			g.fillText(b.getText(), b.getX() + b.getWidth() / 2 - text.getLayoutBounds().getWidth() / 4,
-					b.getY() + b.getHeight() / 2 + text.getLayoutBounds().getHeight() / 4);
+			g.fillText(b.getText(), b.getX() + b.getWidth() / 2, b.getY() + b.getHeight() / 2);
 
 		}
 	}
@@ -200,7 +276,7 @@ public class Draw_Main {
 		g.setFill(new Color(0, 0, 0, .5));
 		g.fillRect(0, 0, Gui.getWidth(), Gui.getHeight());
 
-		g.drawImage(IL.tvictory, 50, 50, 330, 150);
+		g.drawImage(IL.tvictory, 0, 0, Gui.getWidth(), 2 * (Gui.getHeight() / 3));
 
 		for (Button b : Gui.gameendbuttons) {
 			g.strokeRect(b.getX(), b.getY(), b.getWidth(), b.getHeight());
@@ -210,13 +286,11 @@ public class Draw_Main {
 				g.fillRect(b.getX(), b.getY(), b.getWidth(), b.getHeight());
 			}
 
+			g.setTextAlign(TextAlignment.CENTER);
+			g.setTextBaseline(VPos.CENTER);
+			g.setFont(new Font("Verdana", 16));
 			g.setFill(Color.WHITE);
-
-			text.setText(b.getText());
-			text.setFont(Font.font("Verdana", 25));
-
-			g.fillText(b.getText(), b.getX() + b.getWidth() / 2 - text.getLayoutBounds().getWidth() / 4,
-					b.getY() + b.getHeight() / 2 + text.getLayoutBounds().getHeight() / 4);
+			g.fillText(b.getText(), b.getX() + b.getWidth() / 2, b.getY() + b.getHeight() / 2);
 
 		}
 	}
@@ -594,7 +668,19 @@ public class Draw_Main {
 	private void drawGrid(GraphicsContext g) {
 		g.setFill(new Color(1, 1, 1, 0.7)); // semi-transparent layer underneath the grid
 		g.fillRect(Grid.getX(), Grid.getY(), Grid.getWidth(), Grid.getHeight());
-		g.drawImage(IL.igrid, Grid.getX(), Grid.getY(), Grid.getWidth(), Grid.getHeight());
+
+		switch (Grid.getNumberOfTiles()) {
+		case 10:
+			g.drawImage(IL.igrid_10, Grid.getX(), Grid.getY(), Grid.getWidth(), Grid.getHeight());
+			break;
+		case 20:
+			g.drawImage(IL.igrid_20, Grid.getX(), Grid.getY(), Grid.getWidth(), Grid.getHeight());
+			break;
+		default:
+			g.drawImage(IL.igrid_ntransp, Grid.getX(), Grid.getY(), Grid.getWidth(), Grid.getHeight());
+			break;
+		}
+
 	}
 
 	private void drawStartMenu(GraphicsContext g) {
@@ -611,13 +697,11 @@ public class Draw_Main {
 				g.fillRect(b.getX(), b.getY(), b.getWidth(), b.getHeight());
 			}
 
+			g.setTextAlign(TextAlignment.CENTER);
+			g.setTextBaseline(VPos.CENTER);
+			g.setFont(new Font("Verdana", 16));
 			g.setFill(Color.WHITE);
-
-			text.setText(b.getText());
-			text.setFont(Font.font("Verdana", 25));
-
-			g.fillText(b.getText(), b.getX() + b.getWidth() / 2 - text.getLayoutBounds().getWidth() / 4,
-					b.getY() + b.getHeight() / 2 + text.getLayoutBounds().getHeight() / 4);
+			g.fillText(b.getText(), b.getX() + b.getWidth() / 2, b.getY() + b.getHeight() / 2);
 
 		}
 	}

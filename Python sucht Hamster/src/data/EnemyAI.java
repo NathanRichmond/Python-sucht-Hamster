@@ -1,19 +1,18 @@
 package data;
 
-import actions.Collision;
-import actions.Main;
+import actions.Game;
 import chars.Enemy;
 import chars.Player;
 import gui.Grid;
 
 public class EnemyAI {
 
-	private Enemy e = Main.e;
-	private Player p = Main.p;
+	private Enemy e = Game.e;
+	private Player p = Game.p;
 
 	/*
 	 * Area around the player that is blocked for enemy.
-	 * Input: 1 = whole grid; 100 = 1 tile
+	 * Input: 1 = whole grid; 100 = 1 tile (exponential)
 	 */
 	public int playerMargin = CustomMath.calcPlayerMargin(4);
 

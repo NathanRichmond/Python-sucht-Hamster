@@ -1,12 +1,20 @@
 package gui;
 
+import actions.Game;
+
 public class Grid {
 
+	private static int numberOfTiles = 10;
 	private static int x = 20; // position in window
 	private static int y = 20;
 	private static int width = 331;
 	private static int height = 331;
-	private static int numberOfTiles = 10; // currently unused
+
+	public Grid() {
+		Grid.numberOfTiles = Game.getGridsize();
+		width = (int) (getNumberOfTiles() * 33.1); // 33.1: width of one tile
+		height = (int) (getNumberOfTiles() * 33.1);
+	}
 
 	public static int getX() {
 		return x;
@@ -42,10 +50,6 @@ public class Grid {
 
 	public static int getNumberOfTiles() {
 		return numberOfTiles;
-	}
-
-	public static void setNumberOfTiles(int numberOfTiles) {
-		Grid.numberOfTiles = numberOfTiles;
 	}
 
 }

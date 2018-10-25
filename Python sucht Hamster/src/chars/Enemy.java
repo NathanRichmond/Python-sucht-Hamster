@@ -1,7 +1,7 @@
 package chars;
 
-import actions.Collision;
 import clocks.Enemy_Movement;
+import data.Collision;
 import data.CustomMath;
 import game.Gamestate;
 import game.Gamestate_e;
@@ -13,30 +13,32 @@ public class Enemy {
 	private int xAfterMove, yAfterMove; // coords of enemy after making next move
 	private int width, height;
 	private int faceDirection;
-	private double speed;
+	private double speed; // amount of moves Enemy can make within one second
 	private boolean isAlive;
 	public Enemy_Movement em;
 
 	public Enemy() {
-		this.setValidSpawn(); // spawns at random position
+		this.setValidSpawn(); // Spawn at random position
 		this.width = 32;
 		this.height = 32;
-		this.faceDirection = 1;
-		this.speed = 0.4; // time in seconds before enemy makes another move
+		this.faceDirection = (int) (Math.random() * 3); // random faceDirection
+		this.speed = 2.5;
 		this.isAlive = true;
 	}
 
 	private void setValidSpawn() {
 		/*
-		 * Generate random spawn point. Don't spawn inside a Wall.
+		 * Generate random spawn point. Don't spawn inside Player.
 		 */
 		int x, y;
-		do {
-			x = CustomMath.genRandom();
-			y = CustomMath.genRandom();
-		} while (Collision.cWall(x, y) == true);
-		this.setX(Grid.getX() + x);
-		this.setY(Grid.getY() + y);
+		x = CustomMath.genRandom();
+		y = CustomMath.genRandom();
+		if (Collision.cPlayer(x, y) == false) {
+			this.setX(Grid.getX() + x);
+			this.setY(Grid.getY() + y);
+		} else {
+			setValidSpawn();
+		}
 	}
 
 	public void move(int direction) {
