@@ -86,29 +86,53 @@ public class Draw_Main {
 			drawGameTimer(g);
 
 			/*
-			 * GAME ELEMENTS: Player Upgraded
+			 * GAME ELEMENTS: Title
+			 */
+			g.setFill(new Color(0, 0, 0, 0.4));
+			g.fillRect(Grid.getX() + Grid.getWidth() / 2 - 160 / 2, Grid.getY() / 2 - 40 / 2, 160, 40);
+
+			g.setTextAlign(TextAlignment.CENTER);
+			g.setTextBaseline(VPos.CENTER);
+			g.setFont(new Font("Verdana Bold Italic", 30));
+			g.setFill(Color.WHITE);
+			g.fillText("LEVEL " + Game.getLevel(), Grid.getX() + Grid.getWidth() / 2, Grid.getY() / 2);
+
+			/*
+			 * GAME ELEMENTS: Restart Button
+			 */
+			g.setStroke(Color.WHITE);
+			g.setFill(Color.WHITE);
+			Button b = Gui.ingamebutton_restart;
+			g.strokeRect(b.getX(), b.getY(), b.getWidth(), b.getHeight());
+			if (b.isHover()) {
+				g.setFill(new Color(1, 1, 1, 0.2));
+				g.fillRect(b.getX(), b.getY(), b.getWidth(), b.getHeight());
+			}
+
+			g.drawImage(IL.ibrestart, b.getX(), b.getY(), b.getWidth(), b.getHeight());
+
+			/*
+			 * GAME ELEMENTS: Player Upgraded Info Box
 			 */
 			if (p.isUpgraded() == true) {
 				g.setFill(new Color(0, 0, 0, 0.6));
-				g.fillRect(Grid.getX() + Grid.getWidth() + 145, Grid.getY(), 125, 40);
+				g.fillRect(Grid.getX() - 150, Grid.getY(), 135, 40);
 
 				g.setTextAlign(TextAlignment.LEFT);
 				g.setTextBaseline(VPos.TOP);
-				g.setFont(new Font("Verdana Thin", 15));
+				g.setFont(new Font("Verdana", 15));
 				g.setFill(Color.WHITE);
-				g.fillText("Player Upgraded", Grid.getX() + Grid.getWidth() + 145, Grid.getY());
+				g.fillText("Player Upgraded", Grid.getX() - 145, Grid.getY());
 				if (Upgrade.getDuration() + 1 > 1) {
-					g.fillText(Upgrade.getDuration() + 1 + " Sekunden", Grid.getX() + Grid.getWidth() + 145,
-							Grid.getY() + 20); // duration
+					g.fillText(Upgrade.getDuration() + 1 + " Sekunden", Grid.getX() - 145, Grid.getY() + 20); // duration
 				} else {
 					if (Upgrade.getDuration() + 1 == 1) {
-						g.fillText(Upgrade.getDuration() + 1 + " Sekunde", Grid.getX() + Grid.getWidth() + 145,
-								Grid.getY() + 20); // duration
+						g.fillText(Upgrade.getDuration() + 1 + " Sekunde", Grid.getX() - 145, Grid.getY() + 20); // duration
 					}
 				}
 
 				g.setStroke(Color.WHITE); // border
-				g.strokeRect(Grid.getX() + Grid.getWidth() + 145, Grid.getY(), 125, 40);
+				g.strokeRect(Grid.getX() - 150, Grid.getY(), 135, 40);
 			}
 		}
 
@@ -136,7 +160,7 @@ public class Draw_Main {
 	}
 
 	private void drawLevelSelection(GraphicsContext g) {
-		g.drawImage(IL.lvlselect, 0, 0, Gui.getWidth(), Gui.getHeight());
+		g.drawImage(IL.ilvlselect, 0, 0, Gui.getWidth(), Gui.getHeight());
 
 		g.setStroke(Color.WHITE);
 
@@ -156,11 +180,23 @@ public class Draw_Main {
 
 			g.setTextAlign(TextAlignment.CENTER);
 			g.setTextBaseline(VPos.CENTER);
-			g.setFont(new Font("Verdana", 26));
+			g.setFont(new Font("Verdana", 36));
 			g.setFill(Color.WHITE);
 			g.fillText(b.getText(), b.getX() + b.getWidth() / 2, b.getY() + b.getHeight() / 2);
 
 		}
+
+		Button b = Gui.lvlselectbutton_back;
+		g.strokeRect(b.getX(), b.getY(), b.getWidth(), b.getHeight());
+		if (b.isHover()) {
+			g.setFill(new Color(1, 1, 1, 0.2));
+			g.fillRect(b.getX(), b.getY(), b.getWidth(), b.getHeight());
+		}
+		g.setTextAlign(TextAlignment.CENTER);
+		g.setTextBaseline(VPos.CENTER);
+		g.setFont(new Font("Verdana", 19));
+		g.setFill(Color.WHITE);
+		g.fillText(b.getText(), b.getX() + b.getWidth() / 2, b.getY() + b.getHeight() / 2);
 	}
 
 	private void drawLvlDesc(GraphicsContext g, int level) {
@@ -213,6 +249,9 @@ public class Draw_Main {
 		 */
 		g.drawImage(IL.bggras, 0, 0, Gui.getWidth(), Gui.getHeight());
 
+		g.setFill(new Color(1, 1, 1, 0.1)); // semi-transparent layer to moderate the intense grass
+		g.fillRect(0, 0, Gui.getWidth(), Gui.getHeight());
+
 		/*
 		 * Plain gray background:
 		 */
@@ -221,12 +260,13 @@ public class Draw_Main {
 	}
 
 	private void drawPauseScreen(GraphicsContext g) {
-		g.setFill(new Color(0, 0, 0, 0.5));
+		g.setFill(new Color(0, 0, 0, 0.7));
 		g.fillRect(0, 0, Gui.getWidth(), Gui.getHeight());
 
+		g.setTextAlign(TextAlignment.CENTER);
+		g.setTextBaseline(VPos.CENTER);
 		g.setFont(new Font("Verdana Bold", 40));
 		g.setFill(Color.WHITE);
-
 		g.fillText("PAUSE", Gui.getWidth() / 2, Gui.getHeight() / 4);
 
 		g.setStroke(Color.WHITE);
@@ -250,10 +290,10 @@ public class Draw_Main {
 	}
 
 	private void drawDefeatScreen(GraphicsContext g) {
-		g.setFill(new Color(0, 0, 0, .5));
+		g.setFill(new Color(0, 0, 0, 0.7));
 		g.fillRect(0, 0, Gui.getWidth(), Gui.getHeight());
 
-		g.drawImage(IL.tdefeat, 0, 0, Gui.getWidth(), 2 * (Gui.getHeight() / 3));
+		g.drawImage(IL.tdefeat, 0, 0, Gui.getWidth(), Gui.getHeight());
 
 		for (Button b : Gui.gameendbuttons) {
 			g.strokeRect(b.getX(), b.getY(), b.getWidth(), b.getHeight());
@@ -273,10 +313,10 @@ public class Draw_Main {
 	}
 
 	private void drawVictoryScreen(GraphicsContext g) {
-		g.setFill(new Color(0, 0, 0, .5));
+		g.setFill(new Color(0, 0, 0, 0.7));
 		g.fillRect(0, 0, Gui.getWidth(), Gui.getHeight());
 
-		g.drawImage(IL.tvictory, 0, 0, Gui.getWidth(), 2 * (Gui.getHeight() / 3));
+		g.drawImage(IL.tvictory, 0, 0, Gui.getWidth(), Gui.getHeight());
 
 		for (Button b : Gui.gameendbuttons) {
 			g.strokeRect(b.getX(), b.getY(), b.getWidth(), b.getHeight());
@@ -616,35 +656,35 @@ public class Draw_Main {
 			if (p.isUpgraded() == false) {
 				g.drawImage(IL.iplayer0, p.getX(), p.getY(), p.getWidth(), p.getHeight());
 			} else {
-				g.drawImage(IL.iplayerzunge0, p.getX(), p.getY(), p.getWidth(), p.getHeight());
+				g.drawImage(IL.iplayerupgraded0, p.getX(), p.getY(), p.getWidth(), p.getHeight());
 			}
 			break;
 		case 1:
 			if (p.isUpgraded() == false) {
 				g.drawImage(IL.iplayer1, p.getX(), p.getY(), p.getWidth(), p.getHeight());
 			} else {
-				g.drawImage(IL.iplayerzunge1, p.getX(), p.getY(), p.getWidth(), p.getHeight());
+				g.drawImage(IL.iplayerupgraded1, p.getX(), p.getY(), p.getWidth(), p.getHeight());
 			}
 			break;
 		case 2:
 			if (p.isUpgraded() == false) {
 				g.drawImage(IL.iplayer2, p.getX(), p.getY(), p.getWidth(), p.getHeight());
 			} else {
-				g.drawImage(IL.iplayerzunge2, p.getX(), p.getY(), p.getWidth(), p.getHeight());
+				g.drawImage(IL.iplayerupgraded2, p.getX(), p.getY(), p.getWidth(), p.getHeight());
 			}
 			break;
 		case 3:
 			if (p.isUpgraded() == false) {
 				g.drawImage(IL.iplayer3, p.getX(), p.getY(), p.getWidth(), p.getHeight());
 			} else {
-				g.drawImage(IL.iplayerzunge3, p.getX(), p.getY(), p.getWidth(), p.getHeight());
+				g.drawImage(IL.iplayerupgraded3, p.getX(), p.getY(), p.getWidth(), p.getHeight());
 			}
 			break;
 		default:
 			if (p.isUpgraded() == false) {
 				g.drawImage(IL.iplayer0, p.getX(), p.getY(), p.getWidth(), p.getHeight());
 			} else {
-				g.drawImage(IL.iplayerzunge0, p.getX(), p.getY(), p.getWidth(), p.getHeight());
+				g.drawImage(IL.iplayerupgraded0, p.getX(), p.getY(), p.getWidth(), p.getHeight());
 			}
 			break;
 		}
@@ -669,12 +709,24 @@ public class Draw_Main {
 		g.setFill(new Color(1, 1, 1, 0.7)); // semi-transparent layer underneath the grid
 		g.fillRect(Grid.getX(), Grid.getY(), Grid.getWidth(), Grid.getHeight());
 
-		switch (Grid.getNumberOfTiles()) {
-		case 10:
-			g.drawImage(IL.igrid_10, Grid.getX(), Grid.getY(), Grid.getWidth(), Grid.getHeight());
+		switch (Grid.getSize()) {
+		case "05x10":
+			g.drawImage(IL.igrid_05x10, Grid.getX(), Grid.getY(), Grid.getWidth(), Grid.getHeight());
 			break;
-		case 20:
-			g.drawImage(IL.igrid_20, Grid.getX(), Grid.getY(), Grid.getWidth(), Grid.getHeight());
+		case "10x05":
+			g.drawImage(IL.igrid_10x05, Grid.getX(), Grid.getY(), Grid.getWidth(), Grid.getHeight());
+			break;
+		case "10x10":
+			g.drawImage(IL.igrid_10x10, Grid.getX(), Grid.getY(), Grid.getWidth(), Grid.getHeight());
+			break;
+		case "20x20":
+			g.drawImage(IL.igrid_20x20, Grid.getX(), Grid.getY(), Grid.getWidth(), Grid.getHeight());
+			break;
+		case "34x20":
+			g.drawImage(IL.igrid_34x20, Grid.getX(), Grid.getY(), Grid.getWidth(), Grid.getHeight());
+			break;
+		case "40x20":
+			g.drawImage(IL.igrid_40x20, Grid.getX(), Grid.getY(), Grid.getWidth(), Grid.getHeight());
 			break;
 		default:
 			g.drawImage(IL.igrid_ntransp, Grid.getX(), Grid.getY(), Grid.getWidth(), Grid.getHeight());
@@ -689,21 +741,56 @@ public class Draw_Main {
 		g.setStroke(Color.WHITE);
 		g.setFill(Color.WHITE);
 
-		for (Button b : Gui.startmenubuttons) {
-			g.strokeRect(b.getX(), b.getY(), b.getWidth(), b.getHeight());
+		/*
+		 * Button "Start New Game"
+		 */
+		Button b = Gui.startmenubuttons[0];
+		g.strokeRect(b.getX(), b.getY(), b.getWidth(), b.getHeight());
 
-			if (b.isHover() == true) {
-				g.setFill(new Color(1, 1, 1, 0.2));
-				g.fillRect(b.getX(), b.getY(), b.getWidth(), b.getHeight());
-			}
-
-			g.setTextAlign(TextAlignment.CENTER);
-			g.setTextBaseline(VPos.CENTER);
-			g.setFont(new Font("Verdana", 16));
-			g.setFill(Color.WHITE);
-			g.fillText(b.getText(), b.getX() + b.getWidth() / 2, b.getY() + b.getHeight() / 2);
-
+		if (b.isHover() == true) {
+			g.setFill(new Color(1, 1, 1, 0.2));
+			g.fillRect(b.getX(), b.getY(), b.getWidth(), b.getHeight());
 		}
+
+		g.setTextAlign(TextAlignment.CENTER);
+		g.setTextBaseline(VPos.CENTER);
+		g.setFont(new Font("Verdana", 46));
+		g.setFill(Color.WHITE);
+		g.fillText(b.getText(), b.getX() + b.getWidth() / 2, b.getY() + b.getHeight() / 2);
+
+		/*
+		 * Button "Settings"
+		 */
+		b = Gui.startmenubuttons[1];
+		g.strokeRect(b.getX(), b.getY(), b.getWidth(), b.getHeight());
+
+		if (b.isHover() == true) {
+			g.setFill(new Color(1, 1, 1, 0.2));
+			g.fillRect(b.getX(), b.getY(), b.getWidth(), b.getHeight());
+		}
+
+		g.setTextAlign(TextAlignment.CENTER);
+		g.setTextBaseline(VPos.CENTER);
+		g.setFont(new Font("Verdana", 16));
+		g.setFill(Color.WHITE);
+		g.fillText(b.getText(), b.getX() + b.getWidth() / 2, b.getY() + b.getHeight() / 2);
+		
+		/*
+		 * Button "Quit"
+		 */
+		b = Gui.startmenubuttons[2];
+		g.strokeRect(b.getX(), b.getY(), b.getWidth(), b.getHeight());
+
+		if (b.isHover() == true) {
+			g.setFill(new Color(1, 1, 1, 0.2));
+			g.fillRect(b.getX(), b.getY(), b.getWidth(), b.getHeight());
+		}
+
+		g.setTextAlign(TextAlignment.CENTER);
+		g.setTextBaseline(VPos.CENTER);
+		g.setFont(new Font("Verdana", 16));
+		g.setFill(Color.WHITE);
+		g.fillText(b.getText(), b.getX() + b.getWidth() / 2, b.getY() + b.getHeight() / 2);
 	}
 
 }

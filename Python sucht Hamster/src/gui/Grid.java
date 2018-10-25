@@ -4,16 +4,29 @@ import actions.Game;
 
 public class Grid {
 
-	private static int numberOfTiles = 10;
-	private static int x = 20; // position in window
-	private static int y = 20;
-	private static int width = 331;
-	private static int height = 331;
+	private static String size;
+	private static int x; // position in window
+	private static int y;
+	private static int width;
+	private static int height;
 
 	public Grid() {
-		Grid.numberOfTiles = Game.getGridsize();
-		width = (int) (getNumberOfTiles() * 33.1); // 33.1: width of one tile
-		height = (int) (getNumberOfTiles() * 33.1);
+		size = Game.getGridsize();
+		
+		/*
+		 * Determine grid width and height:
+		 * Take string input (e.g. "20x05"), explode into "20" and "05" and convert to int.
+		 * Then multiply with 33 (width/height of one grid tile) and set this as width/height.
+		 */
+		String strWidth = size.substring(0, 2); // part in front of the "x"
+		String strHeight = size.substring(3); // part behind the "x"
+		int intWidth = Integer.parseInt(strWidth); // convert String to int
+		int intHeight = Integer.parseInt(strHeight);
+		width = (intWidth * 33);
+		height = (intHeight * 33);
+
+		setX(Gui.getWidth() / 2 - getWidth() / 2);
+		setY(Gui.getHeight() / 2 - getHeight() / 2);
 	}
 
 	public static int getX() {
@@ -48,8 +61,8 @@ public class Grid {
 		Grid.height = height;
 	}
 
-	public static int getNumberOfTiles() {
-		return numberOfTiles;
+	public static String getSize() {
+		return size;
 	}
 
 }

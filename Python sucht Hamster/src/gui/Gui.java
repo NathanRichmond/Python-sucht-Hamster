@@ -28,14 +28,16 @@ public class Gui {
 
 	public static GraphicsContext gc_main;
 
-	private static int width = 952, height = 702; // size of the window
+	private static int width = 1536, height = 864; // size of the window
 
 	private static int nLvls = 12; // number of levels
 
 	public static Button[] pausebuttons = new Button[3];
-	public static Button[] startmenubuttons = new Button[2];
-	public static Button[] gameendbuttons = new Button[2];
+	public static Button[] startmenubuttons = new Button[3];
+	public static Button[] gameendbuttons = new Button[3];
 	public static Button[] lvlselectbuttons = new Button[getnLvls()];
+	public static Button lvlselectbutton_back;
+	public static Button ingamebutton_restart;
 
 	public void init() {
 		dm = new Draw_Main();
@@ -69,7 +71,7 @@ public class Gui {
 		stage.setTitle("Python sucht Hamster");
 		stage.setResizable(false);
 		stage.centerOnScreen();
-		stage.getIcons().add(IL.iplayerzunge0); // icon in upper left corner of the window
+		stage.getIcons().add(IL.iplayer0); // icon in upper left corner of the window
 
 		stage.setScene(scene);
 		stage.show();
@@ -92,6 +94,8 @@ public class Gui {
 		initStartMenuButtons();
 		initGameEndButtons();
 		initLvlSelectButtons();
+
+		ingamebutton_restart = new Button(50, 30, 60, 60);
 	}
 
 	private void initLvlSelectButtons() {
@@ -118,22 +122,32 @@ public class Gui {
 			lvlselectbuttons[i] = new Button(buttonX, buttonY, buttonWidth, buttonHeight);
 			lvlselectbuttons[i].setText("" + (i + 1));
 		}
+
+		lvlselectbutton_back = new Button(50, 30, 150, 35);
+		lvlselectbutton_back.setText("Back to Menu");
 	}
 
 	private void initGameEndButtons() {
-		gameendbuttons[0] = new Button(getWidth() / 2 - 150, getHeight() - 120, 300, 50);
-		gameendbuttons[0].setText("Exit to Menu");
+		gameendbuttons[0] = new Button(getWidth() / 2 - 150, getHeight() - 180, 300, 50);
+		gameendbuttons[0].setText("Replay");
+		
+		gameendbuttons[1] = new Button(getWidth() / 2 - 150, getHeight() - 120, 300, 50);
+		gameendbuttons[1].setText("Exit to Menu");
 
-		gameendbuttons[1] = new Button(getWidth() / 2 - 150, getHeight() - 60, 300, 50);
-		gameendbuttons[1].setText("Quit");
+		gameendbuttons[2] = new Button(getWidth() / 2 - 150, getHeight() - 60, 300, 50);
+		gameendbuttons[2].setText("Quit");
 	}
 
 	private void initStartMenuButtons() {
-		startmenubuttons[0] = new Button(getWidth() / 2 - 150, getHeight() - 120, 300, 50);
+		int width = 450, height = 175;
+		startmenubuttons[0] = new Button(getWidth() / 2 - width / 2, 2 * (getHeight() / 3) - height / 2, width, height);
 		startmenubuttons[0].setText("Start New Game");
 
-		startmenubuttons[1] = new Button(getWidth() / 2 - 150, getHeight() - 60, 300, 50);
-		startmenubuttons[1].setText("Quit");
+		startmenubuttons[1] = new Button(55, getHeight() - 120, 150, 35);
+		startmenubuttons[1].setText("Settings");
+		
+		startmenubuttons[2] = new Button(55, getHeight() - 70, 150, 35);
+		startmenubuttons[2].setText("Quit");
 	}
 
 	private void initPauseButtons() {

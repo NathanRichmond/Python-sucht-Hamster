@@ -1,11 +1,12 @@
 package actions;
 
+import javafx.event.EventHandler;
+import javafx.scene.input.MouseEvent;
+
 import data.Collision;
 import game.Gamestate;
 import game.Gamestate_e;
 import gui.Gui;
-import javafx.event.EventHandler;
-import javafx.scene.input.MouseEvent;
 
 public class MousePressed implements EventHandler<MouseEvent> {
 	@Override
@@ -21,6 +22,9 @@ public class MousePressed implements EventHandler<MouseEvent> {
 				Gamestate.state = Gamestate_e.lvlselect;
 			}
 			if (Collision.cButton(Gui.startmenubuttons[1], x, y)) {
+//				Gamestate.state = Gamestate_e.settings;
+			}
+			if (Collision.cButton(Gui.startmenubuttons[2], x, y)) {
 				System.exit(0);
 			}
 			break;
@@ -31,6 +35,15 @@ public class MousePressed implements EventHandler<MouseEvent> {
 					Game.setLevel(i + 1); // i+1 because i starts at 0 but levels start at 1
 					Game.startNewGame();
 				}
+			}
+			if (Collision.cButton(Gui.lvlselectbutton_back, x, y)) {
+				Gamestate.state = Gamestate_e.startmenu;
+			}
+			break;
+
+		case ingame:
+			if (Collision.cButton(Gui.ingamebutton_restart, x, y)) {
+				Game.restartLevel();
 			}
 			break;
 
@@ -48,17 +61,23 @@ public class MousePressed implements EventHandler<MouseEvent> {
 
 		case victory:
 			if (Collision.cButton(Gui.gameendbuttons[0], x, y)) {
-				Gamestate.state = Gamestate_e.startmenu;
+				Game.restartLevel();
 			}
 			if (Collision.cButton(Gui.gameendbuttons[1], x, y)) {
+				Gamestate.state = Gamestate_e.startmenu;
+			}
+			if (Collision.cButton(Gui.gameendbuttons[2], x, y)) {
 				System.exit(0);
 			}
 			break;
 		case defeat:
 			if (Collision.cButton(Gui.gameendbuttons[0], x, y)) {
-				Gamestate.state = Gamestate_e.startmenu;
+				Game.restartLevel();
 			}
 			if (Collision.cButton(Gui.gameendbuttons[1], x, y)) {
+				Gamestate.state = Gamestate_e.startmenu;
+			}
+			if (Collision.cButton(Gui.gameendbuttons[2], x, y)) {
 				System.exit(0);
 			}
 			break;

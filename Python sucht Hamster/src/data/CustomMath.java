@@ -10,10 +10,18 @@ public class CustomMath {
 	 * 2. Repeat until that int can be divided by 33 (as this is the width of one square).
 	 * 3. Add +1 to create offset (center character in square) and return.
 	 */
-	public static int genRandom() {
+	public static int genRandomX() {
 		int random;
 		do {
 			random = (int) (Math.random() * Grid.getWidth() - 3);
+		} while (random % 33 != 0);
+		return random + 1;
+	}
+
+	public static int genRandomY() {
+		int random;
+		do {
+			random = (int) (Math.random() * Grid.getHeight() - 3);
 		} while (random % 33 != 0);
 		return random + 1;
 	}

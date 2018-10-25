@@ -156,8 +156,8 @@ public class EnemyAI {
 	private boolean withinGridAfterMove() {
 		boolean flag = false;
 
-		if (e.getyAfterMove() > 0 && e.getxAfterMove() < Grid.getWidth() && e.getyAfterMove() < Grid.getHeight()
-				&& e.getxAfterMove() > 0) {
+		if (e.getyAfterMove() > Grid.getY() && e.getxAfterMove() < Grid.getX() + Grid.getWidth()
+				&& e.getyAfterMove() < Grid.getY() + Grid.getHeight() && e.getxAfterMove() > Grid.getX()) {
 			flag = true;
 		}
 

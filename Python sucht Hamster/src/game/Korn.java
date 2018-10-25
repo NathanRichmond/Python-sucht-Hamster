@@ -25,8 +25,8 @@ public class Korn {
 		 * Wall.
 		 */
 		int x, y;
-		x = CustomMath.genRandom();
-		y = CustomMath.genRandom();
+		x = CustomMath.genRandomX();
+		y = CustomMath.genRandomY();
 		if (Collision.cWall(x, y) == false && Collision.cPlayerOrEnemy(x, y) == false
 				&& Collision.cKorn(x, y) == false) {
 			this.setX(Grid.getX() + x);

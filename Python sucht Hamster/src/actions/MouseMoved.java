@@ -3,6 +3,8 @@ package actions;
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
 import data.Collision;
+import game.Gamestate;
+import game.Gamestate_e;
 import gui.Gui;
 
 public class MouseMoved implements EventHandler<MouseEvent> {
@@ -48,6 +50,23 @@ public class MouseMoved implements EventHandler<MouseEvent> {
 
 			}
 		}
+
+		if (Collision.cButton(Gui.lvlselectbutton_back, x, y)) {
+			Gui.lvlselectbutton_back.setHover(true);
+		} else {
+			Gui.lvlselectbutton_back.setHover(false);
+
+		}
+
+		if (Gamestate.state == Gamestate_e.ingame) {
+			if (Collision.cButton(Gui.ingamebutton_restart, x, y)) {
+				Gui.ingamebutton_restart.setHover(true);
+			} else {
+				Gui.ingamebutton_restart.setHover(false);
+
+			}
+		}
+
 	}
 
 }

@@ -23,7 +23,7 @@ public class Game {
 	/*
 	 * Level Properties:
 	 */
-	private static int gridsize = 10;
+	private static String gridsize = "10x10";
 	private static double gameDuration;
 	private static boolean walls;
 	private static int nWalls; // number of Walls
@@ -35,8 +35,8 @@ public class Game {
 		resetGame();
 
 		setLevelProperties();
-		new Grid();
 
+		new Grid();
 		spawn(); // Generate new chars
 
 		applyLevelPropertiesToChars();
@@ -67,6 +67,30 @@ public class Game {
 		case 4:
 			level4();
 			break;
+		case 5:
+			level5();
+			break;
+		case 6:
+			level6();
+			break;
+		case 7:
+			level7();
+			break;
+		case 8:
+			level8();
+			break;
+		case 9:
+			level9();
+			break;
+		case 10:
+			level10();
+			break;
+		case 11:
+			level11();
+			break;
+		case 12:
+			level12();
+			break;
 		default:
 			level1();
 			break;
@@ -79,6 +103,7 @@ public class Game {
 	}
 
 	public static void resetGame() {
+
 		/*
 		 * Literally kill the existing chars
 		 */
@@ -103,6 +128,11 @@ public class Game {
 		Timer_Clock.start(); // Start the Timer count down
 		setFirstKeyPressInGame(false);
 	}
+	
+	public static void restartLevel() {
+		Timer_Clock.timer.cancel();
+		startNewGame();
+	}
 
 	/*
 	 * Generate new chars
@@ -114,16 +144,16 @@ public class Game {
 
 	private static void level1() {
 		setEspeed(2.5);
-		setGridsize(10);
+		setGridsize("10x10");
 		setGameDuration(3);
 		setWalls(false);
 		setKoerner(false);
 	}
 
 	private static void level2() {
-		setEspeed(12);
-		setGridsize(10);
-		setGameDuration(6);
+		setEspeed(9.5);
+		setGridsize("10x10");
+		setGameDuration(8.5);
 		setWalls(true);
 		setnWalls(1);
 		setKoerner(false);
@@ -131,7 +161,7 @@ public class Game {
 
 	private static void level3() {
 		setEspeed(2.5);
-		setGridsize(10);
+		setGridsize("10x10");
 		setGameDuration(5);
 		setWalls(true);
 		setnWalls(5);
@@ -141,10 +171,75 @@ public class Game {
 
 	private static void level4() {
 		setEspeed(6.6);
-		setGridsize(20);
+		setGridsize("20x20");
 		setGameDuration(30);
 		setWalls(true);
-		setnWalls(330);
+		setnWalls(220);
+		setKoerner(false);
+	}
+
+	private static void level5() {
+		setEspeed(5);
+		setGridsize("05x10");
+		setGameDuration(2.4);
+		setWalls(false);
+		setKoerner(false);
+	}
+
+	private static void level6() {
+		setEspeed(5);
+		setGridsize("10x05");
+		setGameDuration(2.4);
+		setWalls(false);
+		setKoerner(false);
+	}
+
+	private static void level7() {
+		setEspeed(4);
+		setGridsize("34x20");
+		setGameDuration(20);
+		setWalls(false);
+		setKoerner(true);
+		setnKoerner(680);
+	}
+
+	private static void level8() {
+		setEspeed(2.5);
+		setGridsize("10x10");
+		setGameDuration(3);
+		setWalls(false);
+		setKoerner(false);
+	}
+
+	private static void level9() {
+		setEspeed(2.5);
+		setGridsize("10x10");
+		setGameDuration(3);
+		setWalls(false);
+		setKoerner(false);
+	}
+
+	private static void level10() {
+		setEspeed(2.5);
+		setGridsize("10x10");
+		setGameDuration(3);
+		setWalls(false);
+		setKoerner(false);
+	}
+
+	private static void level11() {
+		setEspeed(2.5);
+		setGridsize("10x10");
+		setGameDuration(3);
+		setWalls(false);
+		setKoerner(false);
+	}
+
+	private static void level12() {
+		setEspeed(2.5);
+		setGridsize("10x10");
+		setGameDuration(3);
+		setWalls(false);
 		setKoerner(false);
 	}
 
@@ -164,11 +259,11 @@ public class Game {
 		Game.firstKeyPressInGame = keyPressedFirstTime;
 	}
 
-	public static int getGridsize() {
+	public static String getGridsize() {
 		return gridsize;
 	}
 
-	public static void setGridsize(int gridsize) {
+	public static void setGridsize(String gridsize) {
 		Game.gridsize = gridsize;
 	}
 

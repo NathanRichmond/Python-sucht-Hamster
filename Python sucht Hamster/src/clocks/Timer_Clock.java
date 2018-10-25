@@ -12,7 +12,7 @@ public class Timer_Clock {
 	/*
 	 * Normal timer
 	 */
-	private static Timer timer;
+	public static Timer timer;
 	private static int delay = 0;
 	private static double period; // is set in constructor, because GameTimer.gameDuration varies
 

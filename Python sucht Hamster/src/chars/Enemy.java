@@ -31,8 +31,8 @@ public class Enemy {
 		 * Generate random spawn point. Don't spawn inside Player.
 		 */
 		int x, y;
-		x = CustomMath.genRandom();
-		y = CustomMath.genRandom();
+		x = CustomMath.genRandomX();
+		y = CustomMath.genRandomY();
 		if (Collision.cPlayer(x, y) == false) {
 			this.setX(Grid.getX() + x);
 			this.setY(Grid.getY() + y);
