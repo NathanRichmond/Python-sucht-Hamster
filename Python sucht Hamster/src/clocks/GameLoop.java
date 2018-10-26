@@ -6,8 +6,7 @@ import chars.Player;
 import data.Collision;
 import game.Gamestate;
 import game.Gamestate_e;
-import game.Korn;
-import game.Upgrade;
+import game.SpecialTile;
 import gui.Gui;
 
 public class GameLoop implements Runnable {
@@ -57,14 +56,29 @@ public class GameLoop implements Runnable {
 		if (Gamestate.state == Gamestate_e.ingame) {
 
 			/*
-			 * Consume Korn when colliding with Player
+			 * Execute Special Tile Function when colliding with Enemy/Player
 			 */
 			if (Game.isFirstKeyPressInGame() == false) { // only when clocks are running
-				if (Collision.cKorn(p.getX(), p.getY()) == true) {
-					for (Korn k : Korn_Creation.koerner) { // detect the specific Korn that was collided with
-						if (p.getX() == k.getX() && p.getY() == k.getY()) {
-							k.consume();
-							new Upgrade("Korn");
+
+				/*
+				 * Collision with Player
+				 */
+				if (Collision.cSpecialTile(p.getX(), p.getY()) == true) {
+					for (SpecialTile st : SpecialTile_Creation.specialtiles) { // detect the specific Special Tile that
+																				// was collided with
+						if (p.getX() == st.getX() && p.getY() == st.getY()) {
+							st.activate("player");
+							break;
+						}
+					}
+				}
+				/*
+				 * Collision with Enemy
+				 */
+				if (Collision.cSpecialTile(e.getX(), e.getY()) == true) {
+					for (SpecialTile st : SpecialTile_Creation.specialtiles) { // see above
+						if (e.getX() == st.getX() && e.getY() == st.getY()) {
+							st.activate("enemy");
 							break;
 						}
 					}
@@ -79,11 +93,11 @@ public class GameLoop implements Runnable {
 			}
 
 			/*
-			 * Remove all consumed Koerner
+			 * Remove all activated (thus "dead" -- isAlive = false) Special Tiles
 			 */
-			for (int i = 0; i < Korn_Creation.koerner.size(); i++) {
-				if ((Korn_Creation.koerner.get(i)).isConsumed() == true) {
-					Korn_Creation.remove(i);
+			for (int i = 0; i < SpecialTile_Creation.specialtiles.size(); i++) {
+				if ((SpecialTile_Creation.specialtiles.get(i)).isAlive() == false) {
+					SpecialTile_Creation.remove(i);
 				}
 			}
 		}

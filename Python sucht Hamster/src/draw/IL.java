@@ -33,27 +33,29 @@ public class IL {
 	public static Image iplayer2 = new Image("file:rsc/chars/python_2.png");
 	public static Image iplayer3 = new Image("file:rsc/chars/python_3.png");
 
-	public static Image iplayerupgraded0 = new Image("file:rsc/chars/python-upgraded_0.png");
-	public static Image iplayerupgraded1 = new Image("file:rsc/chars/python-upgraded_1.png");
-	public static Image iplayerupgraded2 = new Image("file:rsc/chars/python-upgraded_2.png");
-	public static Image iplayerupgraded3 = new Image("file:rsc/chars/python-upgraded_3.png");
+	/*
+	 * (currently unused)
+	 */
+	public static Image iplayerred0 = new Image("file:rsc/chars/python-red_0.png");
+	public static Image iplayerred1 = new Image("file:rsc/chars/python-red_1.png");
+	public static Image iplayerred2 = new Image("file:rsc/chars/python-red_2.png");
+	public static Image iplayerred3 = new Image("file:rsc/chars/python-red_3.png");
 
 	/*
 	 * Start Menu Screen
 	 */
-	public static Image istartmenu = new Image("file:rsc/game/startmenu.png");
+	public static Image istartmenu = new Image("file:rsc/game/ui/startmenu.png");
 
 	/*
 	 * Level Selection Screen
 	 */
-	public static Image ilvlselect = new Image("file:rsc/game/lvlselect.png");
-	public static Image tlvldesc = new Image("file:rsc/game/lvldescription_template.png");
+	public static Image ilvlselect = new Image("file:rsc/game/ui/lvlselect.png");
 
 	/*
 	 * Victory and Defeat Screens
 	 */
-	public static Image tvictory = new Image("file:rsc/game/victoryscreen.png");
-	public static Image tdefeat = new Image("file:rsc/game/defeatscreen.png");
+	public static Image tvictory = new Image("file:rsc/game/ui/victoryscreen.png");
+	public static Image tdefeat = new Image("file:rsc/game/ui/defeatscreen.png");
 
 	/*
 	 * Wall
@@ -61,14 +63,16 @@ public class IL {
 	public static Image iwall = new Image("file:rsc/game/wall.png");
 
 	/*
-	 * Korn
+	 * Special Tiles
 	 */
-	public static Image ikorn = new Image("file:rsc/game/korn.png");
+	public static Image ispecialtile_korn = new Image("file:rsc/game/specialtiles/korn.png");
+	public static Image ispecialtile_hourglass = new Image("file:rsc/game/specialtiles/hourglass.png");
+	public static Image ispecialtile_hammer = new Image("file:rsc/game/specialtiles/hammer.png");
 	
 	/*
 	 * Ingame Button: Restart
 	 */
-	public static Image ibrestart = new Image("file:rsc/game/ingamebutton_restart.png");
+	public static Image ibrestart = new Image("file:rsc/game/ui/ingamebutton_restart.png");
 
 	/*
 	 * GameTimer

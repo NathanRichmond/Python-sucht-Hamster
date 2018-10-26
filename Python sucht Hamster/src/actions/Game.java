@@ -3,7 +3,7 @@ package actions;
 import chars.Enemy;
 import chars.Player;
 import clocks.Enemy_Movement;
-import clocks.Korn_Creation;
+import clocks.SpecialTile_Creation;
 import clocks.Timer_Clock;
 import clocks.Wall_Creation;
 import game.GameTimer;
@@ -25,10 +25,12 @@ public class Game {
 	 */
 	private static String gridsize = "10x10";
 	private static double gameDuration;
-	private static boolean walls;
+	private static boolean walls; // any Walls?
 	private static int nWalls; // number of Walls
-	private static boolean koerner;
-	private static int nKoerner; // number of Koerner
+	private static boolean specialTiles; // any Special Tiles?
+	private static int nKorn; // number of Korn Tiles
+	private static int nHourglass; // number of Hourglass Tiles
+	private static int nHammer; // number of Hammer Tiles. Use sparingly, as they can cause the Hamster to trap itself!
 	private static double espeed;
 
 	public static void startNewGame() {
@@ -44,8 +46,8 @@ public class Game {
 		if (isWalls() == true) {
 			new Wall_Creation();
 		}
-		if (isKoerner() == true) {
-			new Korn_Creation();
+		if (isSpecialTiles() == true) {
+			new SpecialTile_Creation();
 		}
 
 		new GameTimer();
@@ -114,7 +116,7 @@ public class Game {
 		 * Empty arrays of grid elements
 		 */
 		Wall_Creation.walls.clear();
-		Korn_Creation.koerner.clear();
+		SpecialTile_Creation.specialtiles.clear();
 
 		setFirstKeyPressInGame(true);
 	}
@@ -128,7 +130,7 @@ public class Game {
 		Timer_Clock.start(); // Start the Timer count down
 		setFirstKeyPressInGame(false);
 	}
-	
+
 	public static void restartLevel() {
 		Timer_Clock.timer.cancel();
 		startNewGame();
@@ -147,7 +149,7 @@ public class Game {
 		setGridsize("10x10");
 		setGameDuration(3);
 		setWalls(false);
-		setKoerner(false);
+		setSpecialTiles(false);
 	}
 
 	private static void level2() {
@@ -156,7 +158,7 @@ public class Game {
 		setGameDuration(8.5);
 		setWalls(true);
 		setnWalls(1);
-		setKoerner(false);
+		setSpecialTiles(false);
 	}
 
 	private static void level3() {
@@ -165,8 +167,8 @@ public class Game {
 		setGameDuration(5);
 		setWalls(true);
 		setnWalls(5);
-		setKoerner(true);
-		setnKoerner(5);
+		setSpecialTiles(true);
+		setnKorn(5);
 	}
 
 	private static void level4() {
@@ -175,7 +177,7 @@ public class Game {
 		setGameDuration(30);
 		setWalls(true);
 		setnWalls(220);
-		setKoerner(false);
+		setSpecialTiles(false);
 	}
 
 	private static void level5() {
@@ -183,7 +185,7 @@ public class Game {
 		setGridsize("05x10");
 		setGameDuration(2.4);
 		setWalls(false);
-		setKoerner(false);
+		setSpecialTiles(false);
 	}
 
 	private static void level6() {
@@ -191,7 +193,7 @@ public class Game {
 		setGridsize("10x05");
 		setGameDuration(2.4);
 		setWalls(false);
-		setKoerner(false);
+		setSpecialTiles(false);
 	}
 
 	private static void level7() {
@@ -199,32 +201,40 @@ public class Game {
 		setGridsize("34x20");
 		setGameDuration(20);
 		setWalls(false);
-		setKoerner(true);
-		setnKoerner(680);
+		setSpecialTiles(true);
+		setnKorn(680);
 	}
 
 	private static void level8() {
-		setEspeed(2.5);
-		setGridsize("10x10");
-		setGameDuration(3);
-		setWalls(false);
-		setKoerner(false);
+		setEspeed(4);
+		setGridsize("34x20");
+		setGameDuration(20);
+		setWalls(true);
+		setnWalls(200);
+		setSpecialTiles(true);
+		setnKorn(125);
 	}
 
 	private static void level9() {
-		setEspeed(2.5);
-		setGridsize("10x10");
-		setGameDuration(3);
-		setWalls(false);
-		setKoerner(false);
+		setEspeed(4);
+		setGridsize("34x20");
+		setGameDuration(20);
+		setWalls(true);
+		setnWalls(125);
+		setSpecialTiles(true);
+		setnKorn(50);
+		setnHourglass(50);
+		setnHammer(50);
 	}
 
 	private static void level10() {
 		setEspeed(2.5);
-		setGridsize("10x10");
-		setGameDuration(3);
-		setWalls(false);
-		setKoerner(false);
+		setGridsize("20x20");
+		setGameDuration(99);
+		setWalls(true);
+		setnWalls(10);
+		setSpecialTiles(true);
+		setnHammer(200);
 	}
 
 	private static void level11() {
@@ -232,7 +242,7 @@ public class Game {
 		setGridsize("10x10");
 		setGameDuration(3);
 		setWalls(false);
-		setKoerner(false);
+		setSpecialTiles(false);
 	}
 
 	private static void level12() {
@@ -240,7 +250,7 @@ public class Game {
 		setGridsize("10x10");
 		setGameDuration(3);
 		setWalls(false);
-		setKoerner(false);
+		setSpecialTiles(false);
 	}
 
 	public static int getLevel() {
@@ -291,20 +301,36 @@ public class Game {
 		Game.nWalls = nWalls;
 	}
 
-	public static boolean isKoerner() {
-		return koerner;
+	public static boolean isSpecialTiles() {
+		return specialTiles;
 	}
 
-	public static void setKoerner(boolean koerner) {
-		Game.koerner = koerner;
+	public static void setSpecialTiles(boolean specialTiles) {
+		Game.specialTiles = specialTiles;
 	}
 
-	public static int getnKoerner() {
-		return nKoerner;
+	public static int getnKorn() {
+		return nKorn;
 	}
 
-	public static void setnKoerner(int nKoerner) {
-		Game.nKoerner = nKoerner;
+	public static void setnKorn(int nKorn) {
+		Game.nKorn = nKorn;
+	}
+
+	public static int getnHourglass() {
+		return nHourglass;
+	}
+
+	public static void setnHourglass(int nHourglass) {
+		Game.nHourglass = nHourglass;
+	}
+
+	public static int getnHammer() {
+		return nHammer;
+	}
+
+	public static void setnHammer(int nHammer) {
+		Game.nHammer = nHammer;
 	}
 
 	private static double getEspeed() {

@@ -12,14 +12,12 @@ public class Player {
 	private int xAfterMove, yAfterMove;
 	private int width, height;
 	private int faceDirection;
-	private boolean isUpgraded;
 
 	public Player() {
 		this.setValidSpawn(); // spawns at random position
 		this.width = 32;
 		this.height = 32;
 		this.faceDirection = 0;
-		this.isUpgraded = false;
 	}
 
 	public void move(int direction) {
@@ -164,14 +162,6 @@ public class Player {
 
 	public void setFaceDirection(int faceDirection) {
 		this.faceDirection = faceDirection;
-	}
-
-	public boolean isUpgraded() {
-		return isUpgraded;
-	}
-
-	public void setUpgraded(boolean isUpgraded) {
-		this.isUpgraded = isUpgraded;
 	}
 
 }

@@ -3,11 +3,11 @@ package data;
 import actions.Game;
 import chars.Enemy;
 import chars.Player;
-import clocks.Korn_Creation;
+import clocks.SpecialTile_Creation;
 import clocks.Wall_Creation;
 import game.Gamestate;
 import game.Gamestate_e;
-import game.Korn;
+import game.SpecialTile;
 import game.Wall;
 import gui.Button;
 
@@ -63,12 +63,12 @@ public class Collision {
 	}
 
 	/*
-	 * Check collision with any Korn
+	 * Check collision with any Special Tile
 	 */
-	public static boolean cKorn(int x, int y) {
+	public static boolean cSpecialTile(int x, int y) {
 		boolean flag = false;
-		for (Korn k : Korn_Creation.koerner) {
-			if (x == k.getX() && y == k.getY()) {
+		for (SpecialTile st : SpecialTile_Creation.specialtiles) {
+			if (x == st.getX() && y == st.getY()) {
 				flag = true;
 				break;
 			} else {
@@ -80,7 +80,7 @@ public class Collision {
 
 	/*
 	 * Check collision with Player or Enemy. Used for determining valid spawns of
-	 * Wall and Korn
+	 * Wall and Special Tile
 	 */
 	public static boolean cPlayerOrEnemy(int x, int y) {
 		p = Game.p;

@@ -9,13 +9,12 @@ import javafx.scene.text.TextAlignment;
 import actions.Game;
 import chars.Enemy;
 import chars.Player;
-import clocks.Korn_Creation;
+import clocks.SpecialTile_Creation;
 import clocks.Wall_Creation;
 import game.GameTimer;
 import game.Gamestate;
 import game.Gamestate_e;
-import game.Korn;
-import game.Upgrade;
+import game.SpecialTile;
 import game.Wall;
 import gui.Button;
 import gui.Grid;
@@ -51,8 +50,8 @@ public class Draw_Main {
 		if (Gamestate.state == Gamestate_e.ingame || Gamestate.state == Gamestate_e.pause
 				|| Gamestate.state == Gamestate_e.victory || Gamestate.state == Gamestate_e.defeat) {
 			/*
-			 * Note: Draw order is important! Example: Koerner are drawn before Characters
-			 * because Characters should be in front of Koerner.
+			 * Note: Draw order is important! Example: Special Tiles are drawn before
+			 * Characters because Characters should be in front of Special Tiles.
 			 */
 
 			/*
@@ -66,9 +65,9 @@ public class Draw_Main {
 			drawGrid(g);
 
 			/*
-			 * GRID CONTENTS: Korn
+			 * GRID CONTENTS: Special Tiles
 			 */
-			drawKorn(g);
+			drawSpecialTile(g);
 
 			/*
 			 * GRID CONTENTS: Wall
@@ -111,35 +110,16 @@ public class Draw_Main {
 
 			g.drawImage(IL.ibrestart, b.getX(), b.getY(), b.getWidth(), b.getHeight());
 
-			/*
-			 * GAME ELEMENTS: Player Upgraded Info Box
-			 */
-			if (p.isUpgraded() == true) {
-				g.setFill(new Color(0, 0, 0, 0.6));
-				g.fillRect(Grid.getX() - 150, Grid.getY(), 135, 40);
-
-				g.setTextAlign(TextAlignment.LEFT);
-				g.setTextBaseline(VPos.TOP);
-				g.setFont(new Font("Verdana", 15));
-				g.setFill(Color.WHITE);
-				g.fillText("Player Upgraded", Grid.getX() - 145, Grid.getY());
-				if (Upgrade.getDuration() + 1 > 1) {
-					g.fillText(Upgrade.getDuration() + 1 + " Sekunden", Grid.getX() - 145, Grid.getY() + 20); // duration
-				} else {
-					if (Upgrade.getDuration() + 1 == 1) {
-						g.fillText(Upgrade.getDuration() + 1 + " Sekunde", Grid.getX() - 145, Grid.getY() + 20); // duration
-					}
-				}
-
-				g.setStroke(Color.WHITE); // border
-				g.strokeRect(Grid.getX() - 150, Grid.getY(), 135, 40);
-			}
+			g.setStroke(Color.WHITE); // border
+			g.strokeRect(Grid.getX() - 150, Grid.getY(), 135, 40);
 		}
 
 		/*
 		 * VICTORY SCREEN
 		 */
-		if (Gamestate.state == Gamestate_e.victory) {
+		if (Gamestate.state == Gamestate_e.victory)
+
+		{
 			drawVictoryScreen(g);
 		}
 
@@ -653,39 +633,19 @@ public class Draw_Main {
 	private void drawPlayer(GraphicsContext g) {
 		switch (p.getFaceDirection()) {
 		case 0:
-			if (p.isUpgraded() == false) {
-				g.drawImage(IL.iplayer0, p.getX(), p.getY(), p.getWidth(), p.getHeight());
-			} else {
-				g.drawImage(IL.iplayerupgraded0, p.getX(), p.getY(), p.getWidth(), p.getHeight());
-			}
+			g.drawImage(IL.iplayer0, p.getX(), p.getY(), p.getWidth(), p.getHeight());
 			break;
 		case 1:
-			if (p.isUpgraded() == false) {
-				g.drawImage(IL.iplayer1, p.getX(), p.getY(), p.getWidth(), p.getHeight());
-			} else {
-				g.drawImage(IL.iplayerupgraded1, p.getX(), p.getY(), p.getWidth(), p.getHeight());
-			}
+			g.drawImage(IL.iplayer1, p.getX(), p.getY(), p.getWidth(), p.getHeight());
 			break;
 		case 2:
-			if (p.isUpgraded() == false) {
-				g.drawImage(IL.iplayer2, p.getX(), p.getY(), p.getWidth(), p.getHeight());
-			} else {
-				g.drawImage(IL.iplayerupgraded2, p.getX(), p.getY(), p.getWidth(), p.getHeight());
-			}
+			g.drawImage(IL.iplayer2, p.getX(), p.getY(), p.getWidth(), p.getHeight());
 			break;
 		case 3:
-			if (p.isUpgraded() == false) {
-				g.drawImage(IL.iplayer3, p.getX(), p.getY(), p.getWidth(), p.getHeight());
-			} else {
-				g.drawImage(IL.iplayerupgraded3, p.getX(), p.getY(), p.getWidth(), p.getHeight());
-			}
+			g.drawImage(IL.iplayer3, p.getX(), p.getY(), p.getWidth(), p.getHeight());
 			break;
 		default:
-			if (p.isUpgraded() == false) {
-				g.drawImage(IL.iplayer0, p.getX(), p.getY(), p.getWidth(), p.getHeight());
-			} else {
-				g.drawImage(IL.iplayerupgraded0, p.getX(), p.getY(), p.getWidth(), p.getHeight());
-			}
+			g.drawImage(IL.iplayerred0, p.getX(), p.getY(), p.getWidth(), p.getHeight());
 			break;
 		}
 
@@ -697,10 +657,20 @@ public class Draw_Main {
 		}
 	}
 
-	private void drawKorn(GraphicsContext g) {
-		for (Korn k : Korn_Creation.koerner) {
-			if (k.isConsumed == false) {
-				g.drawImage(IL.ikorn, k.getX(), k.getY(), k.getWidth(), k.getHeight());
+	private void drawSpecialTile(GraphicsContext g) {
+		for (SpecialTile st : SpecialTile_Creation.specialtiles) {
+			if (st.isAlive() == true) {
+				switch (st.getType()) {
+				case "korn":
+					g.drawImage(IL.ispecialtile_korn, st.getX(), st.getY(), st.getWidth(), st.getHeight());
+					break;
+				case "hourglass":
+					g.drawImage(IL.ispecialtile_hourglass, st.getX(), st.getY(), st.getWidth(), st.getHeight());
+					break;
+				case "hammer":
+					g.drawImage(IL.ispecialtile_hammer, st.getX(), st.getY(), st.getWidth(), st.getHeight());
+					break;
+				}
 			}
 		}
 	}
@@ -774,7 +744,7 @@ public class Draw_Main {
 		g.setFont(new Font("Verdana", 16));
 		g.setFill(Color.WHITE);
 		g.fillText(b.getText(), b.getX() + b.getWidth() / 2, b.getY() + b.getHeight() / 2);
-		
+
 		/*
 		 * Button "Quit"
 		 */
