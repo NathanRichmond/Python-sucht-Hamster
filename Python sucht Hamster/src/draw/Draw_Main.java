@@ -109,9 +109,6 @@ public class Draw_Main {
 			}
 
 			g.drawImage(IL.ibrestart, b.getX(), b.getY(), b.getWidth(), b.getHeight());
-
-			g.setStroke(Color.WHITE); // border
-			g.strokeRect(Grid.getX() - 150, Grid.getY(), 135, 40);
 		}
 
 		/*
