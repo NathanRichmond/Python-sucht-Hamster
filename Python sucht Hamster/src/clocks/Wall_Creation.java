@@ -10,7 +10,7 @@ import game.Wall;
 
 public class Wall_Creation {
 
-	public static ArrayList<Wall> walls = new ArrayList<>();
+	public static ArrayList<Wall> walls = new ArrayList<>(); // global array list with all Walls
 
 	public Wall_Creation() {
 		/*
