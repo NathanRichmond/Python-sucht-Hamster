@@ -1,8 +1,11 @@
 package actions;
 
+import java.util.ArrayList;
+
 import chars.Enemy;
 import chars.Player;
 import clocks.Enemy_Movement;
+import clocks.ST_ModifyTime;
 import clocks.SpecialTile_Creation;
 import clocks.Timer_Clock;
 import clocks.Wall_Creation;
@@ -14,27 +17,36 @@ import gui.Grid;
 public class Game {
 
 	public static Player p;
-	public static Enemy e;
+	public static ArrayList<Enemy> enemies = new ArrayList<>();
 
 	private static int level;
 
 	private static boolean firstKeyPressInGame = true;
 
+//	public static int hamstercount;
+	private static int hamsterinflationCounter = 0;
+
 	/*
 	 * Level Properties:
 	 */
 	private static String gridsize = "10x10";
+	public static int nEnemy; // number of Enemies
+	private static double espeed; // speed of Enemies
 	private static double gameDuration;
+	private static double playerMargin; // see EnemyAI. Default: 4
 	private static boolean walls; // any Walls?
 	private static int nWalls; // number of Walls
 	private static boolean specialTiles; // any Special Tiles?
 	private static int nKorn; // number of Korn Tiles
+	private static int nBabyhamster; // number of Babyhamster Tiles
 	private static int nHourglass; // number of Hourglass Tiles
-	private static int nHammer; // number of Hammer Tiles. Use sparingly, as they can cause the Hamster to trap itself!
-	private static double espeed;
+	private static int nHammer; // number of Hammer Tiles.
 
 	public static void startNewGame() {
-		resetGame();
+
+//		hamstercount = 0;
+		hamsterinflationCounter = 0;
+		resetGame(); // Empty the grid
 
 		setLevelProperties();
 
@@ -53,6 +65,22 @@ public class Game {
 		new GameTimer();
 
 		Gamestate.state = Gamestate_e.ingame; // actually start the game (draw ingame elements)
+	}
+
+	public static void resetGame() {
+		/*
+		 * Literally kill the existing chars
+		 */
+		p = null;
+		enemies.clear(); // Empty array of Enemies
+
+		/*
+		 * Empty arrays of grid elements
+		 */
+		Wall_Creation.walls.clear();
+		SpecialTile_Creation.specialtiles.clear();
+
+		setFirstKeyPressInGame(true);
 	}
 
 	private static void setLevelProperties() {
@@ -100,71 +128,100 @@ public class Game {
 
 	}
 
-	private static void applyLevelPropertiesToChars() {
-		e.setSpeed(getEspeed());
+	public static void spawn() {
+		/*
+		 * Generate new chars
+		 */
+		p = new Player();
+		for (int i = 0; i < getnEnemy(); i++) {
+			enemies.add(new Enemy());
+		}
 	}
 
-	public static void resetGame() {
+	private static void applyLevelPropertiesToChars() {
+		for (Enemy e : enemies) {
+			e.setSpeed(getEspeed());
+		}
+	}
 
-		/*
-		 * Literally kill the existing chars
-		 */
-		e = null;
-		p = null;
-
-		/*
-		 * Empty arrays of grid elements
-		 */
-		Wall_Creation.walls.clear();
-		SpecialTile_Creation.specialtiles.clear();
-
-		setFirstKeyPressInGame(true);
+	public static void restartLevel() {
+		if (isFirstKeyPressInGame() == false) {
+			/*
+			 * Cancel all clocks, in case they have already begun running
+			 */
+			if (GameTimer.isModified() == true) {
+				ST_ModifyTime.timer.cancel();
+			}
+			Timer_Clock.timer.cancel();
+			for (Enemy e : enemies) {
+				if (e.isSpeedBoosted() == false) {
+					e.em.timer.cancel();
+				}
+				if (e.isSpeedBoosted() == true) {
+					e.sb.timer.cancel();
+				}
+			}
+		}
+		startNewGame();
 	}
 
 	public static void startClocks() {
-		e.em = new Enemy_Movement();
-		e.em.start(); // Start Movement of Enemy
+		for (Enemy e : enemies) {
+			e.em = new Enemy_Movement(e);
+			e.em.start(); // Start Movement of Enemy
+		}
 
 		GameTimer.setGameDuration(getGameDuration());
 		new Timer_Clock();
 		Timer_Clock.start(); // Start the Timer count down
+
 		setFirstKeyPressInGame(false);
 	}
 
-	public static void restartLevel() {
-		Timer_Clock.timer.cancel();
-		startNewGame();
+	public static void hamsterinflation() {
+		if (hamsterinflationCounter > 3 * (enemies.size() / 4)) {
+			if (enemies.size() <= 128) {
+				Enemy enemy = new Enemy();
+				enemy.setSpeed(10);
+				enemies.add(enemy);
+				enemy.em = new Enemy_Movement(enemy);
+				enemy.em.start();
+			}
+
+		}
+		hamsterinflationCounter++;
 	}
 
 	/*
-	 * Generate new chars
+	 * Properties for the individual levels:
 	 */
-	public static void spawn() {
-		p = new Player();
-		e = new Enemy();
-	}
-
 	private static void level1() {
-		setEspeed(2.5);
 		setGridsize("10x10");
+		setnEnemy(1);
+		setEspeed(2.5);
 		setGameDuration(3);
+		setPlayerMargin(4);
 		setWalls(false);
 		setSpecialTiles(false);
 	}
 
 	private static void level2() {
-		setEspeed(9.5);
 		setGridsize("10x10");
+		setnEnemy(1);
+		setEspeed(9.5);
 		setGameDuration(8.5);
+		setPlayerMargin(4);
 		setWalls(true);
 		setnWalls(1);
 		setSpecialTiles(false);
 	}
 
 	private static void level3() {
-		setEspeed(2.5);
 		setGridsize("10x10");
+		setnEnemy(1);
+		setEspeed(2.5);
 		setGameDuration(5);
+		setPlayerMargin(4);
 		setWalls(true);
 		setnWalls(5);
 		setSpecialTiles(true);
@@ -172,43 +229,55 @@ public class Game {
 	}
 
 	private static void level4() {
-		setEspeed(6.6);
 		setGridsize("20x20");
+		setnEnemy(1);
+		setEspeed(6.6);
 		setGameDuration(30);
+		setPlayerMargin(4);
 		setWalls(true);
 		setnWalls(220);
 		setSpecialTiles(false);
 	}
 
 	private static void level5() {
-		setEspeed(5);
 		setGridsize("05x10");
+		setnEnemy(1);
+		setEspeed(5);
 		setGameDuration(2.4);
+		setPlayerMargin(4);
 		setWalls(false);
 		setSpecialTiles(false);
 	}
 
 	private static void level6() {
-		setEspeed(5);
 		setGridsize("10x05");
-		setGameDuration(2.4);
+		setnEnemy(1);
+		setEspeed(3);
+		setGameDuration(10);
+		setPlayerMargin(4);
 		setWalls(false);
-		setSpecialTiles(false);
+		setSpecialTiles(true);
+		setnKorn(1);
+		setnHourglass(3);
 	}
 
 	private static void level7() {
-		setEspeed(4);
 		setGridsize("34x20");
-		setGameDuration(20);
+		setnEnemy(3);
+		setEspeed(2);
+		setGameDuration(180);
+		setPlayerMargin(6.5); // at Gridsize 34x20 that's about 4 tiles
 		setWalls(false);
 		setSpecialTiles(true);
 		setnKorn(680);
 	}
 
 	private static void level8() {
-		setEspeed(4);
 		setGridsize("34x20");
-		setGameDuration(20);
+		setnEnemy(1);
+		setEspeed(1);
+		setGameDuration(2000);
+		setPlayerMargin(4);
 		setWalls(true);
 		setnWalls(200);
 		setSpecialTiles(true);
@@ -216,9 +285,11 @@ public class Game {
 	}
 
 	private static void level9() {
-		setEspeed(4);
 		setGridsize("34x20");
+		setnEnemy(1);
+		setEspeed(4);
 		setGameDuration(20);
+		setPlayerMargin(4);
 		setWalls(true);
 		setnWalls(125);
 		setSpecialTiles(true);
@@ -228,9 +299,11 @@ public class Game {
 	}
 
 	private static void level10() {
-		setEspeed(2.5);
 		setGridsize("20x20");
+		setnEnemy(1);
+		setEspeed(2.5);
 		setGameDuration(99);
+		setPlayerMargin(4);
 		setWalls(true);
 		setnWalls(10);
 		setSpecialTiles(true);
@@ -238,19 +311,25 @@ public class Game {
 	}
 
 	private static void level11() {
-		setEspeed(2.5);
-		setGridsize("10x10");
-		setGameDuration(3);
+		setGridsize("20x20");
+		setnEnemy(1);
+		setEspeed(10);
+		setGameDuration(10);
+		setPlayerMargin(4);
 		setWalls(false);
 		setSpecialTiles(false);
 	}
 
 	private static void level12() {
+		setGridsize("20x20");
+		setnEnemy(3);
 		setEspeed(2.5);
-		setGridsize("10x10");
-		setGameDuration(3);
-		setWalls(false);
-		setSpecialTiles(false);
+		setGameDuration(120);
+		setPlayerMargin(4);
+		setWalls(true);
+		setnWalls(10);
+		setSpecialTiles(true);
+		setnBabyhamster(50);
 	}
 
 	public static int getLevel() {
@@ -277,12 +356,36 @@ public class Game {
 		Game.gridsize = gridsize;
 	}
 
+	public static int getnEnemy() {
+		return nEnemy;
+	}
+
+	public static void setnEnemy(int nEnemy) {
+		Game.nEnemy = nEnemy;
+	}
+
+	public static double getEspeed() {
+		return espeed;
+	}
+
+	public static void setEspeed(double espeed) {
+		Game.espeed = espeed;
+	}
+
 	public static double getGameDuration() {
 		return gameDuration;
 	}
 
 	public static void setGameDuration(double gameDuration) {
 		Game.gameDuration = gameDuration;
+	}
+
+	public static double getPlayerMargin() {
+		return playerMargin;
+	}
+
+	public static void setPlayerMargin(double playerMargin) {
+		Game.playerMargin = playerMargin;
 	}
 
 	public static boolean isWalls() {
@@ -317,6 +420,14 @@ public class Game {
 		Game.nKorn = nKorn;
 	}
 
+	public static int getnBabyhamster() {
+		return nBabyhamster;
+	}
+
+	public static void setnBabyhamster(int nBabyhamster) {
+		Game.nBabyhamster = nBabyhamster;
+	}
+
 	public static int getnHourglass() {
 		return nHourglass;
 	}
@@ -331,14 +442,6 @@ public class Game {
 
 	public static void setnHammer(int nHammer) {
 		Game.nHammer = nHammer;
-	}
-
-	private static double getEspeed() {
-		return espeed;
-	}
-
-	private static void setEspeed(double espeed) {
-		Game.espeed = espeed;
 	}
 
 }
