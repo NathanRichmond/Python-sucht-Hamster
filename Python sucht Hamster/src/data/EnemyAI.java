@@ -7,17 +7,21 @@ import gui.Grid;
 
 public class EnemyAI {
 
-	private Enemy e = Game.e;
 	private Player p = Game.p;
+	private Enemy e;
 
 	/*
 	 * Area around the player that is blocked for enemy.
 	 * Input: 1 = whole grid; 100 = 1 tile (exponential)
 	 */
-	public int playerMargin = CustomMath.calcPlayerMargin(4);
+	private int playerMargin = CustomMath.calcPlayerMargin(Game.getPlayerMargin());
 
-	public int moveRand;
+	private int moveRand;
 	private boolean overwriteDirections = false;
+
+	public EnemyAI(Enemy enemy) {
+		e = enemy;
+	}
 
 	public int moveDirection() {
 		do {

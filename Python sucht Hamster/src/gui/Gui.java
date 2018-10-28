@@ -9,20 +9,14 @@ import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
-import actions.Game;
 import actions.KeyPressed;
 import actions.KeyReleased;
 import actions.MouseMoved;
 import actions.MousePressed;
-import chars.Enemy;
-import chars.Player;
 import draw.Draw_Main;
 import draw.IL;
 
 public class Gui {
-
-	public static Player p = Game.p;
-	public static Enemy e = Game.e;
 
 	public static Draw_Main dm;
 
@@ -130,7 +124,7 @@ public class Gui {
 	private void initGameEndButtons() {
 		gameendbuttons[0] = new Button(getWidth() / 2 - 150, getHeight() - 180, 300, 50);
 		gameendbuttons[0].setText("Replay");
-		
+
 		gameendbuttons[1] = new Button(getWidth() / 2 - 150, getHeight() - 120, 300, 50);
 		gameendbuttons[1].setText("Exit to Menu");
 
@@ -145,7 +139,7 @@ public class Gui {
 
 		startmenubuttons[1] = new Button(55, getHeight() - 120, 150, 35);
 		startmenubuttons[1].setText("Settings");
-		
+
 		startmenubuttons[2] = new Button(55, getHeight() - 70, 150, 35);
 		startmenubuttons[2].setText("Quit");
 	}

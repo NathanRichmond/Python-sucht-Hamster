@@ -14,11 +14,9 @@ import gui.Button;
 public class Collision {
 
 	private static Player p;
-	private static Enemy e;
 
 	public Collision() {
 		p = Game.p;
-		e = Game.e;
 	}
 
 	/*
@@ -30,17 +28,20 @@ public class Collision {
 	}
 
 	/*
-	 * Check collision of Enemy and Player
+	 * Check collision of Enemy and Player. Caution: Although this method is a
+	 * boolean method, it kills the Enemy that was collided with in the process.
 	 */
 	public static boolean cEnemyPlayer() {
 		p = Game.p;
-		e = Game.e;
 		boolean flag = false;
 		if (Gamestate.state == Gamestate_e.ingame) {
-			if (p.getX() == e.getX() && p.getY() == e.getY()) {
-				flag = true;
-			} else {
-				flag = false;
+			for (Enemy e : Game.enemies) {
+				if (p.getX() == e.getX() && p.getY() == e.getY()) {
+					e.killEnemy(); // Kill Enemy that Player collided with
+					flag = true;
+				} else {
+					flag = false;
+				}
 			}
 		}
 		return flag;
@@ -84,12 +85,14 @@ public class Collision {
 	 */
 	public static boolean cPlayerOrEnemy(int x, int y) {
 		p = Game.p;
-		e = Game.e;
 		boolean flag = false;
-		if ((x == p.getX() && y == p.getY()) || (x == e.getX() && y == e.getY())) {
+		if (x == p.getX() && y == p.getY()) {
 			flag = true;
-		} else {
-			flag = false;
+		}
+		for (Enemy e : Game.enemies) {
+			if (x == e.getX() && y == e.getY()) {
+				flag = true;
+			}
 		}
 		return flag;
 	}

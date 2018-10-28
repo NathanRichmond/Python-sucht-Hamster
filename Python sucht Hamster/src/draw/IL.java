@@ -27,6 +27,11 @@ public class IL {
 	public static Image ienemy1 = new Image("file:rsc/chars/hamster_1.png");
 	public static Image ienemy2 = new Image("file:rsc/chars/hamster_2.png");
 	public static Image ienemy3 = new Image("file:rsc/chars/hamster_3.png");
+	
+	public static Image ienemyred0 = new Image("file:rsc/chars/hamster-red_0.png");
+	public static Image ienemyred1 = new Image("file:rsc/chars/hamster-red_1.png");
+	public static Image ienemyred2 = new Image("file:rsc/chars/hamster-red_2.png");
+	public static Image ienemyred3 = new Image("file:rsc/chars/hamster-red_3.png");
 
 	public static Image iplayer0 = new Image("file:rsc/chars/python_0.png");
 	public static Image iplayer1 = new Image("file:rsc/chars/python_1.png");
@@ -66,6 +71,7 @@ public class IL {
 	 * Special Tiles
 	 */
 	public static Image ispecialtile_korn = new Image("file:rsc/game/specialtiles/korn.png");
+	public static Image ispecialtile_babyhamster = new Image("file:rsc/game/specialtiles/babyhamster.png");
 	public static Image ispecialtile_hourglass = new Image("file:rsc/game/specialtiles/hourglass.png");
 	public static Image ispecialtile_hammer = new Image("file:rsc/game/specialtiles/hammer.png");
 	

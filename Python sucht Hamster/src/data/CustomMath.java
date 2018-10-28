@@ -5,10 +5,10 @@ import gui.Grid;
 public class CustomMath {
 
 	/*
-	 * Generate a random int that matches character positioning within the grid:
-	 * 1. Create random int between 0 and gridwidth-3.
-	 * 2. Repeat until that int can be divided by 33 (as this is the width of one square).
-	 * 3. Add +1 to create offset (center character in square) and return.
+	 * Generate a random int that matches character positioning within the grid: 1.
+	 * Create random int between 0 and gridwidth-3. 2. Repeat until that int can be
+	 * divided by 33 (as this is the width of one square). 3. Add +1 to create
+	 * offset (center character in square) and return.
 	 */
 	public static int genRandomX() {
 		int random;
@@ -27,8 +27,8 @@ public class CustomMath {
 	}
 
 	/*
-	 * Round input to a multiple of 33.
-	 * Round down if difference is <16, round up otherwise
+	 * Round input to a multiple of 33. Round down if difference is <16, round up
+	 * otherwise
 	 */
 	public static int roundTo33(int input) {
 		int result = 0;
@@ -41,10 +41,10 @@ public class CustomMath {
 	}
 
 	/*
-	 * Divide size of grid by input. Round that to a multiple of 33
+	 * Divide size of grid by factor. Round that to a multiple of 33
 	 */
-	public static int calcPlayerMargin(double input) {
-		return roundTo33((int) Math.round((Grid.getWidth() - 1) / input)) + 1;
+	public static int calcPlayerMargin(double factor) {
+		return roundTo33((int) Math.round(((Grid.getWidth() - 1) + (Grid.getHeight() - 1) / 2) / factor)) + 1;
 	}
 
 }

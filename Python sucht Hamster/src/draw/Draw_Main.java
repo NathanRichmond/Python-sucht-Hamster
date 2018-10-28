@@ -23,11 +23,9 @@ import gui.Gui;
 public class Draw_Main {
 
 	private static Player p;
-	private static Enemy e;
 
 	public void draw(GraphicsContext gc) {
 		p = Game.p;
-		e = Game.e;
 		GraphicsContext g = gc;
 
 		/*
@@ -109,6 +107,62 @@ public class Draw_Main {
 			}
 
 			g.drawImage(IL.ibrestart, b.getX(), b.getY(), b.getWidth(), b.getHeight());
+
+//			/*
+//			 * GAME ELEMENTS: Korn Tile Activated Info
+//			 */
+//			if (Game.isSpecialTiles() == true) {
+//				int x = Grid.getX() - 240, y = Grid.getY();
+//				for (int i = 0; i < Game.enemies.size(); i++) {
+//					Enemy e = Game.enemies.get(i);
+//
+//					if (e.isSpeedBoosted() == true) {
+//						int width = 220, height = 20;
+//						g.setFill(new Color(0, 0, 0, 0.4));
+//						g.fillRect(x, y + i * 2 * height, width, height);
+//
+//						g.setTextAlign(TextAlignment.CENTER);
+//						g.setTextBaseline(VPos.CENTER);
+//						g.setFont(new Font("Verdana", 16));
+//						g.setFill(Color.WHITE);
+//						g.fillText("Enemy speed is boosted!", x + width / 2, (y + i * 2 * height) + height / 2);
+//					}
+//				}
+//			}
+//			/*
+//			 * GAME ELEMENTS: Time Modified Info
+//			 */
+//			if (Game.isSpecialTiles() == true) {
+//
+//				if (GameTimer.isModified() == true) {
+//					int x = Grid.getX() - 240, y = Grid.getY() + 2 * 20, width = 220, height = 20;
+//					g.setFill(new Color(0, 0, 0, 0.4));
+//					g.fillRect(x, y, width, height);
+//
+//					g.setTextAlign(TextAlignment.CENTER);
+//					g.setTextBaseline(VPos.CENTER);
+//					g.setFont(new Font("Verdana", 16));
+//					g.setFill(Color.WHITE);
+//					g.fillText("Game time is modified!", x + width / 2, y + height / 2);
+//
+//				}
+//			}
+//
+//			/*
+//			 * GAME ELEMENTS: Hamster Count
+//			 */
+//			if (Game.getLevel() == 11) {
+//				int x = Grid.getX() - 240, y = Grid.getY(), width = 220, height = 40;
+//				g.setFill(new Color(0, 0, 0, 0.4));
+//				g.fillRect(x, y, width, height);
+//
+//				g.setTextAlign(TextAlignment.CENTER);
+//				g.setTextBaseline(VPos.CENTER);
+//				g.setFont(new Font("Verdana", 16));
+//				g.setFill(Color.WHITE);
+//				g.fillText("Enemies alive: " + Game.enemies.size(), x + width / 2, y + height / 4);
+//				g.fillText("Enemies devoured: " + Game.hamstercount, x + width / 2, y + 3 * height / 4);
+//			}
 		}
 
 		/*
@@ -178,7 +232,7 @@ public class Draw_Main {
 
 	private void drawLvlDesc(GraphicsContext g, int level) {
 		int x = 60;
-		int y = 280;
+		int y = 410;
 		switch (level) {
 		case 1:
 			g.fillText("[Description of level " + level + " here]", x, y);
@@ -199,7 +253,7 @@ public class Draw_Main {
 			g.fillText("[Description of level " + level + " here]", x, y);
 			break;
 		case 7:
-			g.fillText("[Description of level " + level + " here]", x, y);
+			g.fillText("Level 7: The Granary", x, y);
 			break;
 		case 8:
 			g.fillText("[Description of level " + level + " here]", x, y);
@@ -604,26 +658,57 @@ public class Draw_Main {
 	}
 
 	private void drawEnemy(GraphicsContext g) {
-		if (e.isAlive() == true) {
-			switch (e.getFaceDirection()) {
-			case 0:
-				g.drawImage(IL.ienemy0, e.getX(), e.getY(), e.getWidth(), e.getHeight());
-				break;
-			case 1:
-				g.drawImage(IL.ienemy1, e.getX(), e.getY(), e.getWidth(), e.getHeight());
-				break;
-			case 2:
-				g.drawImage(IL.ienemy2, e.getX(), e.getY(), e.getWidth(), e.getHeight());
-				break;
-			case 3:
-				g.drawImage(IL.ienemy3, e.getX(), e.getY(), e.getWidth(), e.getHeight());
-				break;
-			default:
-				g.drawImage(IL.ienemy1, e.getX(), e.getY(), e.getWidth(), e.getHeight());
-				break;
+		for (Enemy e : Game.enemies) {
+
+			if (e.isAlive() == true) {
+				switch (e.getFaceDirection()) {
+				case 0:
+					if (e.isSpeedBoosted() == true) {
+						g.drawImage(IL.ienemyred0, e.getX(), e.getY(), e.getWidth(), e.getHeight());
+					} else {
+						g.drawImage(IL.ienemy0, e.getX(), e.getY(), e.getWidth(), e.getHeight());
+					}
+					break;
+				case 1:
+					if (e.isSpeedBoosted() == true) {
+						g.drawImage(IL.ienemyred1, e.getX(), e.getY(), e.getWidth(), e.getHeight());
+					} else {
+						g.drawImage(IL.ienemy1, e.getX(), e.getY(), e.getWidth(), e.getHeight());
+					}
+					break;
+				case 2:
+					if (e.isSpeedBoosted() == true) {
+						g.drawImage(IL.ienemyred2, e.getX(), e.getY(), e.getWidth(), e.getHeight());
+					} else {
+						g.drawImage(IL.ienemy2, e.getX(), e.getY(), e.getWidth(), e.getHeight());
+					}
+					break;
+				case 3:
+					if (e.isSpeedBoosted() == true) {
+						g.drawImage(IL.ienemyred3, e.getX(), e.getY(), e.getWidth(), e.getHeight());
+					} else {
+						g.drawImage(IL.ienemy3, e.getX(), e.getY(), e.getWidth(), e.getHeight());
+					}
+					break;
+				default:
+					g.drawImage(IL.ienemy1, e.getX(), e.getY(), e.getWidth(), e.getHeight());
+					break;
+				}
+			} else {
+
 			}
-		} else {
-			// image to be displayed when hamster is dead
+			/*
+			 * Draw index of Enemy
+			 */
+//			g.setFill(new Color(0, 0, 0, 0.4));
+//			g.fillRect(e.getX(), e.getY(), 32, 32);
+//
+//			g.setTextAlign(TextAlignment.CENTER);
+//			g.setTextBaseline(VPos.CENTER);
+//			g.setFont(new Font("Verdana", 20));
+//			g.setFill(Color.WHITE);
+//			g.fillText("" + e.index, e.getX() + 16, e.getY() + 16);
+
 		}
 	}
 
@@ -660,6 +745,9 @@ public class Draw_Main {
 				switch (st.getType()) {
 				case "korn":
 					g.drawImage(IL.ispecialtile_korn, st.getX(), st.getY(), st.getWidth(), st.getHeight());
+					break;
+				case "babyhamster":
+					g.drawImage(IL.ispecialtile_babyhamster, st.getX(), st.getY(), st.getWidth(), st.getHeight());
 					break;
 				case "hourglass":
 					g.drawImage(IL.ispecialtile_hourglass, st.getX(), st.getY(), st.getWidth(), st.getHeight());

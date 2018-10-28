@@ -35,26 +35,36 @@ public class Timer_Clock {
 
 		timer = new Timer();
 		timer.scheduleAtFixedRate(new TimerTask() {
+
 			@Override
 			public void run() {
-				if (GameTimer.getGameTime() < GameTimer.getAmountImages() - 2) { // all images except last two
-					if (Gamestate.state == Gamestate_e.ingame) {
-						GameTimer.setGameTime(GameTimer.getGameTime() + 1);
-					}
-				} else { // has reached third to last image
-					timer.schedule(new TimerTask() {
-						@Override
-						public void run() {
-							if (GameTimer.getGameTime() < GameTimer.getAmountImages()) { // end when reaching last image
-								GameTimer.setGameTime(GameTimer.getGameTime() + 1);
-							} else {
-								Gamestate.state = Gamestate_e.defeat;
-							}
+
+				if (GameTimer.isModified() == false) {
+
+					if (GameTimer.getGameTime() < GameTimer.getAmountImages() - 2) { // all images except last two
+						if (Gamestate.state == Gamestate_e.ingame) {
+							GameTimer.setGameTime(GameTimer.getGameTime() + 1);
 						}
-					}, delay2, period2);
-				}
-				if (Gamestate.state == Gamestate_e.startmenu) {
-					timer.cancel();
+					} else { // has reached third to last image
+
+						timer.schedule(new TimerTask() {
+
+							@Override
+							public void run() {
+								if (GameTimer.getGameTime() < GameTimer.getAmountImages()) { // end when reaching last
+																								// image
+									GameTimer.setGameTime(GameTimer.getGameTime() + 1);
+								} else {
+									Gamestate.state = Gamestate_e.defeat;
+								}
+							}
+						}, delay2, period2);
+
+					}
+
+					if (Gamestate.state == Gamestate_e.startmenu) {
+						timer.cancel();
+					}
 				}
 			}
 		}, delay, (long) period);

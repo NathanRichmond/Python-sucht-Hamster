@@ -1,6 +1,8 @@
 package chars;
 
+//import actions.Game;
 import clocks.Enemy_Movement;
+import clocks.ST_BoostEnemy;
 import data.Collision;
 import data.CustomMath;
 import game.Gamestate;
@@ -9,21 +11,26 @@ import gui.Grid;
 
 public class Enemy {
 
+//	public int index; // for testing purposes
 	private int x, y;
 	private int xAfterMove, yAfterMove; // coords of enemy after making next move
 	private int width, height;
 	private int faceDirection;
 	private double speed; // amount of moves Enemy can make within one second
 	private boolean isAlive;
+	private boolean isSpeedBoosted;
 	public Enemy_Movement em;
+	public ST_BoostEnemy sb;
 
 	public Enemy() {
+//		this.index = index;
 		this.setValidSpawn(); // Spawn at random position
 		this.width = 32;
 		this.height = 32;
 		this.faceDirection = (int) (Math.random() * 3); // random faceDirection
-		this.speed = 2.5;
+		this.speed = 2.5; // default speed
 		this.isAlive = true;
+		this.isSpeedBoosted = false;
 	}
 
 	private void setValidSpawn() {
@@ -62,9 +69,6 @@ public class Enemy {
 					this.x = this.x - 33; // move left
 					break;
 				}
-				if (Collision.cEnemyPlayer() == true) {
-					this.killEnemy();
-				}
 			}
 		}
 	}
@@ -87,17 +91,8 @@ public class Enemy {
 	}
 
 	public void killEnemy() {
-		this.isAlive = false;
-		Gamestate.state = Gamestate_e.victory;
-	}
-
-	public void taunt() { // move to center square and spin
-		this.x = 170;
-		this.y = 170;
-		this.turn(2);
-		this.turn(3);
-		this.turn(0);
-		this.turn(1);
+		this.setAlive(false);
+//		Game.hamstercount++;
 	}
 
 	public int getX() {
@@ -170,6 +165,14 @@ public class Enemy {
 
 	public void setAlive(boolean isAlive) {
 		this.isAlive = isAlive;
+	}
+
+	public boolean isSpeedBoosted() {
+		return isSpeedBoosted;
+	}
+
+	public void setSpeedBoosted(boolean isSpeedBoosted) {
+		this.isSpeedBoosted = isSpeedBoosted;
 	}
 
 }
