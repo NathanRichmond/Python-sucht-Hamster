@@ -1,5 +1,8 @@
 package game;
 
+import chars.Enemy;
+import clocks.ST_BoostEnemy;
+import clocks.ST_ModifyTime;
 import data.Collision;
 import data.CustomMath;
 import gui.Grid;
@@ -17,24 +20,46 @@ public class SpecialTile {
 		this.type = type;
 	}
 
-	public void activate(String activatedBy) {
+	public void activate(String activatedBy, Enemy enemy) {
 		this.setAlive(false);
 		switch (getType()) {
 		case "korn":
-			activateKorn(activatedBy);
+			activateKorn(activatedBy, enemy);
+			break;
+		case "babyhamster":
+			activateBabyhamster(activatedBy, enemy);
 			break;
 		case "hourglass":
-			activateHourglass(activatedBy);
+			activateHourglass(activatedBy, enemy);
 			break;
 		case "hammer":
-			activateHammer(activatedBy);
+			activateHammer(activatedBy, enemy);
 			break;
 		}
 	}
 
-	private void activateKorn(String activatedBy) {
+	private void activateKorn(String activatedBy, Enemy e) {
 		if (activatedBy == "enemy") {
 			// increase Enemy speed for limited period of time
+			if (e.isSpeedBoosted() == false) {
+				double duration = 3; // duration in seconds
+				double speedBoost = 4; // factor by which base speed is increased
+				e.sb = new ST_BoostEnemy(e, duration, e.getSpeed() * speedBoost);
+				e.sb.start();
+			} else { // if Enemy is currently boosted
+				e.sb.setCounter(e.sb.getCounter() + 1); // queue another speed boost
+			}
+		} else {
+			if (activatedBy == "player") {
+				// destroy Korn. Is already destroyed by now (see line 24), so nothing else
+				// here.
+			}
+		}
+	}
+
+	private void activateBabyhamster(String activatedBy, Enemy e) {
+		if (activatedBy == "enemy") {
+			// ?
 		} else {
 			if (activatedBy == "player") {
 				// ?
@@ -42,17 +67,42 @@ public class SpecialTile {
 		}
 	}
 
-	private void activateHourglass(String activatedBy) {
+	private void activateHourglass(String activatedBy, Enemy e) {
 		if (activatedBy == "enemy") {
 			// increase game speed for limited period of time
+			double duration = 0.75; // duration in seconds
+			double factor = 4; // factor by which time is increased
+			if (GameTimer.isModified() == false) {
+				new ST_ModifyTime(duration, factor, "enemy").start();
+			} else { // if time is currently modified
+				if (ST_ModifyTime.getActivatedBy() == "enemy") { // if current time modifier was activated by enemy
+					ST_ModifyTime.setCounter(ST_ModifyTime.getCounter() + 1); // queue another time modifier
+				} else {
+					ST_ModifyTime.timer.cancel();
+					new ST_ModifyTime(duration, factor, "enemy").start(); // overwrite player time modifier
+				}
+			}
 		} else {
 			if (activatedBy == "player") {
 				// slow down game speed for limited period of time
+				double duration = 3; // duration in seconds
+				double factor = 0.25; // factor by which time is increased. Needs to be 0<factor<1 to have it slow
+										// down the time
+				if (GameTimer.isModified() == false) {
+					new ST_ModifyTime(duration, factor, "player").start();
+				} else { // if time is currently modified
+					if (ST_ModifyTime.getActivatedBy() == "player") {
+						ST_ModifyTime.setCounter(ST_ModifyTime.getCounter() + 1); // queue another time modifier
+					} else {
+						ST_ModifyTime.timer.cancel();
+						new ST_ModifyTime(duration, factor, "player").start(); // overwrite enemy time modifier
+					}
+				}
 			}
 		}
 	}
 
-	private void activateHammer(String activatedBy) {
+	private void activateHammer(String activatedBy, Enemy e) {
 		if (activatedBy == "enemy") {
 			// generate Walls behind Enemy
 		} else {

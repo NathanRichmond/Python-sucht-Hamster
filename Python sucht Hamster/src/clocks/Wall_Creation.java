@@ -24,10 +24,12 @@ public class Wall_Creation {
 		 * Remove all walls that accidentally somehow spawned on Player/Enemy
 		 */
 		Player p = Game.p;
-		Enemy e = Game.e;
 		for (int i = 0; i < walls.size(); i++) {
-			if (Collision.cWall(p.getX(), p.getY()) == true || Collision.cWall(e.getX(), e.getY()) == true)
-				walls.remove(i);
+			for (Enemy e : Game.enemies) {
+				if (Collision.cWall(p.getX(), p.getY()) == true || Collision.cWall(e.getX(), e.getY()) == true) {
+					walls.remove(i);
+				}
+			}
 		}
 	}
 
