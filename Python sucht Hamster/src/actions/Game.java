@@ -20,7 +20,7 @@ public class Game {
 	public static ArrayList<Enemy> enemies = new ArrayList<>();
 
 	private static int level;
-	private static int maxLevelAvailable = 12; // highest level that was won in current session
+	private static int maxLevelAvailable = 1; // highest level that was won in current session
 
 	private static boolean firstKeyPressInGame = true;
 
