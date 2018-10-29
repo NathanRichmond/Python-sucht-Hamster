@@ -32,8 +32,10 @@ public class MousePressed implements EventHandler<MouseEvent> {
 		case lvlselect:
 			for (int i = 0; i < Gui.getnLvls(); i++) { // cycle through buttons
 				if (Collision.cButton(Gui.lvlselectbuttons[i], x, y)) {
-					Game.setLevel(i + 1); // i+1 because i starts at 0 but levels start at 1
-					Game.startNewGame();
+					if (Game.getMaxLevelAvailable() >= i + 1) { // only if level was unlocked already
+						Game.setLevel(i + 1); // i+1 because i starts at 0 but levels start at 1
+						Game.startNewGame();
+					}
 				}
 			}
 			if (Collision.cButton(Gui.lvlselectbutton_back, x, y)) {
@@ -68,6 +70,12 @@ public class MousePressed implements EventHandler<MouseEvent> {
 			}
 			if (Collision.cButton(Gui.gameendbuttons[2], x, y)) {
 				System.exit(0);
+			}
+			if (Game.getLevel() + 1 <= Gui.getnLvls()) {
+				if (Collision.cButton(Gui.victorybutton_nextlvl, x, y)) {
+					Game.setLevel(Game.getLevel() + 1);
+					Game.restartLevel();
+				}
 			}
 			break;
 		case defeat:

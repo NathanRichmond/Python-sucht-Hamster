@@ -58,6 +58,15 @@ public class MouseMoved implements EventHandler<MouseEvent> {
 
 		}
 
+		if (Game.getLevel() + 1 <= Gui.getnLvls()) {
+			if (Collision.cButton(Gui.victorybutton_nextlvl, x, y)) {
+				Gui.victorybutton_nextlvl.setHover(true);
+			} else {
+				Gui.victorybutton_nextlvl.setHover(false);
+
+			}
+		}
+
 		if (Gamestate.state == Gamestate_e.ingame) {
 			if (Collision.cButton(Gui.ingamebutton_restart, x, y)) {
 				Gui.ingamebutton_restart.setHover(true);

@@ -1,5 +1,6 @@
 package game;
 
+import actions.Game;
 import chars.Enemy;
 import clocks.ST_BoostEnemy;
 import clocks.ST_ModifyTime;
@@ -42,8 +43,8 @@ public class SpecialTile {
 		if (activatedBy == "enemy") {
 			// increase Enemy speed for limited period of time
 			if (e.isSpeedBoosted() == false) {
-				double duration = 3; // duration in seconds
-				double speedBoost = 4; // factor by which base speed is increased
+				double duration = Game.getKornDuration(); // duration in seconds
+				double speedBoost = Game.getKornBoost(); // factor by which base speed is increased
 				e.sb = new ST_BoostEnemy(e, duration, e.getSpeed() * speedBoost);
 				e.sb.start();
 			} else { // if Enemy is currently boosted
@@ -70,8 +71,8 @@ public class SpecialTile {
 	private void activateHourglass(String activatedBy, Enemy e) {
 		if (activatedBy == "enemy") {
 			// increase game speed for limited period of time
-			double duration = 0.75; // duration in seconds
-			double factor = 4; // factor by which time is increased
+			double duration = Game.getHourglassEDuration(); // duration in seconds
+			double factor = Game.getHourglassEFactor(); // factor by which time is increased
 			if (GameTimer.isModified() == false) {
 				new ST_ModifyTime(duration, factor, "enemy").start();
 			} else { // if time is currently modified
@@ -85,8 +86,8 @@ public class SpecialTile {
 		} else {
 			if (activatedBy == "player") {
 				// slow down game speed for limited period of time
-				double duration = 3; // duration in seconds
-				double factor = 0.25; // factor by which time is increased. Needs to be 0<factor<1 to have it slow
+				double duration = Game.getHourglassPDuration(); // duration in seconds
+				double factor = Game.getHourglassPFactor(); // factor by which time is increased. Needs to be 0<factor<1 to have it slow
 										// down the time
 				if (GameTimer.isModified() == false) {
 					new ST_ModifyTime(duration, factor, "player").start();

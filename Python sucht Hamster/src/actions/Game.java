@@ -20,6 +20,7 @@ public class Game {
 	public static ArrayList<Enemy> enemies = new ArrayList<>();
 
 	private static int level;
+	private static int maxLevelAvailable = 12; // highest level that was won in current session
 
 	private static boolean firstKeyPressInGame = true;
 
@@ -29,17 +30,32 @@ public class Game {
 	/*
 	 * Level Properties:
 	 */
-	private static String gridsize = "10x10";
+	private static String gridsize = "10x10"; // widthxheight of the grid
 	public static int nEnemy; // number of Enemies
 	private static double espeed; // speed of Enemies
-	private static double gameDuration;
+	private static double gameDuration; // time in seconds until game is lost
 	private static double playerMargin; // see EnemyAI. Default: 4
+
+	private static boolean hamsterinflation; // activate Inflation?
+
 	private static boolean walls; // any Walls?
 	private static int nWalls; // number of Walls
+
 	private static boolean specialTiles; // any Special Tiles?
+
 	private static int nKorn; // number of Korn Tiles
+	private static double kornDuration; // duration of Korn effect in seconds
+	private static double kornBoost; // factor by which Enemy base speed is increased
+
 	private static int nBabyhamster; // number of Babyhamster Tiles
+
 	private static int nHourglass; // number of Hourglass Tiles
+	private static double hourglassEDuration; // duration of Hourglass effect (activated by Enemy) in seconds
+	private static double hourglassEFactor; // factor by which time is increased.
+
+	private static double hourglassPDuration; // duration of Hourglass effect (activated by Player) in seconds
+	private static double hourglassPFactor; // factor. Needs to be 0<factor<1 to have it slow down the time
+
 	private static int nHammer; // number of Hammer Tiles.
 
 	public static void startNewGame() {
@@ -84,6 +100,31 @@ public class Game {
 	}
 
 	private static void setLevelProperties() {
+		/*
+		 * Reset any existing Level Properties to default values
+		 */
+		setGridsize("10x10");
+		setnEnemy(1);
+		setEspeed(2.5);
+		setGameDuration(10);
+		setPlayerMargin(4);
+		setHamsterinflation(false);
+		setWalls(false);
+		setnWalls(0);
+		setSpecialTiles(false);
+		setnKorn(0);
+		setKornDuration(0);
+		setKornBoost(0);
+		setnBabyhamster(0);
+		setnHourglass(0);
+		setHourglassEDuration(0);
+		setHourglassEFactor(0);
+		setHourglassPDuration(0);
+		setHourglassPFactor(0);
+		setnHammer(0);
+		/*
+		 * Apply new Level Properties
+		 */
 		switch (getLevel()) {
 		case 1:
 			level1();
@@ -180,7 +221,7 @@ public class Game {
 
 	public static void hamsterinflation() {
 		if (hamsterinflationCounter > 3 * (enemies.size() / 4)) {
-			if (enemies.size() <= 128) {
+			if (enemies.size() <= 64) { // don't spawn more than 64 Enemies
 				Enemy enemy = new Enemy();
 				enemy.setSpeed(10);
 				enemies.add(enemy);
@@ -196,114 +237,98 @@ public class Game {
 	 * Properties for the individual levels:
 	 */
 	private static void level1() {
-		setGridsize("10x10");
-		setnEnemy(1);
-		setEspeed(2.5);
 		setGameDuration(3);
-		setPlayerMargin(4);
-		setWalls(false);
-		setSpecialTiles(false);
 	}
 
 	private static void level2() {
-		setGridsize("10x10");
-		setnEnemy(1);
-		setEspeed(9.5);
+		setEspeed(6.5);
 		setGameDuration(8.5);
-		setPlayerMargin(4);
 		setWalls(true);
 		setnWalls(1);
-		setSpecialTiles(false);
 	}
 
 	private static void level3() {
-		setGridsize("10x10");
-		setnEnemy(1);
-		setEspeed(2.5);
 		setGameDuration(5);
-		setPlayerMargin(4);
 		setWalls(true);
 		setnWalls(5);
 		setSpecialTiles(true);
 		setnKorn(5);
+		setKornDuration(1);
+		setKornBoost(3);
 	}
 
 	private static void level4() {
 		setGridsize("20x20");
-		setnEnemy(1);
 		setEspeed(6.6);
-		setGameDuration(30);
-		setPlayerMargin(4);
+		setGameDuration(20);
 		setWalls(true);
 		setnWalls(220);
-		setSpecialTiles(false);
 	}
 
 	private static void level5() {
 		setGridsize("05x10");
-		setnEnemy(1);
 		setEspeed(5);
 		setGameDuration(2.4);
-		setPlayerMargin(4);
-		setWalls(false);
-		setSpecialTiles(false);
 	}
 
 	private static void level6() {
 		setGridsize("10x05");
-		setnEnemy(1);
 		setEspeed(3);
 		setGameDuration(10);
-		setPlayerMargin(4);
-		setWalls(false);
 		setSpecialTiles(true);
 		setnKorn(1);
+		setKornDuration(6);
+		setKornBoost(2.5);
 		setnHourglass(3);
+		setHourglassEDuration(1);
+		setHourglassEFactor(2.5);
+		setHourglassPDuration(1);
+		setHourglassPFactor(0.25);
 	}
 
 	private static void level7() {
-		setGridsize("34x20");
+		setGridsize("20x20");
 		setnEnemy(3);
-		setEspeed(2);
-		setGameDuration(180);
-		setPlayerMargin(6.5); // at Gridsize 34x20 that's about 4 tiles
-		setWalls(false);
+		setGameDuration(30);
+		setWalls(true);
+		setnWalls(10);
 		setSpecialTiles(true);
-		setnKorn(680);
+		setnBabyhamster(50);
 	}
 
 	private static void level8() {
-		setGridsize("34x20");
-		setnEnemy(1);
-		setEspeed(1);
-		setGameDuration(2000);
-		setPlayerMargin(4);
+		setGridsize("32x20");
+		setGameDuration(20);
+		setPlayerMargin(6.5); // at Gridsize 32x20 that's about 4 tiles
 		setWalls(true);
 		setnWalls(200);
 		setSpecialTiles(true);
 		setnKorn(125);
+		setKornDuration(1);
+		setKornBoost(5);
 	}
 
 	private static void level9() {
-		setGridsize("34x20");
-		setnEnemy(1);
+		setGridsize("32x20");
 		setEspeed(4);
 		setGameDuration(20);
-		setPlayerMargin(4);
 		setWalls(true);
 		setnWalls(125);
 		setSpecialTiles(true);
 		setnKorn(50);
+		setKornDuration(1);
+		setKornBoost(2);
 		setnHourglass(50);
+		setHourglassEDuration(0.5);
+		setHourglassEFactor(2);
+		setHourglassPDuration(0.5);
+		setHourglassPFactor(0.5);
 		setnHammer(50);
 	}
 
 	private static void level10() {
 		setGridsize("20x20");
-		setnEnemy(1);
-		setEspeed(2.5);
 		setGameDuration(99);
-		setPlayerMargin(4);
 		setWalls(true);
 		setnWalls(10);
 		setSpecialTiles(true);
@@ -311,25 +336,22 @@ public class Game {
 	}
 
 	private static void level11() {
-		setGridsize("20x20");
-		setnEnemy(1);
-		setEspeed(10);
-		setGameDuration(10);
-		setPlayerMargin(4);
-		setWalls(false);
-		setSpecialTiles(false);
+		setGridsize("32x20");
+		setnEnemy(3);
+		setEspeed(2);
+		setGameDuration(180);
+		setPlayerMargin(6.5); // at Gridsize 32x20 that's about 4 tiles
+		setSpecialTiles(true);
+		setnKorn(680);
+		setKornDuration(0.2);
+		setKornBoost(4);
 	}
 
 	private static void level12() {
 		setGridsize("20x20");
-		setnEnemy(3);
-		setEspeed(2.5);
-		setGameDuration(120);
-		setPlayerMargin(4);
-		setWalls(true);
-		setnWalls(10);
-		setSpecialTiles(true);
-		setnBabyhamster(50);
+		setEspeed(10);
+		setGameDuration(10);
+		setHamsterinflation(true);
 	}
 
 	public static int getLevel() {
@@ -338,6 +360,14 @@ public class Game {
 
 	public static void setLevel(int level) {
 		Game.level = level;
+	}
+
+	public static int getMaxLevelAvailable() {
+		return maxLevelAvailable;
+	}
+
+	public static void setMaxLevelAvailable(int maxLevelCleared) {
+		Game.maxLevelAvailable = maxLevelCleared;
 	}
 
 	public static boolean isFirstKeyPressInGame() {
@@ -388,6 +418,14 @@ public class Game {
 		Game.playerMargin = playerMargin;
 	}
 
+	public static boolean isHamsterinflation() {
+		return hamsterinflation;
+	}
+
+	public static void setHamsterinflation(boolean hamsterinflation) {
+		Game.hamsterinflation = hamsterinflation;
+	}
+
 	public static boolean isWalls() {
 		return walls;
 	}
@@ -420,6 +458,22 @@ public class Game {
 		Game.nKorn = nKorn;
 	}
 
+	public static double getKornDuration() {
+		return kornDuration;
+	}
+
+	public static void setKornDuration(double kornDuration) {
+		Game.kornDuration = kornDuration;
+	}
+
+	public static double getKornBoost() {
+		return kornBoost;
+	}
+
+	public static void setKornBoost(double kornBoost) {
+		Game.kornBoost = kornBoost;
+	}
+
 	public static int getnBabyhamster() {
 		return nBabyhamster;
 	}
@@ -434,6 +488,38 @@ public class Game {
 
 	public static void setnHourglass(int nHourglass) {
 		Game.nHourglass = nHourglass;
+	}
+
+	public static double getHourglassEDuration() {
+		return hourglassEDuration;
+	}
+
+	public static void setHourglassEDuration(double hourglassEDuration) {
+		Game.hourglassEDuration = hourglassEDuration;
+	}
+
+	public static double getHourglassEFactor() {
+		return hourglassEFactor;
+	}
+
+	public static void setHourglassEFactor(double hourglassEFactor) {
+		Game.hourglassEFactor = hourglassEFactor;
+	}
+
+	public static double getHourglassPDuration() {
+		return hourglassPDuration;
+	}
+
+	public static void setHourglassPDuration(double hourglassPDuration) {
+		Game.hourglassPDuration = hourglassPDuration;
+	}
+
+	public static double getHourglassPFactor() {
+		return hourglassPFactor;
+	}
+
+	public static void setHourglassPFactor(double hourglassPFactor) {
+		Game.hourglassPFactor = hourglassPFactor;
 	}
 
 	public static int getnHammer() {

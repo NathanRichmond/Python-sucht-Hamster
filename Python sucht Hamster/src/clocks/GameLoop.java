@@ -97,6 +97,9 @@ public class GameLoop implements Runnable {
 			 */
 			if (Game.enemies.size() == 0) {
 				Gamestate.state = Gamestate_e.victory;
+				if (Game.getLevel() >= Game.getMaxLevelAvailable()) { // if this is the highest level won until now
+					Game.setMaxLevelAvailable(Game.getLevel() + 1);
+				}
 			}
 
 			/*

@@ -30,25 +30,25 @@ public class Enemy_Movement {
 	}
 
 	public void start() {
-		
+
 		timer = new Timer();
-		
+
 		if (Gamestate.state == Gamestate_e.ingame) {
-			
+
 			timer.scheduleAtFixedRate(new TimerTask() {
 
 				@Override
 				public void run() {
 
 					if (e.isSpeedBoosted() == false) {
-						
+
 						EnemyAI ai = new EnemyAI(e);
 						e.move(ai.moveDirection()); // move in random direction (0-3)
-						
-						if (Game.getLevel() == 11) {
+
+						if (Game.isHamsterinflation() == true) {
 							hamsterinflation();
 						}
-						
+
 						/*
 						 * Stop timer if Enemy is dead or game is quit
 						 */
@@ -59,9 +59,9 @@ public class Enemy_Movement {
 								timer.cancel();
 							}
 						}
-						
+
 					}
-					
+
 				}
 
 			}, delay, period);

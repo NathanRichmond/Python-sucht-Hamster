@@ -55,7 +55,9 @@ public class Timer_Clock {
 																								// image
 									GameTimer.setGameTime(GameTimer.getGameTime() + 1);
 								} else {
-									Gamestate.state = Gamestate_e.defeat;
+									if (Gamestate.state != Gamestate_e.victory) {
+										Gamestate.state = Gamestate_e.defeat;
+									}
 								}
 							}
 						}, delay2, period2);

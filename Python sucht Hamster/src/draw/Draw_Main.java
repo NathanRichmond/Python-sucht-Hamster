@@ -199,14 +199,19 @@ public class Draw_Main {
 			Button b = Gui.lvlselectbuttons[i];
 			g.strokeRect(b.getX(), b.getY(), b.getWidth(), b.getHeight());
 
-			g.setFill(new Color(1, 1, 1, 0.2));
-			if (b.isHover()) {
+			if (Game.getMaxLevelAvailable() < i + 1) { // if level is still unavailable
+				g.setFill(new Color(0, 0, 0, 0.2)); // make button darker
 				g.fillRect(b.getX(), b.getY(), b.getWidth(), b.getHeight());
+			} else {
+				if (b.isHover()) {
+					g.setFill(new Color(1, 1, 1, 0.2));
+					g.fillRect(b.getX(), b.getY(), b.getWidth(), b.getHeight());
 
-				g.setTextAlign(TextAlignment.LEFT);
-				g.setFont(new Font("Verdana Italic", 26));
-				g.setFill(Color.WHITE);
-				drawLvlDesc(g, (i + 1));
+					g.setTextAlign(TextAlignment.LEFT);
+					g.setFont(new Font("Verdana Italic", 26));
+					g.setFill(Color.WHITE);
+					drawLvlDesc(g, (i + 1));
+				}
 			}
 
 			g.setTextAlign(TextAlignment.CENTER);
@@ -234,41 +239,14 @@ public class Draw_Main {
 		int x = 60;
 		int y = 410;
 		switch (level) {
-		case 1:
-			g.fillText("[Description of level " + level + " here]", x, y);
-			break;
-		case 2:
-			g.fillText("[Description of level " + level + " here]", x, y);
-			break;
-		case 3:
-			g.fillText("[Description of level " + level + " here]", x, y);
-			break;
-		case 4:
-			g.fillText("[Description of level " + level + " here]", x, y);
-			break;
-		case 5:
-			g.fillText("[Description of level " + level + " here]", x, y);
-			break;
-		case 6:
-			g.fillText("[Description of level " + level + " here]", x, y);
-			break;
-		case 7:
-			g.fillText("Level 7: The Granary", x, y);
-			break;
-		case 8:
-			g.fillText("[Description of level " + level + " here]", x, y);
-			break;
-		case 9:
-			g.fillText("[Description of level " + level + " here]", x, y);
-			break;
-		case 10:
+		default:
 			g.fillText("[Description of level " + level + " here]", x, y);
 			break;
 		case 11:
-			g.fillText("[Description of level " + level + " here]", x, y);
+			g.fillText("Level 11: The Granary", x, y);
 			break;
 		case 12:
-			g.fillText("[Description of level " + level + " here]", x, y);
+			g.fillText("Level 12: Hamsterinflation", x, y);
 			break;
 		}
 
@@ -363,6 +341,20 @@ public class Draw_Main {
 			g.setFill(Color.WHITE);
 			g.fillText(b.getText(), b.getX() + b.getWidth() / 2, b.getY() + b.getHeight() / 2);
 
+		}
+
+		if (Game.getLevel() + 1 <= Gui.getnLvls()) {
+			Button b = Gui.victorybutton_nextlvl;
+			g.strokeRect(b.getX(), b.getY(), b.getWidth(), b.getHeight());
+			if (b.isHover() == true) {
+				g.setFill(new Color(1, 1, 1, 0.2));
+				g.fillRect(b.getX(), b.getY(), b.getWidth(), b.getHeight());
+			}
+			g.setTextAlign(TextAlignment.CENTER);
+			g.setTextBaseline(VPos.CENTER);
+			g.setFont(new Font("Verdana", 16));
+			g.setFill(Color.WHITE);
+			g.fillText(b.getText(), b.getX() + b.getWidth() / 2, b.getY() + b.getHeight() / 2);
 		}
 	}
 
@@ -777,8 +769,8 @@ public class Draw_Main {
 		case "20x20":
 			g.drawImage(IL.igrid_20x20, Grid.getX(), Grid.getY(), Grid.getWidth(), Grid.getHeight());
 			break;
-		case "34x20":
-			g.drawImage(IL.igrid_34x20, Grid.getX(), Grid.getY(), Grid.getWidth(), Grid.getHeight());
+		case "32x20":
+			g.drawImage(IL.igrid_32x20, Grid.getX(), Grid.getY(), Grid.getWidth(), Grid.getHeight());
 			break;
 		case "40x20":
 			g.drawImage(IL.igrid_40x20, Grid.getX(), Grid.getY(), Grid.getWidth(), Grid.getHeight());

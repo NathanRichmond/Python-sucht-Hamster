@@ -22,8 +22,8 @@ public class Grid {
 		String strHeight = size.substring(3); // part behind the "x"
 		int intWidth = Integer.parseInt(strWidth); // convert String to int
 		int intHeight = Integer.parseInt(strHeight);
-		width = (intWidth * 33);
-		height = (intHeight * 33);
+		width = (intWidth * 33) + 1;
+		height = (intHeight * 33) + 1;
 
 		setX(Gui.getWidth() / 2 - getWidth() / 2);
 		setY(Gui.getHeight() / 2 - getHeight() / 2);

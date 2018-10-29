@@ -29,6 +29,7 @@ public class Gui {
 	public static Button[] pausebuttons = new Button[3];
 	public static Button[] startmenubuttons = new Button[3];
 	public static Button[] gameendbuttons = new Button[3];
+	public static Button victorybutton_nextlvl;
 	public static Button[] lvlselectbuttons = new Button[getnLvls()];
 	public static Button lvlselectbutton_back;
 	public static Button ingamebutton_restart;
@@ -93,24 +94,35 @@ public class Gui {
 	}
 
 	private void initLvlSelectButtons() {
+		/*
+		 * Automatically place buttons depending on nLvls
+		 */
 		int buttonWidth = 90;
 		int buttonHeight = 90;
 		int buttonMargin = 60; // space between window borders and outer buttons (bottom, right and left)
+		int lines = 1; // lines of buttons
+		int buttonsPerLine = getnLvls(); // number of buttons on one line
+		if (getnLvls() > 11) { // no more than 11 buttons on one line
+			int lvls = getnLvls();
+			/*
+			 * Calculate multiple of 11 (rounding up)
+			 */
+			while (lvls % 11 != 0) {
+				lvls++;
+			}
+			buttonsPerLine = getnLvls() / (lvls / 11);
+			lines = lvls / 11;
+		}
 		// space between individual buttons:
-		int innerSpace = (getWidth() - 2 * buttonMargin - buttonWidth * getnLvls() / 2) / (getnLvls() / 2 - 1);
+		int innerSpace = (getWidth() - 2 * buttonMargin - buttonWidth * buttonsPerLine) / (buttonsPerLine - 1);
 		int buttonX = buttonMargin; // x coordinate of the left column of buttons
 		int buttonY = 11 * (getHeight() / 20); // y coordinate of upper row of buttons: 11/20 of screen height
 		int j = 0;
 
 		for (int i = 0; i < getnLvls(); i++) {
-			if (i < getnLvls() / 2) {
-				j = i;
-			}
-			if (i >= getnLvls() / 2) {
-				j = i - getnLvls() / 2;
-				if (i == getnLvls() / 2) {
-					buttonY = buttonY + 4 * (getHeight() / 20);
-				}
+			j = i % buttonsPerLine;
+			if (i % buttonsPerLine == 0 && i != 0) { // if end of line is reached
+				buttonY = buttonY + (9 / lines) * (getHeight() / 20); // apply line break
 			}
 			buttonX = buttonMargin + (buttonWidth + innerSpace) * j;
 			lvlselectbuttons[i] = new Button(buttonX, buttonY, buttonWidth, buttonHeight);
@@ -130,12 +142,15 @@ public class Gui {
 
 		gameendbuttons[2] = new Button(getWidth() / 2 - 150, getHeight() - 60, 300, 50);
 		gameendbuttons[2].setText("Quit");
+		
+		victorybutton_nextlvl = new Button(getWidth() / 2 - 150, getHeight() - 240, 300, 50);
+		victorybutton_nextlvl.setText("Next Level");
 	}
 
 	private void initStartMenuButtons() {
 		int width = 450, height = 175;
 		startmenubuttons[0] = new Button(getWidth() / 2 - width / 2, 2 * (getHeight() / 3) - height / 2, width, height);
-		startmenubuttons[0].setText("Start New Game");
+		startmenubuttons[0].setText("Start Game");
 
 		startmenubuttons[1] = new Button(55, getHeight() - 120, 150, 35);
 		startmenubuttons[1].setText("Settings");

@@ -17,7 +17,7 @@ public class IL {
 	public static Image igrid_10x05 = new Image("file:rsc/bg/grid/grid_10x05.png");
 	public static Image igrid_10x10 = new Image("file:rsc/bg/grid/grid_10x10.png");
 	public static Image igrid_20x20 = new Image("file:rsc/bg/grid/grid_20x20.png");
-	public static Image igrid_34x20 = new Image("file:rsc/bg/grid/grid_34x20.png");
+	public static Image igrid_32x20 = new Image("file:rsc/bg/grid/grid_32x20.png");
 	public static Image igrid_40x20 = new Image("file:rsc/bg/grid/grid_40x20.png");
 
 	/*
