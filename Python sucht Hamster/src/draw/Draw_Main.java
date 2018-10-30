@@ -188,6 +188,84 @@ public class Draw_Main {
 			drawPauseScreen(g);
 		}
 
+		/*
+		 * SETTINGS SCREEN
+		 */
+		if (Gamestate.state == Gamestate_e.settings) {
+			drawSettingsScreen(g);
+		}
+
+	}
+
+	private void drawSettingsScreen(GraphicsContext g) {
+		g.drawImage(IL.isettings, 0, 0, Gui.getWidth(), Gui.getHeight());
+
+		g.setStroke(Color.WHITE);
+		g.setFill(Color.WHITE);
+
+		g.setTextAlign(TextAlignment.CENTER);
+		g.setTextBaseline(VPos.CENTER);
+		g.setFont(new Font("Verdana", 38));
+		g.setFill(Color.WHITE);
+		g.fillText("Select Python Skin:", Gui.getWidth() / 2, 11 * Gui.getHeight() / 20);
+
+		/*
+		 * Button "Back to Menu"
+		 */
+		Button b = Gui.settingsbuttons[0];
+		g.strokeRect(b.getX(), b.getY(), b.getWidth(), b.getHeight());
+
+		if (b.isHover() == true) {
+			g.setFill(new Color(1, 1, 1, 0.2));
+			g.fillRect(b.getX(), b.getY(), b.getWidth(), b.getHeight());
+		}
+
+		g.setTextAlign(TextAlignment.CENTER);
+		g.setTextBaseline(VPos.CENTER);
+		g.setFont(new Font("Verdana", 19));
+		g.setFill(Color.WHITE);
+		g.fillText(b.getText(), b.getX() + b.getWidth() / 2, b.getY() + b.getHeight() / 2);
+
+		/*
+		 * Python buttons
+		 */
+		b = Gui.settingsbuttons[1];
+		g.strokeRect(b.getX(), b.getY(), b.getWidth(), b.getHeight());
+
+		if (b.isHover() == true) {
+			g.setFill(new Color(1, 1, 1, 0.2));
+			g.fillRect(b.getX(), b.getY(), b.getWidth(), b.getHeight());
+			g.setTextAlign(TextAlignment.CENTER);
+			g.setFont(new Font("Verdana Italic", 26));
+			g.setFill(Color.WHITE);
+			g.fillText("Default Python", b.getX() + b.getWidth() / 2, b.getY() + 3 * b.getHeight() / 2);
+		}
+
+		g.drawImage(IL.iplayer0, b.getX() + 10, b.getY() + 10, 80, 80);
+
+		b = Gui.settingsbuttons[2];
+		g.strokeRect(b.getX(), b.getY(), b.getWidth(), b.getHeight());
+
+		if (b.isHover() == true) {
+			g.setFill(new Color(1, 1, 1, 0.2));
+			g.fillRect(b.getX(), b.getY(), b.getWidth(), b.getHeight());
+			g.setTextAlign(TextAlignment.CENTER);
+			g.setFont(new Font("Verdana Italic", 26));
+			g.setFill(Color.WHITE);
+			g.fillText("Blood Python", b.getX() + b.getWidth() / 2, b.getY() + 3 * b.getHeight() / 2);
+		}
+
+		g.drawImage(IL.iplayerred0, b.getX() + 10, b.getY() + 10, 80, 80);
+
+		/*
+		 * Settings saved
+		 */
+		if (Gui.isClickedToSaveSettings() == true) {
+			g.setTextAlign(TextAlignment.CENTER);
+			g.setFont(new Font("Verdana Bold", 36));
+			g.setFill(Color.WHITE);
+			g.fillText("Saved Settings!", Gui.getWidth() / 2, 18 * Gui.getHeight() / 20);
+		}
 	}
 
 	private void drawLevelSelection(GraphicsContext g) {
@@ -707,19 +785,54 @@ public class Draw_Main {
 	private void drawPlayer(GraphicsContext g) {
 		switch (p.getFaceDirection()) {
 		case 0:
-			g.drawImage(IL.iplayer0, p.getX(), p.getY(), p.getWidth(), p.getHeight());
+			switch (Gui.getPythonSkin()) {
+			default:
+				g.drawImage(IL.iplayer0, p.getX(), p.getY(), p.getWidth(), p.getHeight());
+				break;
+			case 1:
+				g.drawImage(IL.iplayerred0, p.getX(), p.getY(), p.getWidth(), p.getHeight());
+				break;
+			}
 			break;
 		case 1:
-			g.drawImage(IL.iplayer1, p.getX(), p.getY(), p.getWidth(), p.getHeight());
+			switch (Gui.getPythonSkin()) {
+			default:
+				g.drawImage(IL.iplayer1, p.getX(), p.getY(), p.getWidth(), p.getHeight());
+				break;
+			case 1:
+				g.drawImage(IL.iplayerred1, p.getX(), p.getY(), p.getWidth(), p.getHeight());
+				break;
+			}
 			break;
 		case 2:
-			g.drawImage(IL.iplayer2, p.getX(), p.getY(), p.getWidth(), p.getHeight());
+			switch (Gui.getPythonSkin()) {
+			default:
+				g.drawImage(IL.iplayer2, p.getX(), p.getY(), p.getWidth(), p.getHeight());
+				break;
+			case 1:
+				g.drawImage(IL.iplayerred2, p.getX(), p.getY(), p.getWidth(), p.getHeight());
+				break;
+			}
 			break;
 		case 3:
-			g.drawImage(IL.iplayer3, p.getX(), p.getY(), p.getWidth(), p.getHeight());
+			switch (Gui.getPythonSkin()) {
+			default:
+				g.drawImage(IL.iplayer3, p.getX(), p.getY(), p.getWidth(), p.getHeight());
+				break;
+			case 1:
+				g.drawImage(IL.iplayerred3, p.getX(), p.getY(), p.getWidth(), p.getHeight());
+				break;
+			}
 			break;
 		default:
-			g.drawImage(IL.iplayerred0, p.getX(), p.getY(), p.getWidth(), p.getHeight());
+			switch (Gui.getPythonSkin()) {
+			default:
+				g.drawImage(IL.iplayer0, p.getX(), p.getY(), p.getWidth(), p.getHeight());
+				break;
+			case 1:
+				g.drawImage(IL.iplayerred0, p.getX(), p.getY(), p.getWidth(), p.getHeight());
+				break;
+			}
 			break;
 		}
 

@@ -22,10 +22,24 @@ public class MousePressed implements EventHandler<MouseEvent> {
 				Gamestate.state = Gamestate_e.lvlselect;
 			}
 			if (Collision.cButton(Gui.startmenubuttons[1], x, y)) {
-//				Gamestate.state = Gamestate_e.settings;
+				Gamestate.state = Gamestate_e.settings;
 			}
 			if (Collision.cButton(Gui.startmenubuttons[2], x, y)) {
 				System.exit(0);
+			}
+			break;
+
+		case settings:
+			if (Collision.cButton(Gui.settingsbuttons[0], x, y)) {
+				Gamestate.state = Gamestate_e.startmenu;
+			}
+			if (Collision.cButton(Gui.settingsbuttons[1], x, y)) {
+				Gui.setPythonSkin(0);
+				Gui.saveSettings();
+			}
+			if (Collision.cButton(Gui.settingsbuttons[2], x, y)) {
+				Gui.setPythonSkin(1);
+				Gui.saveSettings();
 			}
 			break;
 

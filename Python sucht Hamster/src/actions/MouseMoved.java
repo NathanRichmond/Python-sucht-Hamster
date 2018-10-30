@@ -15,6 +15,9 @@ public class MouseMoved implements EventHandler<MouseEvent> {
 		int x = (int) e.getX(); // x coord of current mouse position
 		int y = (int) e.getY(); // y coord of current mouse position
 
+		/*
+		 * PAUSE Buttons
+		 */
 		for (int i = 0; i < Gui.pausebuttons.length; i++) {
 			if (Collision.cButton(Gui.pausebuttons[i], x, y)) {
 				Gui.pausebuttons[i].setHover(true);
@@ -24,6 +27,9 @@ public class MouseMoved implements EventHandler<MouseEvent> {
 			}
 		}
 
+		/*
+		 * START MENU Buttons
+		 */
 		for (int i = 0; i < Gui.startmenubuttons.length; i++) {
 			if (Collision.cButton(Gui.startmenubuttons[i], x, y)) {
 				Gui.startmenubuttons[i].setHover(true);
@@ -33,6 +39,21 @@ public class MouseMoved implements EventHandler<MouseEvent> {
 			}
 		}
 
+		/*
+		 * SETTINGS Buttons
+		 */
+		for (int i = 0; i < Gui.settingsbuttons.length; i++) {
+			if (Collision.cButton(Gui.settingsbuttons[i], x, y)) {
+				Gui.settingsbuttons[i].setHover(true);
+			} else {
+				Gui.settingsbuttons[i].setHover(false);
+
+			}
+		}
+
+		/*
+		 * DEFEAT/VICTORY Buttons
+		 */
 		for (int i = 0; i < Gui.gameendbuttons.length; i++) {
 			if (Collision.cButton(Gui.gameendbuttons[i], x, y)) {
 				Gui.gameendbuttons[i].setHover(true);
@@ -41,7 +62,18 @@ public class MouseMoved implements EventHandler<MouseEvent> {
 
 			}
 		}
+		if (Game.getLevel() + 1 <= Gui.getnLvls()) {
+			if (Collision.cButton(Gui.victorybutton_nextlvl, x, y)) {
+				Gui.victorybutton_nextlvl.setHover(true);
+			} else {
+				Gui.victorybutton_nextlvl.setHover(false);
 
+			}
+		}
+
+		/*
+		 * LEVEL SELECT Buttons
+		 */
 		for (int i = 0; i < Gui.lvlselectbuttons.length; i++) {
 			if (Collision.cButton(Gui.lvlselectbuttons[i], x, y)) {
 				Gui.lvlselectbuttons[i].setHover(true);
@@ -58,15 +90,9 @@ public class MouseMoved implements EventHandler<MouseEvent> {
 
 		}
 
-		if (Game.getLevel() + 1 <= Gui.getnLvls()) {
-			if (Collision.cButton(Gui.victorybutton_nextlvl, x, y)) {
-				Gui.victorybutton_nextlvl.setHover(true);
-			} else {
-				Gui.victorybutton_nextlvl.setHover(false);
-
-			}
-		}
-
+		/*
+		 * INGAME Restart Button
+		 */
 		if (Gamestate.state == Gamestate_e.ingame) {
 			if (Collision.cButton(Gui.ingamebutton_restart, x, y)) {
 				Gui.ingamebutton_restart.setHover(true);

@@ -60,7 +60,7 @@ public class SpecialTile {
 
 	private void activateBabyhamster(String activatedBy, Enemy e) {
 		if (activatedBy == "enemy") {
-			// ?
+			// nothing
 		} else {
 			if (activatedBy == "player") {
 				// ?

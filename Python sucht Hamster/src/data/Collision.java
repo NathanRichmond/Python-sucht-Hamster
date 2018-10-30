@@ -80,6 +80,22 @@ public class Collision {
 	}
 
 	/*
+	 * Check collision with any Babyhamster (as they are like Walls for Enemies)
+	 */
+	public static boolean cBabyhamster(int x, int y) {
+		boolean flag = false;
+		for (SpecialTile st : SpecialTile_Creation.specialtiles) {
+			if (st.getType() == "babyhamster" && x == st.getX() && y == st.getY()) {
+				flag = true;
+				break;
+			} else {
+				flag = false;
+			}
+		}
+		return flag;
+	}
+
+	/*
 	 * Check collision with Player or Enemy. Used for determining valid spawns of
 	 * Wall and Special Tile
 	 */

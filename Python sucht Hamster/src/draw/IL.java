@@ -23,24 +23,25 @@ public class IL {
 	/*
 	 * Characters, with all faceDirections
 	 */
+	// Enemy
 	public static Image ienemy0 = new Image("file:rsc/chars/hamster_0.png");
 	public static Image ienemy1 = new Image("file:rsc/chars/hamster_1.png");
 	public static Image ienemy2 = new Image("file:rsc/chars/hamster_2.png");
 	public static Image ienemy3 = new Image("file:rsc/chars/hamster_3.png");
-	
+
+	// Enemy upgraded
 	public static Image ienemyred0 = new Image("file:rsc/chars/hamster-red_0.png");
 	public static Image ienemyred1 = new Image("file:rsc/chars/hamster-red_1.png");
 	public static Image ienemyred2 = new Image("file:rsc/chars/hamster-red_2.png");
 	public static Image ienemyred3 = new Image("file:rsc/chars/hamster-red_3.png");
 
+	// Default Python (Gui.pythonSkin: 0)
 	public static Image iplayer0 = new Image("file:rsc/chars/python_0.png");
 	public static Image iplayer1 = new Image("file:rsc/chars/python_1.png");
 	public static Image iplayer2 = new Image("file:rsc/chars/python_2.png");
 	public static Image iplayer3 = new Image("file:rsc/chars/python_3.png");
 
-	/*
-	 * (currently unused)
-	 */
+	// Default Python (Gui.pythonSkin: 1)
 	public static Image iplayerred0 = new Image("file:rsc/chars/python-red_0.png");
 	public static Image iplayerred1 = new Image("file:rsc/chars/python-red_1.png");
 	public static Image iplayerred2 = new Image("file:rsc/chars/python-red_2.png");
@@ -50,6 +51,11 @@ public class IL {
 	 * Start Menu Screen
 	 */
 	public static Image istartmenu = new Image("file:rsc/game/ui/startmenu.png");
+
+	/*
+	 * Settings Screen
+	 */
+	public static Image isettings = new Image("file:rsc/game/ui/settingsscreen.png");
 
 	/*
 	 * Level Selection Screen
@@ -74,7 +80,7 @@ public class IL {
 	public static Image ispecialtile_babyhamster = new Image("file:rsc/game/specialtiles/babyhamster.png");
 	public static Image ispecialtile_hourglass = new Image("file:rsc/game/specialtiles/hourglass.png");
 	public static Image ispecialtile_hammer = new Image("file:rsc/game/specialtiles/hammer.png");
-	
+
 	/*
 	 * Ingame Button: Restart
 	 */

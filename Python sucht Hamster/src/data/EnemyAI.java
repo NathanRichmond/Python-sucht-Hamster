@@ -12,7 +12,7 @@ public class EnemyAI {
 
 	/*
 	 * Area around the player that is blocked for enemy.
-	 * Input: 1 = whole grid; 100 = 1 tile (exponential)
+	 * Input: 1 = whole grid; 100 = 1 tile. (exponential)
 	 */
 	private int playerMargin = CustomMath.calcPlayerMargin(Game.getPlayerMargin());
 
@@ -44,7 +44,9 @@ public class EnemyAI {
 					flag = true;
 				}
 			}
-			if (Collision.cWall(e.getxAfterMove(), e.getyAfterMove()) == true) {
+			// don't walk into walls or babyhamsters
+			if (Collision.cWall(e.getxAfterMove(), e.getyAfterMove()) == true
+					|| Collision.cBabyhamster(e.getxAfterMove(), e.getyAfterMove()) == true) {
 				flag = false;
 			}
 		}
@@ -53,7 +55,6 @@ public class EnemyAI {
 	}
 
 	private void leavePlayerMargin() {
-
 		/*
 		 * Detect position relative to player
 		 */
@@ -66,7 +67,7 @@ public class EnemyAI {
 		 * 3 = South-east.
 		 * 4 = South.
 		 * 5 = South-west.
-		 * 6 = West.
+		 * 6 = West. 
 		 * 7 = Northwest.
 		 */
 		if (e.getY() < p.getY()) { // if N of player
@@ -144,7 +145,8 @@ public class EnemyAI {
 			}
 		}
 		setCoords(rand);
-		if (withinGridAfterMove() == true && Collision.cWall(e.getxAfterMove(), e.getyAfterMove()) == false) {
+		if (withinGridAfterMove() == true && Collision.cWall(e.getxAfterMove(), e.getyAfterMove()) == false
+				&& Collision.cBabyhamster(e.getxAfterMove(), e.getyAfterMove()) == false) {
 			moveRand = rand;
 		} else { // if dir1 is blocked (wall or end of grid)
 			try {
