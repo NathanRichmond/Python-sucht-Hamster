@@ -26,7 +26,7 @@ public class Wall {
 			this.y = y;
 		} else {
 			this.x = -40;						// Placing wrong Walls in an unseen area
-			this.y = - 40;
+			this.y = -40;
 		}
 	}
 
