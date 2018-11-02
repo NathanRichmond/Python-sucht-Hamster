@@ -63,7 +63,7 @@ public class GameLoop implements Runnable {
 					for (SpecialTile st : SpecialTile_Creation.specialtiles) { // detect the specific Special Tile that
 																				// was collided with
 						if (p.getX() == st.getX() && p.getY() == st.getY()) {
-							st.activate("player", null);
+							st.activate("player", null, p);
 							break;
 						}
 					}
@@ -73,7 +73,7 @@ public class GameLoop implements Runnable {
 					if (Collision.cSpecialTile(e.getX(), e.getY()) == true) {
 						for (SpecialTile st : SpecialTile_Creation.specialtiles) { // see above
 							if (e.getX() == st.getX() && e.getY() == st.getY()) {
-								st.activate("enemy", e);
+								st.activate("enemy", e, null);
 							}
 						}
 					}
