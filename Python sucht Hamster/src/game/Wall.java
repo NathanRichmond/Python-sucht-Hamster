@@ -20,8 +20,8 @@ public class Wall {
 	 * Constructor with parameters: For adding specific Walls (e.g. through Special Tiles)
 	 */
 	public Wall(int x, int y) {
-		if (x > Grid.getX() && x < Grid.getX() + Grid.getWidth() - 1 && y > Grid.getY()     // No Walls beyond the Grid
-				&& y < Grid.getY() + Grid.getHeight() - 1) {	
+		if (x > Grid.getX() && x < Grid.getX() + Grid.getWidth() && y > Grid.getY()     // No Walls beyond the Grid
+				&& y < Grid.getY() + Grid.getHeight()) {	
 			this.x = x;
 			this.y = y;
 		} else {
