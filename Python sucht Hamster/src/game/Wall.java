@@ -20,8 +20,14 @@ public class Wall {
 	 * Constructor with parameters: For adding specific Walls (e.g. through Special Tiles)
 	 */
 	public Wall(int x, int y) {
-		this.x = x;
-		this.y = y;
+		if (x > Grid.getX() && x < Grid.getX() + Grid.getWidth() - 1 && y > Grid.getY()     // No Walls beyond the Grid
+				&& y < Grid.getY() + Grid.getHeight() - 1) {	
+			this.x = x;
+			this.y = y;
+		} else {
+			this.x = -40;						// Placing wrong Walls in an unseen area
+			this.y = - 40;
+		}
 	}
 
 	private void setValidSpawn() {

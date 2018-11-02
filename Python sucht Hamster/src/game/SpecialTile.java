@@ -2,11 +2,13 @@ package game;
 
 import actions.Game;
 import chars.Enemy;
+import chars.Player;
 import clocks.ST_BoostEnemy;
 import clocks.ST_ModifyTime;
 import data.Collision;
 import data.CustomMath;
 import gui.Grid;
+import clocks.Wall_Creation;
 
 public class SpecialTile {
 
@@ -21,7 +23,7 @@ public class SpecialTile {
 		this.type = type;
 	}
 
-	public void activate(String activatedBy, Enemy enemy) {
+	public void activate(String activatedBy, Enemy enemy, Player player) {
 		this.setAlive(false);
 		switch (getType()) {
 		case "korn":
@@ -34,7 +36,7 @@ public class SpecialTile {
 			activateHourglass(activatedBy, enemy);
 			break;
 		case "hammer":
-			activateHammer(activatedBy, enemy);
+			activateHammer(activatedBy, enemy, player);
 			break;
 		}
 	}
@@ -52,7 +54,7 @@ public class SpecialTile {
 			}
 		} else {
 			if (activatedBy == "player") {
-				// destroy Korn. Is already destroyed by now (see line 24), so nothing else
+				// destroy Korn. Is already destroyed by now (see line 24, 25), so nothing else
 				// here.
 			}
 		}
@@ -103,12 +105,56 @@ public class SpecialTile {
 		}
 	}
 
-	private void activateHammer(String activatedBy, Enemy e) {
+	private void activateHammer(String activatedBy, Enemy e, Player p) {
 		if (activatedBy == "enemy") {
 			// generate Walls behind Enemy
+			switch (e.getFaceDirection()) {
+			case 0:
+				Wall_Creation.walls.add(new Wall(e.getX() - 33, e.getY() + 33));
+				Wall_Creation.walls.add(new Wall(e.getX(), e.getY() + 33));
+				Wall_Creation.walls.add(new Wall(e.getX() + 33, e.getY() + 33));
+				break;
+			case 1:
+				Wall_Creation.walls.add(new Wall(e.getX() - 33, e.getY() - 33));
+				Wall_Creation.walls.add(new Wall(e.getX() - 33, e.getY()));
+				Wall_Creation.walls.add(new Wall(e.getX() - 33, e.getY() + 33));
+				break;
+			case 2:
+				Wall_Creation.walls.add(new Wall(e.getX() + 33, e.getY() - 33));
+				Wall_Creation.walls.add(new Wall(e.getX(), e.getY() - 33));
+				Wall_Creation.walls.add(new Wall(e.getX() - 33, e.getY() - 33));
+				break;
+			case 3:
+				Wall_Creation.walls.add(new Wall(e.getX() + 33, e.getY() + 33));
+				Wall_Creation.walls.add(new Wall(e.getX() + 33, e.getY()));
+				Wall_Creation.walls.add(new Wall(e.getX() + 33, e.getY() - 33));
+				break;
+			}
 		} else {
 			if (activatedBy == "player") {
 				// generate Walls in front of Player
+				switch (p.getFaceDirection()) {
+				case 0:
+					Wall_Creation.walls.add(new Wall(p.getX() + 33, p.getY() - 33));
+					Wall_Creation.walls.add(new Wall(p.getX(), p.getY() - 33));
+					Wall_Creation.walls.add(new Wall(p.getX() - 33, p.getY() - 33));
+					break;
+				case 1:
+					Wall_Creation.walls.add(new Wall(p.getX() + 33, p.getY() + 33));
+					Wall_Creation.walls.add(new Wall(p.getX() + 33, p.getY()));
+					Wall_Creation.walls.add(new Wall(p.getX() + 33, p.getY() - 33));
+					break;
+				case 2:
+					Wall_Creation.walls.add(new Wall(p.getX() - 33, p.getY() + 33));
+					Wall_Creation.walls.add(new Wall(p.getX(), p.getY() + 33));
+					Wall_Creation.walls.add(new Wall(p.getX() + 33, p.getY() + 33));
+					break;
+				case 3:
+					Wall_Creation.walls.add(new Wall(p.getX() - 33, p.getY() - 33));
+					Wall_Creation.walls.add(new Wall(p.getX() - 33, p.getY()));
+					Wall_Creation.walls.add(new Wall(p.getX() - 33, p.getY() + 33));
+					break;
+				}
 			}
 		}
 	}
