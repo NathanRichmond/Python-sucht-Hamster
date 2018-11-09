@@ -19,32 +19,26 @@ public class MousePressed implements EventHandler<MouseEvent> {
 
 		case startmenu:
 			if (Collision.cButton(Gui.startmenubuttons[0], x, y)) {
-				Gamestate.state = Gamestate_e.lvlselect;
-			}
-			if (Collision.cButton(Gui.startmenubuttons[1], x, y)) {
-				Gamestate.state = Gamestate_e.settings;
-			}
-			if (Collision.cButton(Gui.startmenubuttons[2], x, y)) {
 				System.exit(0);
 			}
-			break;
-
-		case settings:
-			if (Collision.cButton(Gui.settingsbuttons[0], x, y)) {
-				Gamestate.state = Gamestate_e.startmenu;
+			if (Collision.cButton(Gui.startmenubuttons[1], x, y)) { // Hamster skins
+				if (Gui.getHamsterSkin() + 1 == Gui.getnHamsterSkins()) { // if last skin is reached
+					Gui.setHamsterSkin(0); // select first skin
+				} else {
+					Gui.setHamsterSkin(Gui.getHamsterSkin() + 1); // select next skin
+				}
 			}
-			if (Collision.cButton(Gui.settingsbuttons[1], x, y)) {
-				Gui.setPythonSkin(0);
-				Gui.saveSettings();
+			if (Collision.cButton(Gui.startmenubuttons[2], x, y)) { // Python skins
+				if (Gui.getPythonSkin() + 1 == Gui.getnPythonSkins()) { // if last skin is reached
+					Gui.setPythonSkin(0); // select first skin
+				} else {
+					Gui.setPythonSkin(Gui.getPythonSkin() + 1); // select next skin
+				}
 			}
-			if (Collision.cButton(Gui.settingsbuttons[2], x, y)) {
-				Gui.setPythonSkin(1);
-				Gui.saveSettings();
+			if (Collision.cButton(Gui.startmenubuttons[3], x, y)) {
+				// Gamestate.state = Gamestate_e.manual;
 			}
-			break;
-
-		case lvlselect:
-			for (int i = 0; i < Gui.getnLvls(); i++) { // cycle through buttons
+			for (int i = 0; i < Gui.getnLvls(); i++) { // cycle through level select buttons
 				if (Collision.cButton(Gui.lvlselectbuttons[i], x, y)) {
 					if (Game.getMaxLevelAvailable() >= i + 1) { // only if level was unlocked already
 						Game.setLevel(i + 1); // i+1 because i starts at 0 but levels start at 1
@@ -52,57 +46,56 @@ public class MousePressed implements EventHandler<MouseEvent> {
 					}
 				}
 			}
-			if (Collision.cButton(Gui.lvlselectbutton_back, x, y)) {
-				Gamestate.state = Gamestate_e.startmenu;
-			}
 			break;
 
 		case ingame:
-			if (Collision.cButton(Gui.ingamebutton_restart, x, y)) {
+			if (Collision.cButton(Gui.ingamebuttons[0], x, y)) {
+				Gamestate.state = Gamestate_e.startmenu;
+			}
+			if (Collision.cButton(Gui.ingamebuttons[1], x, y)) {
+				Gamestate.state = Gamestate_e.pause;
+			}
+			if (Collision.cButton(Gui.ingamebuttons[2], x, y)) {
 				Game.restartLevel();
 			}
 			break;
 
 		case pause:
-			if (Collision.cButton(Gui.pausebuttons[0], x, y)) {
-				Gamestate.state = Gamestate_e.ingame;
-			}
-			if (Collision.cButton(Gui.pausebuttons[1], x, y)) {
+			if (Collision.cButton(Gui.ingamebuttons[0], x, y)) {
 				Gamestate.state = Gamestate_e.startmenu;
 			}
-			if (Collision.cButton(Gui.pausebuttons[2], x, y)) {
-				System.exit(0);
+			if (Collision.cButton(Gui.ingamebuttons[1], x, y)) {
+				Gamestate.state = Gamestate_e.ingame;
+			}
+			if (Collision.cButton(Gui.ingamebuttons[2], x, y)) {
+				Game.restartLevel();
 			}
 			break;
 
 		case victory:
-			if (Collision.cButton(Gui.gameendbuttons[0], x, y)) {
-				Game.restartLevel();
-			}
-			if (Collision.cButton(Gui.gameendbuttons[1], x, y)) {
+			if (Collision.cButton(Gui.ingamebuttons[0], x, y)) {
 				Gamestate.state = Gamestate_e.startmenu;
 			}
-			if (Collision.cButton(Gui.gameendbuttons[2], x, y)) {
-				System.exit(0);
+			if (Collision.cButton(Gui.ingamebuttons[2], x, y)) {
+				Game.restartLevel();
 			}
 			if (Game.getLevel() + 1 <= Gui.getnLvls()) {
-				if (Collision.cButton(Gui.victorybutton_nextlvl, x, y)) {
+				if (Collision.cButton(Gui.victorybutton, x, y)) {
 					Game.setLevel(Game.getLevel() + 1);
 					Game.restartLevel();
 				}
 			}
 			break;
+
 		case defeat:
-			if (Collision.cButton(Gui.gameendbuttons[0], x, y)) {
-				Game.restartLevel();
-			}
-			if (Collision.cButton(Gui.gameendbuttons[1], x, y)) {
+			if (Collision.cButton(Gui.ingamebuttons[0], x, y)) {
 				Gamestate.state = Gamestate_e.startmenu;
 			}
-			if (Collision.cButton(Gui.gameendbuttons[2], x, y)) {
-				System.exit(0);
+			if (Collision.cButton(Gui.ingamebuttons[2], x, y)) {
+				Game.restartLevel();
 			}
 			break;
+
 		default:
 			break;
 		}
