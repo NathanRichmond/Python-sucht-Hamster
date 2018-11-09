@@ -241,7 +241,7 @@ public class Game {
 	}
 
 	private static void level2() {
-		setEspeed(6.5);
+		setEspeed(5.5);
 		setGameDuration(8.5);
 		setWalls(true);
 		setnWalls(1);
@@ -304,7 +304,7 @@ public class Game {
 		setnWalls(200);
 		setSpecialTiles(true);
 		setnKorn(125);
-		setKornDuration(1);
+		setKornDuration(0.6);
 		setKornBoost(5);
 	}
 

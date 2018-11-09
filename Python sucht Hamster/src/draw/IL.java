@@ -16,6 +16,8 @@ public class IL {
 	public static Image igrid_05x10 = new Image("file:rsc/bg/grid/grid_05x10.png");
 	public static Image igrid_10x05 = new Image("file:rsc/bg/grid/grid_10x05.png");
 	public static Image igrid_10x10 = new Image("file:rsc/bg/grid/grid_10x10.png");
+	public static Image igrid_12x04 = new Image("file:rsc/bg/grid/grid_12x04.png");
+	public static Image igrid_12x04_large = new Image("file:rsc/bg/grid/grid_12x04_large.png");
 	public static Image igrid_20x20 = new Image("file:rsc/bg/grid/grid_20x20.png");
 	public static Image igrid_32x20 = new Image("file:rsc/bg/grid/grid_32x20.png");
 	public static Image igrid_40x20 = new Image("file:rsc/bg/grid/grid_40x20.png");
@@ -23,17 +25,29 @@ public class IL {
 	/*
 	 * Characters, with all faceDirections
 	 */
-	// Enemy
+	// Default Hamster (Gui.hamsterSkin: 0)
 	public static Image ienemy0 = new Image("file:rsc/chars/hamster_0.png");
 	public static Image ienemy1 = new Image("file:rsc/chars/hamster_1.png");
 	public static Image ienemy2 = new Image("file:rsc/chars/hamster_2.png");
 	public static Image ienemy3 = new Image("file:rsc/chars/hamster_3.png");
 
-	// Enemy upgraded
+	// Default Hamster upgraded
 	public static Image ienemyred0 = new Image("file:rsc/chars/hamster-red_0.png");
 	public static Image ienemyred1 = new Image("file:rsc/chars/hamster-red_1.png");
 	public static Image ienemyred2 = new Image("file:rsc/chars/hamster-red_2.png");
 	public static Image ienemyred3 = new Image("file:rsc/chars/hamster-red_3.png");
+
+	// Candy Hamster (Gui.hamsterSkin: 1)
+	public static Image ienemypink0 = new Image("file:rsc/chars/hamster-pink_0.png");
+	public static Image ienemypink1 = new Image("file:rsc/chars/hamster-pink_1.png");
+	public static Image ienemypink2 = new Image("file:rsc/chars/hamster-pink_2.png");
+	public static Image ienemypink3 = new Image("file:rsc/chars/hamster-pink_3.png");
+
+	// Candy Hamster upgraded
+	public static Image ienemydarkpink0 = new Image("file:rsc/chars/hamster-darkpink_0.png");
+	public static Image ienemydarkpink1 = new Image("file:rsc/chars/hamster-darkpink_1.png");
+	public static Image ienemydarkpink2 = new Image("file:rsc/chars/hamster-darkpink_2.png");
+	public static Image ienemydarkpink3 = new Image("file:rsc/chars/hamster-darkpink_3.png");
 
 	// Default Python (Gui.pythonSkin: 0)
 	public static Image iplayer0 = new Image("file:rsc/chars/python_0.png");
@@ -41,11 +55,18 @@ public class IL {
 	public static Image iplayer2 = new Image("file:rsc/chars/python_2.png");
 	public static Image iplayer3 = new Image("file:rsc/chars/python_3.png");
 
-	// Default Python (Gui.pythonSkin: 1)
+	// Bloody Python (Gui.pythonSkin: 1)
 	public static Image iplayerred0 = new Image("file:rsc/chars/python-red_0.png");
 	public static Image iplayerred1 = new Image("file:rsc/chars/python-red_1.png");
 	public static Image iplayerred2 = new Image("file:rsc/chars/python-red_2.png");
 	public static Image iplayerred3 = new Image("file:rsc/chars/python-red_3.png");
+	
+	// Start Menu icons
+	public static Image iplayerlargered3 = new Image("file:rsc/chars/pythonlarge-red_3.png");
+	public static Image iplayerlarge3 = new Image("file:rsc/chars/pythonlarge_3.png");
+	public static Image ienemylargepink1 = new Image("file:rsc/chars/hamsterlarge-pink_1.png");
+	public static Image ienemylarge1 = new Image("file:rsc/chars/hamsterlarge_1.png");
+	
 
 	/*
 	 * Start Menu Screen
@@ -53,14 +74,14 @@ public class IL {
 	public static Image istartmenu = new Image("file:rsc/game/ui/startmenu.png");
 
 	/*
-	 * Settings Screen
+	 * Cross button
 	 */
-	public static Image isettings = new Image("file:rsc/game/ui/settingsscreen.png");
-
+	public static Image ibcross = new Image("file:rsc/game/ui/cross_large.png");
+	
 	/*
-	 * Level Selection Screen
+	 * Question mark button
 	 */
-	public static Image ilvlselect = new Image("file:rsc/game/ui/lvlselect.png");
+	public static Image ibquestionmark = new Image("file:rsc/game/ui/questionmark.png");
 
 	/*
 	 * Victory and Defeat Screens
@@ -72,6 +93,7 @@ public class IL {
 	 * Wall
 	 */
 	public static Image iwall = new Image("file:rsc/game/wall.png");
+	public static Image iwalllarge = new Image("file:rsc/game/wall_large.png");
 
 	/*
 	 * Special Tiles
@@ -82,9 +104,29 @@ public class IL {
 	public static Image ispecialtile_hammer = new Image("file:rsc/game/specialtiles/hammer.png");
 
 	/*
-	 * Ingame Button: Restart
+	 * Ingame Buttons
 	 */
-	public static Image ibrestart = new Image("file:rsc/game/ui/ingamebutton_restart.png");
+	public static Image ibpause = new Image("file:rsc/game/ui/ingamebuttons/button_pause.png");
+	public static Image ibplay = new Image("file:rsc/game/ui/ingamebuttons/button_play.png");
+	public static Image ibrestart = new Image("file:rsc/game/ui/ingamebuttons/button_restart.png");
+	public static Image ibexit = new Image("file:rsc/game/ui/ingamebuttons/button_stop.png");
+	public static Image ibnext = new Image("file:rsc/game/ui/ingamebuttons/button_next.png");
+
+	/*
+	 * Koerner for Level Select
+	 */
+	public static Image ikorn1 = new Image("file:rsc/game/ui/koerner/1.png");
+	public static Image ikorn2 = new Image("file:rsc/game/ui/koerner/2.png");
+	public static Image ikorn3 = new Image("file:rsc/game/ui/koerner/3.png");
+	public static Image ikorn4 = new Image("file:rsc/game/ui/koerner/4.png");
+	public static Image ikorn5 = new Image("file:rsc/game/ui/koerner/5.png");
+	public static Image ikorn6 = new Image("file:rsc/game/ui/koerner/6.png");
+	public static Image ikorn7 = new Image("file:rsc/game/ui/koerner/7.png");
+	public static Image ikorn8 = new Image("file:rsc/game/ui/koerner/8.png");
+	public static Image ikorn9 = new Image("file:rsc/game/ui/koerner/9.png");
+	public static Image ikorn10 = new Image("file:rsc/game/ui/koerner/10.png");
+	public static Image ikorn11 = new Image("file:rsc/game/ui/koerner/11.png");
+	public static Image ikorn12 = new Image("file:rsc/game/ui/koerner/12.png");
 
 	/*
 	 * GameTimer

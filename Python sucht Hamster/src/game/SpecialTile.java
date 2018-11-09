@@ -65,7 +65,7 @@ public class SpecialTile {
 			// nothing
 		} else {
 			if (activatedBy == "player") {
-				// ?
+				// do a fast dash of two tiles in the face direction
 			}
 		}
 	}
