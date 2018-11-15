@@ -47,7 +47,9 @@ public class Game {
   private static double kornDuration; // duration of Korn effect in seconds
   private static double kornBoost; // factor by which Enemy base speed is increased
 
-  private static int nBabyhamster; // number of Babyhamster Tiles
+  private static int nBabyhamsterTwo; // number of Babyhamster Tiles with two hamsters
+  private static int nBabyhamsterThree; // number of Babyhamster tiles with three hamsters
+  private static int nBabyhamsterFour; // number of Babyhamster tiles with four hamsters
 
   private static int nHourglass; // number of Hourglass Tiles
   private static double hourglassEDuration; // duration of Hourglass effect (activated by Enemy) in seconds
@@ -115,7 +117,9 @@ public class Game {
     setnKorn(0);
     setKornDuration(0);
     setKornBoost(0);
-    setnBabyhamster(0);
+    setnBabyhamsterTwo(0);
+    setnBabyhamsterThree(0);
+    setnBabyhamsterFour(0);
     setnHourglass(0);
     setHourglassEDuration(0);
     setHourglassEFactor(0);
@@ -293,7 +297,9 @@ public class Game {
     setWalls(true);
     setnWalls(10);
     setSpecialTiles(true);
-    setnBabyhamster(50);
+    setnBabyhamsterTwo(25);
+    setnBabyhamsterThree(15);
+    setnBabyhamsterFour(10);
   }
 
   private static void level8() {
@@ -474,12 +480,28 @@ public class Game {
     Game.kornBoost = kornBoost;
   }
 
-  public static int getnBabyhamster() {
-    return nBabyhamster;
+  public static int getnBabyhamsterTwo() {
+    return nBabyhamsterTwo;
   }
 
-  public static void setnBabyhamster(int nBabyhamster) {
-    Game.nBabyhamster = nBabyhamster;
+  public static void setnBabyhamsterTwo(int nBabyhamster) {
+    Game.nBabyhamsterTwo = nBabyhamster;
+  }
+
+  public static int getnBabyhamsterThree() {
+    return nBabyhamsterThree;
+  }
+
+  public static void setnBabyhamsterThree(int nBabyhamster) {
+    Game.nBabyhamsterThree = nBabyhamster;
+  }
+
+  public static int getnBabyhamsterFour() {
+    return nBabyhamsterFour;
+  }
+
+  public static void setnBabyhamsterFour(int nBabyhamster) {
+    Game.nBabyhamsterFour = nBabyhamster;
   }
 
   public static int getnHourglass() {

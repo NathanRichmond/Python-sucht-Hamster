@@ -16,8 +16,14 @@ public class SpecialTile_Creation {
 		for (int i = 0; i < Game.getnKorn(); i++) {
 			specialtiles.add(new SpecialTile("korn"));
 		}
-		for (int i = 0; i < Game.getnBabyhamster(); i++) {
-			specialtiles.add(new SpecialTile("babyhamster"));
+		for (int i = 0; i < Game.getnBabyhamsterTwo(); i++) {
+			specialtiles.add(new SpecialTile("babyhamsterTwo"));
+		}
+		for (int i = 0; i < Game.getnBabyhamsterThree(); i++) {
+			specialtiles.add(new SpecialTile("babyhamsterThree"));
+		}
+		for (int i = 0; i < Game.getnBabyhamsterFour(); i++) {
+			specialtiles.add(new SpecialTile("babyhamsterFour"));
 		}
 		for (int i = 0; i < Game.getnHourglass(); i++) {
 			specialtiles.add(new SpecialTile("hourglass"));
