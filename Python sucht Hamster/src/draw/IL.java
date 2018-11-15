@@ -7,7 +7,7 @@ public class IL {
 	/*
 	 * Grass Background
 	 */
-	public static Image bggras = new Image("file:rsc/bg/grass.png");
+	public static Image bggras = new Image("file:rsc/bg/feld.jpg");
 
 	/*
 	 * Grid
@@ -71,7 +71,7 @@ public class IL {
 	/*
 	 * Start Menu Screen
 	 */
-	public static Image istartmenu = new Image("file:rsc/game/ui/startmenu.png");
+	public static Image istartmenu = new Image("file:rsc/bg/feld.jpg");
 
 	/*
 	 * Cross button
@@ -81,8 +81,13 @@ public class IL {
 	/*
 	 * Question mark button
 	 */
-	public static Image ibquestionmark = new Image("file:rsc/game/ui/questionmark.png");
-
+	public static Image ibquestionmark = new Image("file:rsc/game/ui/questionmark.png"); 
+	
+	/*
+	 * Arrow Keys Button _ Manual 
+	 */
+	public static Image ikeys = new Image("file:rsc/manual/300px-Arrow_keys[1].jpg"); 
+	
 	/*
 	 * Victory and Defeat Screens
 	 */

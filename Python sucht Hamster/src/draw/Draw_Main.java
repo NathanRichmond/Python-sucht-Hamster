@@ -39,7 +39,14 @@ public class Draw_Main {
 		if (Gamestate.state == Gamestate_e.startmenu) {
 			drawStartMenu(g);
 		}
-
+		
+		/*
+		 * MANUAL SCREEN
+		 */
+         if (Gamestate.state == Gamestate_e.manual) {
+        	 drawManual(g); 
+         }
+		
 		/*
 		 * INGAME ELEMENTS
 		 */
@@ -1016,7 +1023,56 @@ public class Draw_Main {
 //		g.setFill(Color.WHITE);
 //		g.fillText(b.getText(), b.getX() + b.getWidth() / 2, b.getY() + b.getHeight() / 2);
 	}
+	
+	public void drawManual (GraphicsContext g) {
+		g.drawImage(IL.istartmenu, 0, 0, Gui.getWidth(), Gui.getHeight());
+		
+		g.setFill(new Color(1, 1, 1, 0.7)); // semi-transparent layer underneath the grid
+		g.fillRect(startmenugridX, startmenugridY, startmenugridWidth, startmenugridHeight);
 
+		g.drawImage(IL.igrid_12x04_large, startmenugridX, startmenugridY, startmenugridWidth, startmenugridHeight);
+		
+		// SCHLIEßEN BUTTON 
+		Button b = Gui.startmenubuttons[0];
+		g.drawImage(IL.ibcross, b.getX() + 3, b.getY() + 3, b.getWidth() - 6, b.getHeight() - 6);
+	    
+		//Tutorial Button 1 
+		b = Gui.manualbuttons[0]; 
+		g.drawImage(IL.ikeys, b.getX() + 3, b.getY() + 3, b.getWidth() - 6, b.getHeight() - 6);
+		
+		// Tutorial Button 2 
+		b = Gui.manualbuttons[1]; 
+		g.drawImage(IL.iwall, b.getX() + 3, b.getY() + 3, b.getWidth() - 6, b.getHeight() - 6);
+		
+		//Tutorial Button 3
+		b = Gui.manualbuttons[2]; 
+		g.drawImage(IL.ispecialtile_korn, b.getX() + 3, b.getY() + 3, b.getWidth() - 6, b.getHeight() - 6);
+		
+		
+		b = Gui.manualbuttons[3]; 
+	    g.drawImage(IL.ibquestionmark, b.getX() + 3, b.getY() + 3, b.getWidth() - 6, b.getHeight() - 6);
+	    
+	    b = Gui.manualbuttons[4]; 
+	    g.drawImage(IL.ispecialtile_hourglass, b.getX() + 3, b.getY() + 3, b.getWidth() - 6, b.getHeight() - 6);
+		
+	    b = Gui.manualbuttons[5]; 
+	    g.drawImage(IL.ispecialtile_hammer, b.getX() + 3, b.getY() + 3, b.getWidth() - 6, b.getHeight() - 6);
+	    
+	    b = Gui.manualbuttons[6]; 
+        g.strokeRect(b.getX(), b.getY(), b.getWidth(), b.getHeight()); 
+        
+		g.setFill(Color.CHOCOLATE);
+		g.fillRect(b.getX(), b.getY(), b.getWidth(), b.getHeight());
+		
+		g.setTextAlign(TextAlignment.CENTER);
+		g.setTextBaseline(VPos.CENTER);
+		g.setFont(new Font("Verdana", 16));
+		g.setFill(Color.WHITE);
+		g.fillText(b.getText(), b.getX() + b.getWidth() / 2, b.getY() + b.getHeight() / 2);
+
+	}
+
+	
 	public static int getStartmenugridWidth() {
 		return startmenugridWidth;
 	}
