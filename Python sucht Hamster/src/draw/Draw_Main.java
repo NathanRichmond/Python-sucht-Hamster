@@ -839,8 +839,14 @@ public class Draw_Main {
 				case "korn":
 					g.drawImage(IL.ispecialtile_korn, st.getX(), st.getY(), st.getWidth(), st.getHeight());
 					break;
-				case "babyhamster":
-					g.drawImage(IL.ispecialtile_babyhamster, st.getX(), st.getY(), st.getWidth(), st.getHeight());
+				case "babyhamsterTwo":
+					g.drawImage(IL.ispecialtile_babyhamsterTwo, st.getX(), st.getY(), st.getWidth(), st.getHeight());
+					break;
+				case "babyhamsterThree":
+					g.drawImage(IL.ispecialtile_babyhamsterThree, st.getX(), st.getY(), st.getWidth(), st.getHeight());
+					break;
+				case "babyhamsterFour":
+					g.drawImage(IL.ispecialtile_babyhamsterFour, st.getX(), st.getY(), st.getWidth(), st.getHeight());
 					break;
 				case "hourglass":
 					g.drawImage(IL.ispecialtile_hourglass, st.getX(), st.getY(), st.getWidth(), st.getHeight());
