@@ -92,13 +92,11 @@ public class Collision {
 				if (st.getType() == "babyhamsterThree" && x == st.getX() && y == st.getY()) {
 					flag = true;
 					break;
-				}
-				else {
+				} else {
 					if (st.getType() == "babyhamsterFour" && x == st.getX() && y == st.getY()) {
 						flag = true;
 						break;
-					}
-					else {
+					} else {
 						flag = false;
 					}
 				}

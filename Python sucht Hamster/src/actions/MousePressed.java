@@ -36,7 +36,7 @@ public class MousePressed implements EventHandler<MouseEvent> {
 				}
 			}
 			if (Collision.cButton(Gui.startmenubuttons[3], x, y)) {
-				 Gamestate.state = Gamestate_e.manual;
+				Gamestate.state = Gamestate_e.manual;
 			}
 			for (int i = 0; i < Gui.getnLvls(); i++) { // cycle through level select buttons
 				if (Collision.cButton(Gui.lvlselectbuttons[i], x, y)) {
@@ -56,8 +56,7 @@ public class MousePressed implements EventHandler<MouseEvent> {
 					Game.setLevel(1);
 					Game.startNewGame();
 			}
-			
-
+				break;
 		case ingame:
 			if (Collision.cButton(Gui.ingamebuttons[0], x, y)) {
 				Gamestate.state = Gamestate_e.startmenu;
@@ -89,7 +88,7 @@ public class MousePressed implements EventHandler<MouseEvent> {
 			if (Collision.cButton(Gui.ingamebuttons[2], x, y)) {
 				Game.restartLevel();
 			}
-			if (Game.getLevel() + 1 <= Gui.getnLvls()) {
+			if (Game.getLevel() + 1 <= Gui.getnLvls() || Game.getLevel() > 100) {
 				if (Collision.cButton(Gui.victorybutton, x, y)) {
 					Game.setLevel(Game.getLevel() + 1);
 					Game.restartLevel();
