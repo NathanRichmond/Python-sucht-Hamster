@@ -39,14 +39,14 @@ public class Draw_Main {
 		if (Gamestate.state == Gamestate_e.startmenu) {
 			drawStartMenu(g);
 		}
-		
+
 		/*
 		 * MANUAL SCREEN
 		 */
-         if (Gamestate.state == Gamestate_e.manual) {
-        	 drawManual(g); 
-         }
-		
+		if (Gamestate.state == Gamestate_e.manual) {
+			drawManual(g);
+		}
+
 		/*
 		 * INGAME ELEMENTS
 		 */
@@ -85,7 +85,9 @@ public class Draw_Main {
 			/*
 			 * GAME ELEMENTS: GameTimer
 			 */
-			drawGameTimer(g);
+			if (Game.getLevel() != 101 && Game.getLevel() != 102) { // no timer in tut1 & tut2
+				drawGameTimer(g);
+			}
 
 			/*
 			 * GAME ELEMENTS: Ingame Buttons
@@ -93,16 +95,9 @@ public class Draw_Main {
 			drawIngameButtons(g);
 
 			/*
-			 * GAME ELEMENTS: Title
+			 * GAME ELEMENTS: Level Title
 			 */
-			g.setFill(new Color(0, 0, 0, 0.4));
-			g.fillRect(Grid.getX() + Grid.getWidth() / 2 - 160 / 2, Grid.getY() / 2 - 40 / 2, 160, 40);
-
-			g.setTextAlign(TextAlignment.CENTER);
-			g.setTextBaseline(VPos.CENTER);
-			g.setFont(new Font("Verdana Bold Italic", 30));
-			g.setFill(Color.WHITE);
-			g.fillText("LEVEL " + Game.getLevel(), Grid.getX() + Grid.getWidth() / 2, Grid.getY() / 2);
+			drawLvlTitle(g);
 
 //			/*
 //			 * GAME ELEMENTS: Korn Tile Activated Info
@@ -162,19 +157,10 @@ public class Draw_Main {
 		}
 
 		/*
-		 * VICTORY SCREEN
+		 * GAME END SCREENS
 		 */
-		if (Gamestate.state == Gamestate_e.victory)
-
-		{
-			drawVictoryScreen(g);
-		}
-
-		/*
-		 * DEFEAT SCREEN
-		 */
-		if (Gamestate.state == Gamestate_e.defeat) {
-			drawDefeatScreen(g);
+		if (Gamestate.state == Gamestate_e.victory || Gamestate.state == Gamestate_e.defeat) {
+			drawGameendScreen(g);
 		}
 
 		/*
@@ -184,6 +170,52 @@ public class Draw_Main {
 			drawPauseScreen(g);
 		}
 
+	}
+
+	private void drawLvlTitle(GraphicsContext g) {
+		int width = 150; // width of the lvl title box
+		int height = 70; // height of the lvl title box
+		int x = Grid.getX() + Grid.getWidth() / 2 - width / 2; // x coordinate of the lvl title box
+		int y = Grid.getY() / 2 - height / 2; // y coordinate of the lvl title box
+
+		switch (Game.getLevel()) {
+		case 1:
+			g.drawImage(IL.ilvltitle1, x, y, width, height);
+			break;
+		case 2:
+			g.drawImage(IL.ilvltitle2, x, y, width, height);
+			break;
+		case 3:
+			g.drawImage(IL.ilvltitle3, x, y, width, height);
+			break;
+		case 4:
+			g.drawImage(IL.ilvltitle4, x, y, width, height);
+			break;
+		case 5:
+			g.drawImage(IL.ilvltitle5, x, y, width, height);
+			break;
+		case 6:
+			g.drawImage(IL.ilvltitle6, x, y, width, height);
+			break;
+		case 7:
+			g.drawImage(IL.ilvltitle7, x, y, width, height);
+			break;
+		case 8:
+			g.drawImage(IL.ilvltitle8, x, y, width, height);
+			break;
+		case 9:
+			g.drawImage(IL.ilvltitle9, x, y, width, height);
+			break;
+		case 10:
+			g.drawImage(IL.ilvltitle10, x, y, width, height);
+			break;
+		case 11:
+			g.drawImage(IL.ilvltitle11, x, y, width, height);
+			break;
+		case 12:
+			g.drawImage(IL.ilvltitle12, x, y, width, height);
+			break;
+		}
 	}
 
 	private void drawIngameButtons(GraphicsContext g) {
@@ -318,17 +350,47 @@ public class Draw_Main {
 	}
 
 	private void drawLvlDesc(GraphicsContext g, int level) {
-		int x = 60;
-		int y = 420;
+		int x = getStartmenugridX();
+		int y = getStartmenugridY() - 90;
 		switch (level) {
 		default:
 			g.fillText("[Description of level " + level + " here]", x, y);
 			break;
+		case 1:
+			g.drawImage(IL.ilvldesc1, x, y);
+			break;
+		case 2:
+			g.drawImage(IL.ilvldesc2, x, y);
+			break;
+		case 3:
+			g.drawImage(IL.ilvldesc3, x, y);
+			break;
+		case 4:
+			g.drawImage(IL.ilvldesc4, x, y);
+			break;
+		case 5:
+			g.drawImage(IL.ilvldesc5, x, y);
+			break;
+		case 6:
+			g.drawImage(IL.ilvldesc6, x, y);
+			break;
+		case 7:
+			g.drawImage(IL.ilvldesc7, x, y);
+			break;
+		case 8:
+			g.drawImage(IL.ilvldesc8, x, y);
+			break;
+		case 9:
+			g.drawImage(IL.ilvldesc9, x, y);
+			break;
+		case 10:
+			g.drawImage(IL.ilvldesc10, x, y);
+			break;
 		case 11:
-			g.fillText("Level 11: The Granary", x, y);
+			g.drawImage(IL.ilvldesc11, x, y);
 			break;
 		case 12:
-			g.fillText("Level 12: Hamsterinflation", x, y);
+			g.drawImage(IL.ilvldesc12, x, y);
 			break;
 		}
 
@@ -361,20 +423,39 @@ public class Draw_Main {
 		g.fillText("PAUSE", Grid.getX() + Grid.getWidth() / 2, Grid.getY() + Grid.getHeight() / 4);
 	}
 
-	private void drawDefeatScreen(GraphicsContext g) {
+	private void drawGameendScreen(GraphicsContext g) {
+		// dark layer over grid
 		g.setFill(new Color(0, 0, 0, 0.7));
 		g.fillRect(Grid.getX(), Grid.getY(), Grid.getWidth(), Grid.getHeight());
 
-		g.drawImage(IL.tdefeat, Grid.getX(), Grid.getY(), Grid.getWidth(), Grid.getHeight());
+		int w = 166; // width of image
+		int h = 166; // height of image
+		// position of image: centered on grid
+		int x = Grid.getX() + (Grid.getWidth() / 2 - w / 2);
+		int y = Grid.getY() + (Grid.getHeight() / 2 - h / 2);
+
+		// border around the image (placeholder while there is no image)
+		g.setStroke(Color.WHITE);
+		g.strokeRect(x, y, w, h);
+
+		switch (Gamestate.state) {
+		case defeat:
+			g.drawImage(IL.idefeat, x, y, w, h);
+			break;
+		case victory:
+			g.drawImage(IL.ivictory, x, y, w, h);
+			drawVictoryButton(g); // Button: "Next Level"
+			if (Game.getLevel() > 100) { // if victory is in a Tutorial level
+				// draw text "zum nächsten Level" with an arrow next to the button
+			}
+			break;
+		default:
+			break;
+		}
 	}
 
-	private void drawVictoryScreen(GraphicsContext g) {
-		g.setFill(new Color(0, 0, 0, 0.7));
-		g.fillRect(Grid.getX(), Grid.getY(), Grid.getWidth(), Grid.getHeight());
-
-		g.drawImage(IL.tvictory, Grid.getX(), Grid.getY(), Grid.getWidth(), Grid.getHeight());
-
-		if (Game.getLevel() + 1 <= Gui.getnLvls()) {
+	private void drawVictoryButton(GraphicsContext g) {
+		if (Game.getLevel() + 1 <= Gui.getnLvls() || Game.getLevel() > 100) {
 			Button b = Gui.victorybutton;
 			g.strokeRect(b.getX(), b.getY(), b.getWidth(), b.getHeight());
 			g.setFill(new Color(1, 1, 1, 0.8));
@@ -687,16 +768,23 @@ public class Draw_Main {
 					switch (Gui.getHamsterSkin()) {
 					case 0:
 						if (e.isSpeedBoosted() == true) {
-							g.drawImage(IL.ienemyred0, e.getX(), e.getY(), e.getWidth(), e.getHeight());
+							g.drawImage(IL.ienemy0u_0, e.getX(), e.getY(), e.getWidth(), e.getHeight());
 						} else {
-							g.drawImage(IL.ienemy0, e.getX(), e.getY(), e.getWidth(), e.getHeight());
+							g.drawImage(IL.ienemy0_0, e.getX(), e.getY(), e.getWidth(), e.getHeight());
 						}
 						break;
 					case 1:
 						if (e.isSpeedBoosted() == true) {
-							g.drawImage(IL.ienemydarkpink0, e.getX(), e.getY(), e.getWidth(), e.getHeight());
+							g.drawImage(IL.ienemy1u_0, e.getX(), e.getY(), e.getWidth(), e.getHeight());
 						} else {
-							g.drawImage(IL.ienemypink0, e.getX(), e.getY(), e.getWidth(), e.getHeight());
+							g.drawImage(IL.ienemy1_0, e.getX(), e.getY(), e.getWidth(), e.getHeight());
+						}
+						break;
+					case 2:
+						if (e.isSpeedBoosted() == true) {
+							g.drawImage(IL.ienemy2u_0, e.getX(), e.getY(), e.getWidth(), e.getHeight());
+						} else {
+							g.drawImage(IL.ienemy2_0, e.getX(), e.getY(), e.getWidth(), e.getHeight());
 						}
 						break;
 					}
@@ -705,16 +793,23 @@ public class Draw_Main {
 					switch (Gui.getHamsterSkin()) {
 					case 0:
 						if (e.isSpeedBoosted() == true) {
-							g.drawImage(IL.ienemyred1, e.getX(), e.getY(), e.getWidth(), e.getHeight());
+							g.drawImage(IL.ienemy0u_1, e.getX(), e.getY(), e.getWidth(), e.getHeight());
 						} else {
-							g.drawImage(IL.ienemy1, e.getX(), e.getY(), e.getWidth(), e.getHeight());
+							g.drawImage(IL.ienemy0_1, e.getX(), e.getY(), e.getWidth(), e.getHeight());
 						}
 						break;
 					case 1:
 						if (e.isSpeedBoosted() == true) {
-							g.drawImage(IL.ienemydarkpink1, e.getX(), e.getY(), e.getWidth(), e.getHeight());
+							g.drawImage(IL.ienemy1u_1, e.getX(), e.getY(), e.getWidth(), e.getHeight());
 						} else {
-							g.drawImage(IL.ienemypink1, e.getX(), e.getY(), e.getWidth(), e.getHeight());
+							g.drawImage(IL.ienemy1_1, e.getX(), e.getY(), e.getWidth(), e.getHeight());
+						}
+						break;
+					case 2:
+						if (e.isSpeedBoosted() == true) {
+							g.drawImage(IL.ienemy2u_1, e.getX(), e.getY(), e.getWidth(), e.getHeight());
+						} else {
+							g.drawImage(IL.ienemy2_1, e.getX(), e.getY(), e.getWidth(), e.getHeight());
 						}
 						break;
 					}
@@ -723,16 +818,23 @@ public class Draw_Main {
 					switch (Gui.getHamsterSkin()) {
 					case 0:
 						if (e.isSpeedBoosted() == true) {
-							g.drawImage(IL.ienemyred2, e.getX(), e.getY(), e.getWidth(), e.getHeight());
+							g.drawImage(IL.ienemy0u_2, e.getX(), e.getY(), e.getWidth(), e.getHeight());
 						} else {
-							g.drawImage(IL.ienemy2, e.getX(), e.getY(), e.getWidth(), e.getHeight());
+							g.drawImage(IL.ienemy0_2, e.getX(), e.getY(), e.getWidth(), e.getHeight());
 						}
 						break;
 					case 1:
 						if (e.isSpeedBoosted() == true) {
-							g.drawImage(IL.ienemydarkpink2, e.getX(), e.getY(), e.getWidth(), e.getHeight());
+							g.drawImage(IL.ienemy1u_2, e.getX(), e.getY(), e.getWidth(), e.getHeight());
 						} else {
-							g.drawImage(IL.ienemypink2, e.getX(), e.getY(), e.getWidth(), e.getHeight());
+							g.drawImage(IL.ienemy1_2, e.getX(), e.getY(), e.getWidth(), e.getHeight());
+						}
+						break;
+					case 2:
+						if (e.isSpeedBoosted() == true) {
+							g.drawImage(IL.ienemy2u_2, e.getX(), e.getY(), e.getWidth(), e.getHeight());
+						} else {
+							g.drawImage(IL.ienemy2_2, e.getX(), e.getY(), e.getWidth(), e.getHeight());
 						}
 						break;
 					}
@@ -741,22 +843,29 @@ public class Draw_Main {
 					switch (Gui.getHamsterSkin()) {
 					case 0:
 						if (e.isSpeedBoosted() == true) {
-							g.drawImage(IL.ienemyred3, e.getX(), e.getY(), e.getWidth(), e.getHeight());
+							g.drawImage(IL.ienemy0u_3, e.getX(), e.getY(), e.getWidth(), e.getHeight());
 						} else {
-							g.drawImage(IL.ienemy3, e.getX(), e.getY(), e.getWidth(), e.getHeight());
+							g.drawImage(IL.ienemy0_3, e.getX(), e.getY(), e.getWidth(), e.getHeight());
 						}
 						break;
 					case 1:
 						if (e.isSpeedBoosted() == true) {
-							g.drawImage(IL.ienemydarkpink3, e.getX(), e.getY(), e.getWidth(), e.getHeight());
+							g.drawImage(IL.ienemy1u_3, e.getX(), e.getY(), e.getWidth(), e.getHeight());
 						} else {
-							g.drawImage(IL.ienemypink3, e.getX(), e.getY(), e.getWidth(), e.getHeight());
+							g.drawImage(IL.ienemy1_3, e.getX(), e.getY(), e.getWidth(), e.getHeight());
+						}
+						break;
+					case 2:
+						if (e.isSpeedBoosted() == true) {
+							g.drawImage(IL.ienemy2u_3, e.getX(), e.getY(), e.getWidth(), e.getHeight());
+						} else {
+							g.drawImage(IL.ienemy2_3, e.getX(), e.getY(), e.getWidth(), e.getHeight());
 						}
 						break;
 					}
 					break;
 				default:
-					g.drawImage(IL.ienemy1, e.getX(), e.getY(), e.getWidth(), e.getHeight());
+					g.drawImage(IL.ienemy0_1, e.getX(), e.getY(), e.getWidth(), e.getHeight());
 					break;
 				}
 			} else {
@@ -782,50 +891,65 @@ public class Draw_Main {
 		case 0:
 			switch (Gui.getPythonSkin()) {
 			default:
-				g.drawImage(IL.iplayer0, p.getX(), p.getY(), p.getWidth(), p.getHeight());
+				g.drawImage(IL.iplayer0_0, p.getX(), p.getY(), p.getWidth(), p.getHeight());
 				break;
 			case 1:
-				g.drawImage(IL.iplayerred0, p.getX(), p.getY(), p.getWidth(), p.getHeight());
+				g.drawImage(IL.iplayer1_0, p.getX(), p.getY(), p.getWidth(), p.getHeight());
+				break;
+			case 2:
+				g.drawImage(IL.iplayer2_0, p.getX(), p.getY(), p.getWidth(), p.getHeight());
 				break;
 			}
 			break;
 		case 1:
 			switch (Gui.getPythonSkin()) {
 			default:
-				g.drawImage(IL.iplayer1, p.getX(), p.getY(), p.getWidth(), p.getHeight());
+				g.drawImage(IL.iplayer0_1, p.getX(), p.getY(), p.getWidth(), p.getHeight());
 				break;
 			case 1:
-				g.drawImage(IL.iplayerred1, p.getX(), p.getY(), p.getWidth(), p.getHeight());
+				g.drawImage(IL.iplayer1_1, p.getX(), p.getY(), p.getWidth(), p.getHeight());
+				break;
+			case 2:
+				g.drawImage(IL.iplayer2_1, p.getX(), p.getY(), p.getWidth(), p.getHeight());
 				break;
 			}
 			break;
 		case 2:
 			switch (Gui.getPythonSkin()) {
 			default:
-				g.drawImage(IL.iplayer2, p.getX(), p.getY(), p.getWidth(), p.getHeight());
+				g.drawImage(IL.iplayer0_2, p.getX(), p.getY(), p.getWidth(), p.getHeight());
 				break;
 			case 1:
-				g.drawImage(IL.iplayerred2, p.getX(), p.getY(), p.getWidth(), p.getHeight());
+				g.drawImage(IL.iplayer1_2, p.getX(), p.getY(), p.getWidth(), p.getHeight());
+				break;
+			case 2:
+				g.drawImage(IL.iplayer2_2, p.getX(), p.getY(), p.getWidth(), p.getHeight());
 				break;
 			}
 			break;
 		case 3:
 			switch (Gui.getPythonSkin()) {
 			default:
-				g.drawImage(IL.iplayer3, p.getX(), p.getY(), p.getWidth(), p.getHeight());
+				g.drawImage(IL.iplayer0_3, p.getX(), p.getY(), p.getWidth(), p.getHeight());
 				break;
 			case 1:
-				g.drawImage(IL.iplayerred3, p.getX(), p.getY(), p.getWidth(), p.getHeight());
+				g.drawImage(IL.iplayer1_3, p.getX(), p.getY(), p.getWidth(), p.getHeight());
+				break;
+			case 2:
+				g.drawImage(IL.iplayer2_3, p.getX(), p.getY(), p.getWidth(), p.getHeight());
 				break;
 			}
 			break;
 		default:
 			switch (Gui.getPythonSkin()) {
 			default:
-				g.drawImage(IL.iplayer0, p.getX(), p.getY(), p.getWidth(), p.getHeight());
+				g.drawImage(IL.iplayer0_0, p.getX(), p.getY(), p.getWidth(), p.getHeight());
 				break;
 			case 1:
-				g.drawImage(IL.iplayerred0, p.getX(), p.getY(), p.getWidth(), p.getHeight());
+				g.drawImage(IL.iplayer1_0, p.getX(), p.getY(), p.getWidth(), p.getHeight());
+				break;
+			case 2:
+				g.drawImage(IL.iplayer2_0, p.getX(), p.getY(), p.getWidth(), p.getHeight());
 				break;
 			}
 			break;
@@ -871,14 +995,35 @@ public class Draw_Main {
 		g.fillRect(Grid.getX(), Grid.getY(), Grid.getWidth(), Grid.getHeight());
 
 		switch (Grid.getSize()) {
+		case "05x05":
+			g.drawImage(IL.igrid_05x05, Grid.getX(), Grid.getY(), Grid.getWidth(), Grid.getHeight());
+			break;
 		case "05x10":
 			g.drawImage(IL.igrid_05x10, Grid.getX(), Grid.getY(), Grid.getWidth(), Grid.getHeight());
+			break;
+		case "08x05":
+			g.drawImage(IL.igrid_08x05, Grid.getX(), Grid.getY(), Grid.getWidth(), Grid.getHeight());
+			break;
+		case "08x08":
+			g.drawImage(IL.igrid_08x08, Grid.getX(), Grid.getY(), Grid.getWidth(), Grid.getHeight());
 			break;
 		case "10x05":
 			g.drawImage(IL.igrid_10x05, Grid.getX(), Grid.getY(), Grid.getWidth(), Grid.getHeight());
 			break;
 		case "10x10":
 			g.drawImage(IL.igrid_10x10, Grid.getX(), Grid.getY(), Grid.getWidth(), Grid.getHeight());
+			break;
+		case "12x05":
+			g.drawImage(IL.igrid_12x05, Grid.getX(), Grid.getY(), Grid.getWidth(), Grid.getHeight());
+			break;
+		case "14x03":
+			g.drawImage(IL.igrid_14x03, Grid.getX(), Grid.getY(), Grid.getWidth(), Grid.getHeight());
+			break;
+		case "15x01":
+			g.drawImage(IL.igrid_15x01, Grid.getX(), Grid.getY(), Grid.getWidth(), Grid.getHeight());
+			break;
+		case "15x08":
+			g.drawImage(IL.igrid_15x08, Grid.getX(), Grid.getY(), Grid.getWidth(), Grid.getHeight());
 			break;
 		case "20x20":
 			g.drawImage(IL.igrid_20x20, Grid.getX(), Grid.getY(), Grid.getWidth(), Grid.getHeight());
@@ -911,20 +1056,26 @@ public class Draw_Main {
 			case 1: // Hamster settings
 				switch (Gui.getHamsterSkin()) {
 				case 0:
-					g.drawImage(IL.ienemylarge1, b.getX(), b.getY(), b.getWidth(), b.getHeight());
+					g.drawImage(IL.ienemy0large_1, b.getX(), b.getY(), b.getWidth(), b.getHeight());
 					break;
 				case 1:
-					g.drawImage(IL.ienemylargepink1, b.getX(), b.getY(), b.getWidth(), b.getHeight());
+					g.drawImage(IL.ienemy1large_1, b.getX(), b.getY(), b.getWidth(), b.getHeight());
+					break;
+				case 2:
+					g.drawImage(IL.ienemy2large_1, b.getX(), b.getY(), b.getWidth(), b.getHeight());
 					break;
 				}
 				break;
 			case 2: // Python settings
 				switch (Gui.getPythonSkin()) {
 				case 0:
-					g.drawImage(IL.iplayerlarge3, b.getX(), b.getY(), b.getWidth(), b.getHeight());
+					g.drawImage(IL.iplayer0large_3, b.getX(), b.getY(), b.getWidth(), b.getHeight());
 					break;
 				case 1:
-					g.drawImage(IL.iplayerlargered3, b.getX(), b.getY(), b.getWidth(), b.getHeight());
+					g.drawImage(IL.iplayer1large_3, b.getX(), b.getY(), b.getWidth(), b.getHeight());
+					break;
+				case 2:
+					g.drawImage(IL.iplayer2large_3, b.getX(), b.getY(), b.getWidth(), b.getHeight());
 					break;
 				}
 				break;
@@ -933,40 +1084,45 @@ public class Draw_Main {
 				break;
 			}
 			if (b.isHover()) {
-				g.setFill(new Color(0, 0, 0, 0.2));
-				g.fillRect(b.getX(), b.getY(), b.getWidth(), b.getHeight());
+				drawHoverLayer(g, b);
 
 				g.setTextAlign(TextAlignment.LEFT);
-				g.setFont(new Font("Verdana Italic", 26));
+				g.setFont(new Font("Verdana Italic", 31));
 				g.setFill(Color.WHITE);
 
-				int x = 60;
-				int y = 420;
+				int x = getStartmenugridX();
+				int y = getStartmenugridY() - 90;
 
 				switch (i) {
 				case 1: // if hovering over button 1 (Hamster skins)
 					switch (Gui.getHamsterSkin()) {
 					default:
-						g.fillText("Default Hamster", x, y);
+						g.fillText("Standard-Hamster", x, y);
 						break;
 					case 0:
-						g.fillText("Default Hamster", x, y);
+						g.fillText("Standard-Hamster", x, y);
 						break;
 					case 1:
-						g.fillText("Candy Hamster", x, y);
+						g.fillText("Zuckerwatte-Hamster", x, y);
+						break;
+					case 2:
+						g.fillText("Pokémon-Hamster", x, y);
 						break;
 					}
 					break;
 				case 2: // if hovering over button 2 (Python skins)
 					switch (Gui.getPythonSkin()) {
 					default:
-						g.fillText("Default Python", x, y);
+						g.fillText("Standard-Python", x, y);
 						break;
 					case 0:
-						g.fillText("Default Python", x, y);
+						g.fillText("Standard-Python", x, y);
 						break;
 					case 1:
-						g.fillText("Bloody Python", x, y);
+						g.fillText("Blutsauger-Python", x, y);
+						break;
+					case 2:
+						g.fillText("Pokémon-Python", x, y);
 						break;
 					}
 					break;
@@ -1029,56 +1185,78 @@ public class Draw_Main {
 //		g.setFill(Color.WHITE);
 //		g.fillText(b.getText(), b.getX() + b.getWidth() / 2, b.getY() + b.getHeight() / 2);
 	}
-	
-	public void drawManual (GraphicsContext g) {
-		g.drawImage(IL.istartmenu, 0, 0, Gui.getWidth(), Gui.getHeight());
-		
+
+	public void drawManual(GraphicsContext g) {
+		g.drawImage(IL.itutorialmenu, 0, 0, Gui.getWidth(), Gui.getHeight());
+
 		g.setFill(new Color(1, 1, 1, 0.7)); // semi-transparent layer underneath the grid
 		g.fillRect(startmenugridX, startmenugridY, startmenugridWidth, startmenugridHeight);
 
 		g.drawImage(IL.igrid_12x04_large, startmenugridX, startmenugridY, startmenugridWidth, startmenugridHeight);
-		
-		// SCHLIEßEN BUTTON 
+
+		// SCHLIESSEN BUTTON
 		Button b = Gui.startmenubuttons[0];
 		g.drawImage(IL.ibcross, b.getX() + 3, b.getY() + 3, b.getWidth() - 6, b.getHeight() - 6);
-	    
-		//Tutorial Button 1 
-		b = Gui.manualbuttons[0]; 
+		drawHoverLayer(g, b);
+
+		// Tutorial Button 1
+		b = Gui.manualbuttons[0];
 		g.drawImage(IL.ikeys, b.getX() + 3, b.getY() + 3, b.getWidth() - 6, b.getHeight() - 6);
-		
-		// Tutorial Button 2 
-		b = Gui.manualbuttons[1]; 
+		drawHoverLayer(g, b);
+
+		// Tutorial Button 2
+		b = Gui.manualbuttons[1];
 		g.drawImage(IL.iwall, b.getX() + 3, b.getY() + 3, b.getWidth() - 6, b.getHeight() - 6);
-		
-		//Tutorial Button 3
-		b = Gui.manualbuttons[2]; 
+		drawHoverLayer(g, b);
+
+		// Tutorial Button 3
+		b = Gui.manualbuttons[2];
 		g.drawImage(IL.ispecialtile_korn, b.getX() + 3, b.getY() + 3, b.getWidth() - 6, b.getHeight() - 6);
-		
-		
-		b = Gui.manualbuttons[3]; 
-	    g.drawImage(IL.ibquestionmark, b.getX() + 3, b.getY() + 3, b.getWidth() - 6, b.getHeight() - 6);
-	    
-	    b = Gui.manualbuttons[4]; 
-	    g.drawImage(IL.ispecialtile_hourglass, b.getX() + 3, b.getY() + 3, b.getWidth() - 6, b.getHeight() - 6);
-		
-	    b = Gui.manualbuttons[5]; 
-	    g.drawImage(IL.ispecialtile_hammer, b.getX() + 3, b.getY() + 3, b.getWidth() - 6, b.getHeight() - 6);
-	    
-	    b = Gui.manualbuttons[6]; 
-        g.strokeRect(b.getX(), b.getY(), b.getWidth(), b.getHeight()); 
-        
+		drawHoverLayer(g, b);
+
+		b = Gui.manualbuttons[3];
+		g.drawImage(IL.ibquestionmark, b.getX() + 3, b.getY() + 3, b.getWidth() - 6, b.getHeight() - 6);
+		drawHoverLayer(g, b);
+
+		b = Gui.manualbuttons[4];
+		g.drawImage(IL.ispecialtile_hourglass, b.getX() + 3, b.getY() + 3, b.getWidth() - 6, b.getHeight() - 6);
+		drawHoverLayer(g, b);
+
+		b = Gui.manualbuttons[5];
+		g.drawImage(IL.ispecialtile_hammer, b.getX() + 3, b.getY() + 3, b.getWidth() - 6, b.getHeight() - 6);
+		drawHoverLayer(g, b);
+
+		b = Gui.manualbuttons[6]; // Button "Level 1"
+		g.strokeRect(b.getX(), b.getY(), b.getWidth(), b.getHeight());
+
 		g.setFill(Color.CHOCOLATE);
 		g.fillRect(b.getX(), b.getY(), b.getWidth(), b.getHeight());
-		
+
 		g.setTextAlign(TextAlignment.CENTER);
 		g.setTextBaseline(VPos.CENTER);
 		g.setFont(new Font("Verdana", 16));
 		g.setFill(Color.WHITE);
 		g.fillText(b.getText(), b.getX() + b.getWidth() / 2, b.getY() + b.getHeight() / 2);
 
+		drawHoverLayer(g, b);
+
+		b = Gui.manualbuttons[7];
+		g.drawImage(IL.ibzeitleiste, b.getX() + 3, b.getY() + 3, b.getWidth() - 6, b.getHeight() - 6);
+		drawHoverLayer(g, b);
+
+		b = Gui.manualbuttons[8];
+		g.drawImage(IL.ibbabyhamster, b.getX() + 3, b.getY() + 3, b.getWidth() - 6, b.getHeight() - 6);
+		drawHoverLayer(g, b);
 	}
 
-	
+	private void drawHoverLayer(GraphicsContext g, Button b) {
+		// draw Layer over the Button that is hovered on
+		if (b.isHover()) {
+			g.setFill(new Color(0, 0, 0, 0.2));
+			g.fillRect(b.getX(), b.getY(), b.getWidth(), b.getHeight());
+		}
+	}
+
 	public static int getStartmenugridWidth() {
 		return startmenugridWidth;
 	}
