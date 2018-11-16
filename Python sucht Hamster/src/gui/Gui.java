@@ -22,7 +22,7 @@ public class Gui {
 
 	public static GraphicsContext gc_main;
 
-	private static int width = 1536, height = 864; // size of the window
+	private static int width = 1200, height = 700; // size of the window
 
 	private static int nLvls = 12; // number of levels
 
@@ -34,6 +34,7 @@ public class Gui {
 
 	public static Button[] startmenubuttons = new Button[4];
 	public static Button[] lvlselectbuttons = new Button[getnLvls()];
+	public static Button[] manualbuttons = new Button[7]; 
 	public static Button[] ingamebuttons = new Button[3];
 	public static Button victorybutton;
 
@@ -93,6 +94,7 @@ public class Gui {
 	private void initButtons() {
 		initStartMenuButtons();
 		initIngameButtons();
+		initManualButtons(); 
 
 		victorybutton = new Button(260, 30, 60, 60); // Next Level
 	}
@@ -131,7 +133,17 @@ public class Gui {
 		startmenubuttons[2] = new Button(gridx + 3 + 2 * 66, gridy + 3, 62, 62); // Python
 		startmenubuttons[3] = new Button(gridx + 3 + 9 * 66, gridy + 3, 62, 62); // Question Mark - Manual
 	}
-
+		
+	private void initManualButtons() {
+		manualbuttons[0] = new Button(gridx + 3 + 2*66, gridy +3 +2*66, 62, 62); //Keys 
+		manualbuttons[1] = new Button(gridx + 3 + 4*66, gridy +3 +2*66 , 62, 62); //Wall
+		manualbuttons[2] = new Button(gridx + 3 + 5*66 , gridy +3 + 3*66, 62, 62); //Korn 
+		manualbuttons[3] = new Button(gridx + 3, gridy + 3, 62, 62);  //Fragezeichen 
+		manualbuttons[4] = new Button(gridx + 3 + 6*66 , gridy +3 + 2*66, 62, 62); //Sanduhr
+		manualbuttons[5] = new Button(gridx + 3 + 8*66 , gridy +3 + 2*66, 62, 62); //Hammer
+		manualbuttons[6] = new Button(gridx + 3 + 9*66 , gridy +3 + 3*66, 62, 62); //zu Level 1
+		manualbuttons[6].setText("Level 1");
+	}
 	public static int getWidth() {
 		return width;
 	}
