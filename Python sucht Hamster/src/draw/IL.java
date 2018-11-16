@@ -104,7 +104,9 @@ public class IL {
 	 * Special Tiles
 	 */
 	public static Image ispecialtile_korn = new Image("file:rsc/game/specialtiles/korn.png");
-	public static Image ispecialtile_babyhamster = new Image("file:rsc/game/specialtiles/babyhamster.png");
+	public static Image ispecialtile_babyhamsterTwo = new Image("file:rsc/game/specialtiles/babyhamster_two.png");
+	public static Image ispecialtile_babyhamsterThree = new Image("file:rsc/game/specialtiles/babyhamster_three.png");
+	public static Image ispecialtile_babyhamsterFour = new Image("file:rsc/game/specialtiles/babyhamster_four.png");
 	public static Image ispecialtile_hourglass = new Image("file:rsc/game/specialtiles/hourglass.png");
 	public static Image ispecialtile_hammer = new Image("file:rsc/game/specialtiles/hammer.png");
 
