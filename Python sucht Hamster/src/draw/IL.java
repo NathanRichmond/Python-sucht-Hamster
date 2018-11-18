@@ -63,11 +63,11 @@ public class IL {
 	public static Image ienemy2_1 = new Image("file:rsc/chars/hamster/pokemon_skin/pokemon-hamster_1.png");
 	public static Image ienemy2_2 = new Image("file:rsc/chars/hamster/pokemon_skin/pokemon-hamster_2.png");
 	public static Image ienemy2_3 = new Image("file:rsc/chars/hamster/pokemon_skin/pokemon-hamster_3.png");
-	// Pokemon upgraded - currently equal to non-upgraded
-	public static Image ienemy2u_0 = new Image("file:rsc/chars/hamster/pokemon_skin/pokemon-hamster_0.png");
-	public static Image ienemy2u_1 = new Image("file:rsc/chars/hamster/pokemon_skin/pokemon-hamster_1.png");
-	public static Image ienemy2u_2 = new Image("file:rsc/chars/hamster/pokemon_skin/pokemon-hamster_2.png");
-	public static Image ienemy2u_3 = new Image("file:rsc/chars/hamster/pokemon_skin/pokemon-hamster_3.png");
+	// Pokemon upgraded
+	public static Image ienemy2u_0 = new Image("file:rsc/chars/hamster/pokemon_skin/pokemon-hamster-u_0.png");
+	public static Image ienemy2u_1 = new Image("file:rsc/chars/hamster/pokemon_skin/pokemon-hamster-u_1.png");
+	public static Image ienemy2u_2 = new Image("file:rsc/chars/hamster/pokemon_skin/pokemon-hamster-u_2.png");
+	public static Image ienemy2u_3 = new Image("file:rsc/chars/hamster/pokemon_skin/pokemon-hamster-u_3.png");
 
 	/*
 	 * Python
