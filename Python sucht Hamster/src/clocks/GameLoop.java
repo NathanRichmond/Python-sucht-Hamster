@@ -97,32 +97,27 @@ public class GameLoop implements Runnable {
 			 */
 			if (Game.enemies.size() == 0) {
 				Gamestate.state = Gamestate_e.victory;
-
-				// just for regular levels, not for Tutorial Levels
-				if (Game.getLevel() < 100) {
-					if (Game.getLevel() >= Game.getMaxLevelAvailable()) { // if this is the highest level won until now
-						Game.setMaxLevelAvailable(Game.getLevel() + 1);
-					}
+				if (Game.getLevel() >= Game.getMaxLevelAvailable()) { // if this is the highest level won until now
+					Game.setMaxLevelAvailable(Game.getLevel() + 1);
 				}
-
 			}
-		}
 
-		/*
-		 * Remove all activated (thus "dead" -- isAlive = false) Special Tiles
-		 */
-		for (int i = 0; i < SpecialTile_Creation.specialtiles.size(); i++) {
-			if ((SpecialTile_Creation.specialtiles.get(i)).isAlive() == false) {
-				SpecialTile_Creation.remove(i);
+			/*
+			 * Remove all activated (thus "dead" -- isAlive = false) Special Tiles
+			 */
+			for (int i = 0; i < SpecialTile_Creation.specialtiles.size(); i++) {
+				if ((SpecialTile_Creation.specialtiles.get(i)).isAlive() == false) {
+					SpecialTile_Creation.remove(i);
+				}
 			}
-		}
 
-		/*
-		 * Remove all killed Enemies
-		 */
-		for (int i = 0; i < Game.enemies.size(); i++) {
-			if ((Game.enemies.get(i)).isAlive() == false) {
-				Game.enemies.remove(i);
+			/*
+			 * Remove all killed Enemies
+			 */
+			for (int i = 0; i < Game.enemies.size(); i++) {
+				if ((Game.enemies.get(i)).isAlive() == false) {
+					Game.enemies.remove(i);
+				}
 			}
 		}
 	}

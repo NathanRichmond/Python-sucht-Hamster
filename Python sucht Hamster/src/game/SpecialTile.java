@@ -9,8 +9,6 @@ import data.Collision;
 import data.CustomMath;
 import gui.Grid;
 import clocks.Wall_Creation;
-import java.util.Timer;
-import java.util.TimerTask;
 
 public class SpecialTile {
 
@@ -18,9 +16,7 @@ public class SpecialTile {
 	private int width = 32, height = 32;
 	private String type;
 	private boolean isAlive;
-	
-	private int stepsWent;
-	
+
 	public SpecialTile(String type) {
 		this.setValidSpawn();
 		this.isAlive = true;
@@ -33,14 +29,8 @@ public class SpecialTile {
 		case "korn":
 			activateKorn(activatedBy, enemy);
 			break;
-		case "babyhamsterTwo":
-			activateBabyhamsterTwo(activatedBy, player);
-			break;
-		case "babyhamsterThree":
-			activateBabyhamsterThree(activatedBy, player);
-			break;
-		case "babyhamsterFour":
-			activateBabyhamsterFour(activatedBy, player);
+		case "babyhamster":
+			activateBabyhamster(activatedBy, enemy);
 			break;
 		case "hourglass":
 			activateHourglass(activatedBy, enemy);
@@ -70,84 +60,12 @@ public class SpecialTile {
 		}
 	}
 
-	private void activateBabyhamsterTwo(String activatedBy, Player p) {
+	private void activateBabyhamster(String activatedBy, Enemy e) {
 		if (activatedBy == "enemy") {
 			// nothing
 		} else {
 			if (activatedBy == "player") {
 				// do a fast dash of two tiles in the face direction
-				p.move(p.getFaceDirection());					// One instant step, followed by the others, each after a delay
-				stepsWent++;
-				Timer timer = new Timer();
-				timer.schedule(new TimerTask() {
-					
-					public void run() {
-						if (stepsWent < 2) {
-							stepsWent++;
-							p.move(p.getFaceDirection());
-						}
-						else {
-							stepsWent = 0;
-							timer.cancel();
-						}
-					
-					}
-				}, 30, 30);
-					
-			}
-		}
-	}
-
-	private void activateBabyhamsterThree(String activatedBy, Player p) {
-		if (activatedBy == "enemy") {
-			// nothing
-		} else {
-			if (activatedBy == "player") {
-				// do a fast dash of three tiles in the face direction
-				p.move(p.getFaceDirection());					// One instant step, followed by the others, each after a delay
-				stepsWent++;
-				Timer timer = new Timer();
-				timer.schedule(new TimerTask() {
-					
-					public void run() {
-						if (stepsWent < 3) {
-							stepsWent++;
-							p.move(p.getFaceDirection());
-						}
-						else {
-							stepsWent = 0;
-							timer.cancel();
-						}
-					
-					}
-				}, 30, 30);
-			}
-		}
-	}
-
-	private void activateBabyhamsterFour(String activatedBy, Player p) {
-		if (activatedBy == "enemy") {
-			// nothing
-		} else {
-			if (activatedBy == "player") {
-				// do a fast dash of four tiles in the face direction
-				p.move(p.getFaceDirection());					// One instant step, followed by the others, each after a delay
-				stepsWent++;
-				Timer timer = new Timer();
-				timer.schedule(new TimerTask() {
-					
-					public void run() {
-						if (stepsWent < 4) {
-							stepsWent++;
-							p.move(p.getFaceDirection());
-						}
-						else {
-							stepsWent = 0;
-							timer.cancel();
-						}
-					
-					}
-				}, 30, 30);
 			}
 		}
 	}

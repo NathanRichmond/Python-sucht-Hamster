@@ -35,18 +35,6 @@ public class MouseMoved implements EventHandler<MouseEvent> {
 		}
 
 		/*
-		 * TUTORIAL MENU Buttons
-		 */
-		for (int i = 0; i < Gui.manualbuttons.length; i++) {
-			if (Collision.cButton(Gui.manualbuttons[i], x, y)) {
-				Gui.manualbuttons[i].setHover(true);
-			} else {
-				Gui.manualbuttons[i].setHover(false);
-
-			}
-		}
-		
-		/*
 		 * INGAME Buttons
 		 */
 		for (int i = 0; i < Gui.ingamebuttons.length; i++) {
@@ -61,7 +49,7 @@ public class MouseMoved implements EventHandler<MouseEvent> {
 		/*
 		 * VICTORY Button
 		 */
-		if (Game.getLevel() + 1 <= Gui.getnLvls() || Game.getLevel() > 100) {
+		if (Game.getLevel() + 1 <= Gui.getnLvls()) {
 			if (Collision.cButton(Gui.victorybutton, x, y)) {
 				Gui.victorybutton.setHover(true);
 			} else {

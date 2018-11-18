@@ -9,7 +9,8 @@ import gui.Grid;
 
 public class Player {
 
-	private int x, y;
+	private  int x, y;  
+	private static int schritte;
 	private int xAfterMove, yAfterMove;
 	private int width, height;
 	private int faceDirection;
@@ -19,7 +20,14 @@ public class Player {
 		this.width = 32;
 		this.height = 32;
 		this.faceDirection = 0;
-	}
+   }
+	public Player(int a, int b) {
+		 x = a; 
+		y = b; 
+		this.width = 32;
+		this.height = 32;
+		this.faceDirection = 0;
+}
 
 	public void move(int direction) {
 		if (Gamestate.state == Gamestate_e.ingame) {
@@ -30,6 +38,7 @@ public class Player {
 				if (this.yAfterMove > Grid.getY()) { // don't leave the grid
 					if (Collision.cWall(this.x, this.yAfterMove) == false) { // don't walk into walls
 						this.y = this.yAfterMove; // move up
+						count(); 
 					}
 				}
 				break;
@@ -38,6 +47,7 @@ public class Player {
 				if (this.xAfterMove < Grid.getX() + Grid.getWidth()) { // don't leave the grid
 					if (Collision.cWall(this.xAfterMove, this.y) == false) { // don't walk into walls
 						this.x = this.xAfterMove; // move right
+						count(); 
 					}
 				}
 				break;
@@ -46,6 +56,7 @@ public class Player {
 				if (this.yAfterMove < Grid.getY() + Grid.getHeight()) { // don't leave the grid
 					if (Collision.cWall(this.x, this.yAfterMove) == false) { // don't walk into walls
 						this.y = this.yAfterMove; // move down
+						count(); 
 					}
 				}
 				break;
@@ -54,6 +65,7 @@ public class Player {
 				if (this.xAfterMove > Grid.getX()) { // don't leave the grid
 					if (Collision.cWall(this.xAfterMove, this.y) == false) { // don't walk into walls
 						this.x = this.xAfterMove; // move left
+						count(); 
 					}
 				}
 				break;
@@ -107,6 +119,17 @@ public class Player {
 		y = CustomMath.genRandomY();
 		this.setX(Grid.getX() + x);
 		this.setY(Grid.getY() + y);
+	}
+	private void count() {
+		setSchritte(getSchritte() +1); 
+		}
+	
+	public static int getSchritte() {
+		return schritte;
+	}
+
+	public static void setSchritte(int nb) {
+		schritte= nb;
 	}
 
 	public int getX() {

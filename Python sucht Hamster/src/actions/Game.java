@@ -47,9 +47,7 @@ public class Game {
 	private static double kornDuration; // duration of Korn effect in seconds
 	private static double kornBoost; // factor by which Enemy base speed is increased
 
-	private static int nBabyhamsterTwo; // number of Babyhamster Tiles with two hamsters
-	private static int nBabyhamsterThree; // number of Babyhamster tiles with three hamsters
-	private static int nBabyhamsterFour; // number of Babyhamster tiles with four hamsters
+	private static int nBabyhamster; // number of Babyhamster Tiles
 
 	private static int nHourglass; // number of Hourglass Tiles
 	private static double hourglassEDuration; // duration of Hourglass effect (activated by Enemy) in seconds
@@ -59,6 +57,8 @@ public class Game {
 	private static double hourglassPFactor; // factor. Needs to be 0<factor<1 to have it slow down the time
 
 	private static int nHammer; // number of Hammer Tiles.
+	
+	public static int hx, hy, px, py; //Koordinaten für die nicht zufällig gesetzten Chars 
 
 	public static void startNewGame() {
 
@@ -81,6 +81,33 @@ public class Game {
 		}
 
 		new GameTimer();
+
+		Gamestate.state = Gamestate_e.ingame; // actually start the game (draw ingame elements)
+	}
+	
+	public static void startNewTutorial() { //für Tutorial 1 und 2 (mit den Pfeiltasten) 
+
+//		hamstercount = 0;
+		hamsterinflationCounter = 0;
+		resetGame(); // Empty the grid
+
+		
+		setLevelProperties();
+
+		new Grid();
+		
+		if(Game.getLevel() ==101) {
+			placeChars1();}
+		
+		applyLevelPropertiesToChars();
+
+		if (isWalls() == true) {
+			new Wall_Creation();
+		}
+		if (isSpecialTiles() == true) {
+			new SpecialTile_Creation();
+		}
+
 
 		Gamestate.state = Gamestate_e.ingame; // actually start the game (draw ingame elements)
 	}
@@ -117,9 +144,7 @@ public class Game {
 		setnKorn(0);
 		setKornDuration(0);
 		setKornBoost(0);
-		setnBabyhamsterTwo(0);
-		setnBabyhamsterThree(0);
-		setnBabyhamsterFour(0);
+		setnBabyhamster(0);
 		setnHourglass(0);
 		setHourglassEDuration(0);
 		setHourglassEFactor(0);
@@ -169,27 +194,6 @@ public class Game {
 		case 101:
 			level101();
 			break;
-		case 102:
-			level102();
-			break;
-		case 103:
-			level103();
-			break;
-		case 104:
-			level104();
-			break;
-		case 105:
-			level105();
-			break;
-		case 106:
-			level106();
-			break;
-		case 107:
-			level107();
-			break;
-		case 108:
-			level108();
-			break;
 		default:
 			level1();
 			break;
@@ -206,12 +210,20 @@ public class Game {
 			enemies.add(new Enemy());
 		}
 	}
+	
 
 	private static void applyLevelPropertiesToChars() {
 		for (Enemy e : enemies) {
 			e.setSpeed(getEspeed());
 		}
 	}
+	public static void placeChars1() {
+		p = new Player(Grid.getX(), Grid.getY()); 
+		for (int i = 0; i < getnEnemy(); i++) {
+			enemies.add(new Enemy(Grid.getX()+14*33, Grid.getY()));
+		}
+	}
+
 
 	public static void restartLevel() {
 		if (isFirstKeyPressInGame() == false) {
@@ -221,13 +233,7 @@ public class Game {
 			if (GameTimer.isModified() == true) {
 				ST_ModifyTime.timer.cancel();
 			}
-			if (Game.getLevel() != 101 && Game.getLevel() != 102) { // no timer in tut1 & tut2
-				try {
-					Timer_Clock.timer.cancel();
-				} catch (Exception e1) {
-					e1.printStackTrace(); // print error log
-				}
-			}
+			Timer_Clock.timer.cancel();
 			for (Enemy e : enemies) {
 				if (e.isSpeedBoosted() == false) {
 					e.em.timer.cancel();
@@ -246,11 +252,9 @@ public class Game {
 			e.em.start(); // Start Movement of Enemy
 		}
 
-		if (Game.getLevel() != 101 && Game.getLevel() != 102) { // no timer in tut1 & tut2
-			GameTimer.setGameDuration(getGameDuration());
-			new Timer_Clock();
-			Timer_Clock.start(); // Start the Timer count down
-		}
+		GameTimer.setGameDuration(getGameDuration());
+		new Timer_Clock();
+		Timer_Clock.start(); // Start the Timer count down
 
 		setFirstKeyPressInGame(false);
 	}
@@ -329,9 +333,7 @@ public class Game {
 		setWalls(true);
 		setnWalls(10);
 		setSpecialTiles(true);
-		setnBabyhamsterTwo(25);
-		setnBabyhamsterThree(15);
-		setnBabyhamsterFour(10);
+		setnBabyhamster(50);
 	}
 
 	private static void level8() {
@@ -391,37 +393,11 @@ public class Game {
 		setGameDuration(10);
 		setHamsterinflation(true);
 	}
-
-	private static void level101() {
-
-	}
-
-	private static void level102() {
-
-	}
-
-	private static void level103() {
-
-	}
-
-	private static void level104() {
-
-	}
-
-	private static void level105() {
-
-	}
-
-	private static void level106() {
-
-	}
-
-	private static void level107() {
-
-	}
-
-	private static void level108() {
-
+	
+	private static void level101() {   //Tutorial 1: Pfeiltasten links/rechts 
+		setGridsize("15x1"); 
+		setGameDuration(100000000);
+		
 	}
 
 	public static int getLevel() {
@@ -544,28 +520,12 @@ public class Game {
 		Game.kornBoost = kornBoost;
 	}
 
-	public static int getnBabyhamsterTwo() {
-		return nBabyhamsterTwo;
+	public static int getnBabyhamster() {
+		return nBabyhamster;
 	}
 
-	public static void setnBabyhamsterTwo(int nBabyhamsterTwo) {
-		Game.nBabyhamsterTwo = nBabyhamsterTwo;
-	}
-
-	public static int getnBabyhamsterThree() {
-		return nBabyhamsterThree;
-	}
-
-	public static void setnBabyhamsterThree(int nBabyhamsterThree) {
-		Game.nBabyhamsterThree = nBabyhamsterThree;
-	}
-
-	public static int getnBabyhamsterFour() {
-		return nBabyhamsterFour;
-	}
-
-	public static void setnBabyhamsterFour(int nBabyhamsterFour) {
-		Game.nBabyhamsterFour = nBabyhamsterFour;
+	public static void setnBabyhamster(int nBabyhamster) {
+		Game.nBabyhamster = nBabyhamster;
 	}
 
 	public static int getnHourglass() {

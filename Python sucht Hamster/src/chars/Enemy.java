@@ -32,6 +32,16 @@ public class Enemy {
 		this.isAlive = true;
 		this.isSpeedBoosted = false;
 	}
+  public Enemy(int a, int b) {
+	    this.x = a; 
+	    this.y = b; 
+		this.width = 32;
+		this.height = 32;
+		this.faceDirection = (int) (Math.random() * 3); // random faceDirection
+		this.speed = 2.5; // default speed
+		this.isAlive = true;
+		this.isSpeedBoosted = false;
+	}
 
 	private void setValidSpawn() {
 		/*

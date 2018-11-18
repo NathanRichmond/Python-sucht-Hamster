@@ -8,6 +8,7 @@ import chars.Player;
 public class KeyReleased implements EventHandler<KeyEvent> {
 
 	private static Player p;
+	 
 
 	@Override
 	public void handle(KeyEvent event) {
@@ -21,7 +22,7 @@ public class KeyReleased implements EventHandler<KeyEvent> {
 			break;
 		case RIGHT:
 			p.move(1);
-			sc();
+			sc(); 
 			break;
 		case DOWN:
 			p.move(2);
@@ -34,6 +35,7 @@ public class KeyReleased implements EventHandler<KeyEvent> {
 		default:
 			break;
 		}
+		
 	}
 
 	private void sc() {
@@ -41,5 +43,8 @@ public class KeyReleased implements EventHandler<KeyEvent> {
 			Game.startClocks();
 		}
 	}
+	
 
-}
+	}
+
+
