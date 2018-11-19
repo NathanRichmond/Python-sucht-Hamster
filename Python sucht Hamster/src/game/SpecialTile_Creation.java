@@ -1,9 +1,8 @@
-package clocks;
+package game;
 
 import java.util.ArrayList;
 
-import actions.Game;
-import game.SpecialTile;
+import gui.Grid;
 
 public class SpecialTile_Creation {
 
@@ -53,48 +52,63 @@ public class SpecialTile_Creation {
 		}
 	}
 
-	private void setSpecialTilesLevel108() {
-		int amount = 3; // amount of Special Tiles in this level
-		for (int i = 0; i < amount; i++) {
-			SpecialTile st = new SpecialTile("hammer"); // generate new Special Tile
-			/*
-			 * Set x and y coordinates
-			 */
-			switch (i) {
-			case 1: // first Special Tile
-				st.setX(5 * 33 + 1); // x coordinate of this particular Special Tile
-				st.setY(2 * 33 + 1); // y coordinate of this particular Special Tile
-				break;
-			case 2: // second Special Tile
-				st.setX(6 * 33 + 1); // x coordinate of this particular Special Tile
-				st.setY(0 * 33 + 1); // y coordinate of this particular Special Tile
-				break;
-			case 3: // third Special Tile
-				st.setX(11 * 33 + 1); // x coordinate of this particular Special Tile
-				st.setY(2 * 33 + 1); // y coordinate of this particular Special Tile
-				break;
-			}
-			specialtiles.add(st);
-		}
-	}
-
-	private void setSpecialTilesLevel107() {
-		int amount = 3; // amount of Special Tiles in this level
-
+	private void setSpecialTilesLevel105() {
+		String type = "korn";
+		addSpecialTile(type, 3, 0);
+		addSpecialTile(type, 3, 1);
+		addSpecialTile(type, 5, 0);
+		addSpecialTile(type, 5, 1);
+		addSpecialTile(type, 7, 5);
+		addSpecialTile(type, 0, 6);
 	}
 
 	private void setSpecialTilesLevel106() {
-		int amount = 3; // amount of Special Tiles in this level
-
+		String type = "hourglass";
+		addSpecialTile(type, 3, 2);
+		addSpecialTile(type, 3, 3);
+		addSpecialTile(type, 7, 5);
+		addSpecialTile(type, 10, 1);
+		addSpecialTile(type, 10, 2);
+		addSpecialTile(type, 13, 2);
+		addSpecialTile(type, 14, 1);
+		addSpecialTile(type, 14, 3);
 	}
 
-	private void setSpecialTilesLevel105() {
-		int amount = 3; // amount of Special Tiles in this level
+	private void setSpecialTilesLevel107() {
+		String type = "babyhamsterTwo";
+		addSpecialTile(type, 7, 2);
+		addSpecialTile(type, 10, 2);
+		addSpecialTile(type, 11, 0);
 
+		type = "babyhamsterThree";
+		addSpecialTile(type, 1, 0);
+		addSpecialTile(type, 13, 2);
+
+		type = "babyhamsterFour";
+		addSpecialTile(type, 9, 0);
+	}
+
+	private void setSpecialTilesLevel108() {
+		String type;
+
+		type = "hammer";
+		addSpecialTile(type, 5, 2);
+		addSpecialTile(type, 6, 0);
+		addSpecialTile(type, 11, 2);
 	}
 
 	public static void remove(int index) {
 		specialtiles.remove(index);
+	}
+
+	/*
+	 * Add Special Tile manually
+	 */
+	private void addSpecialTile(String type, int x, int y) {
+		SpecialTile st = new SpecialTile(type);
+		st.setX(Grid.getX() + (x * 33 + 1));
+		st.setY(Grid.getY() + (y * 33 + 1));
+		specialtiles.add(st);
 	}
 
 }

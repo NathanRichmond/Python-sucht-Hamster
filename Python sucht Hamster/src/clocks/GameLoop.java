@@ -1,12 +1,13 @@
 package clocks;
 
-import actions.Game;
 import chars.Enemy;
 import chars.Player;
 import data.Collision;
+import game.Game;
 import game.Gamestate;
 import game.Gamestate_e;
 import game.SpecialTile;
+import game.SpecialTile_Creation;
 import gui.Gui;
 
 public class GameLoop implements Runnable {
@@ -98,7 +99,7 @@ public class GameLoop implements Runnable {
 			if (Game.enemies.size() == 0) {
 				Gamestate.state = Gamestate_e.victory;
 
-				// just for regular levels, not for Tutorial Levels
+				// only for regular levels, not for Tutorial Levels
 				if (Game.getLevel() < 100) {
 					if (Game.getLevel() >= Game.getMaxLevelAvailable()) { // if this is the highest level won until now
 						Game.setMaxLevelAvailable(Game.getLevel() + 1);

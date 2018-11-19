@@ -4,6 +4,7 @@ import javafx.event.EventHandler;
 import javafx.scene.input.KeyEvent;
 
 import chars.Player;
+import game.Game;
 
 public class KeyReleased implements EventHandler<KeyEvent> {
 

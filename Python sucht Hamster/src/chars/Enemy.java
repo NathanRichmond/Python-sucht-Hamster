@@ -5,6 +5,7 @@ import clocks.Enemy_Movement;
 import clocks.ST_BoostEnemy;
 import data.Collision;
 import data.CustomMath;
+import game.Game;
 import game.Gamestate;
 import game.Gamestate_e;
 import gui.Grid;
@@ -28,10 +29,21 @@ public class Enemy {
 		this.width = 32;
 		this.height = 32;
 		this.faceDirection = (int) (Math.random() * 3); // random faceDirection
-		this.speed = 2.5; // default speed
+		this.speed = Game.getEspeed();
 		this.isAlive = true;
 		this.isSpeedBoosted = false;
 	}
+	
+	  public Enemy(int a, int b) {
+		    this.x = a; 
+		    this.y = b; 
+			this.width = 32;
+			this.height = 32;
+			this.faceDirection = (int) (Math.random() * 3); // random faceDirection
+			this.speed = Game.getEspeed();
+			this.isAlive = true;
+			this.isSpeedBoosted = false;
+		}
 
 	private void setValidSpawn() {
 		/*
@@ -49,7 +61,7 @@ public class Enemy {
 	}
 
 	public void move(int direction) {
-		if (Gamestate.state == Gamestate_e.ingame || Gamestate.state == Gamestate_e.defeat) {
+		if (Gamestate.state == Gamestate_e.ingame) {
 			if (this.isAlive == true) {
 				switch (direction) {
 				case 0:
@@ -92,7 +104,7 @@ public class Enemy {
 
 	public void killEnemy() {
 		this.setAlive(false);
-//		Game.hamstercount++;
+		Game.hamstercount++;
 	}
 
 	public int getX() {

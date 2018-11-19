@@ -13,9 +13,18 @@ public class Player {
 	private int xAfterMove, yAfterMove;
 	private int width, height;
 	private int faceDirection;
+	private int schritte;
 
 	public Player() {
 		this.setValidSpawn(); // spawns at random position
+		this.width = 32;
+		this.height = 32;
+		this.faceDirection = 0;
+	}
+
+	public Player(int a, int b) {
+		x = a;
+		y = b;
 		this.width = 32;
 		this.height = 32;
 		this.faceDirection = 0;
@@ -30,6 +39,7 @@ public class Player {
 				if (this.yAfterMove > Grid.getY()) { // don't leave the grid
 					if (Collision.cWall(this.x, this.yAfterMove) == false) { // don't walk into walls
 						this.y = this.yAfterMove; // move up
+						count();
 					}
 				}
 				break;
@@ -38,6 +48,7 @@ public class Player {
 				if (this.xAfterMove < Grid.getX() + Grid.getWidth()) { // don't leave the grid
 					if (Collision.cWall(this.xAfterMove, this.y) == false) { // don't walk into walls
 						this.x = this.xAfterMove; // move right
+						count();
 					}
 				}
 				break;
@@ -46,6 +57,7 @@ public class Player {
 				if (this.yAfterMove < Grid.getY() + Grid.getHeight()) { // don't leave the grid
 					if (Collision.cWall(this.x, this.yAfterMove) == false) { // don't walk into walls
 						this.y = this.yAfterMove; // move down
+						count();
 					}
 				}
 				break;
@@ -54,6 +66,7 @@ public class Player {
 				if (this.xAfterMove > Grid.getX()) { // don't leave the grid
 					if (Collision.cWall(this.xAfterMove, this.y) == false) { // don't walk into walls
 						this.x = this.xAfterMove; // move left
+						count();
 					}
 				}
 				break;
@@ -107,6 +120,10 @@ public class Player {
 		y = CustomMath.genRandomY();
 		this.setX(Grid.getX() + x);
 		this.setY(Grid.getY() + y);
+	}
+
+	private void count() {
+		setSchritte(getSchritte() + 1);
 	}
 
 	public int getX() {
@@ -163,6 +180,14 @@ public class Player {
 
 	public void setFaceDirection(int faceDirection) {
 		this.faceDirection = faceDirection;
+	}
+
+	public int getSchritte() {
+		return schritte;
+	}
+
+	public void setSchritte(int nb) {
+		schritte = nb;
 	}
 
 }

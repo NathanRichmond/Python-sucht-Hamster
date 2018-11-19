@@ -4,6 +4,7 @@ import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
 
 import data.Collision;
+import game.Game;
 import gui.Gui;
 
 public class MouseMoved implements EventHandler<MouseEvent> {
@@ -37,11 +38,11 @@ public class MouseMoved implements EventHandler<MouseEvent> {
 		/*
 		 * TUTORIAL MENU Buttons
 		 */
-		for (int i = 0; i < Gui.manualbuttons.length; i++) {
-			if (Collision.cButton(Gui.manualbuttons[i], x, y)) {
-				Gui.manualbuttons[i].setHover(true);
+		for (int i = 0; i < Gui.tutorialmenubuttons.length; i++) {
+			if (Collision.cButton(Gui.tutorialmenubuttons[i], x, y)) {
+				Gui.tutorialmenubuttons[i].setHover(true);
 			} else {
-				Gui.manualbuttons[i].setHover(false);
+				Gui.tutorialmenubuttons[i].setHover(false);
 
 			}
 		}
