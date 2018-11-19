@@ -1,14 +1,14 @@
 package data;
 
-import actions.Game;
 import chars.Enemy;
 import chars.Player;
-import clocks.SpecialTile_Creation;
-import clocks.Wall_Creation;
+import game.Game;
 import game.Gamestate;
 import game.Gamestate_e;
 import game.SpecialTile;
+import game.SpecialTile_Creation;
 import game.Wall;
+import game.Wall_Creation;
 import gui.Button;
 
 public class Collision {

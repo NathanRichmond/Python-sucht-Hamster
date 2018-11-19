@@ -1,8 +1,8 @@
 package data;
 
-import actions.Game;
 import chars.Enemy;
 import chars.Player;
+import game.Game;
 import gui.Grid;
 
 public class EnemyAI {

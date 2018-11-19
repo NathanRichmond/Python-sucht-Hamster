@@ -7,7 +7,7 @@ public class IL {
 	/*
 	 * ============================= BACKGROUND =============================
 	 */
-	public static Image bggras = new Image("file:rsc/bg/feld.png");
+	public static Image bgfeld = new Image("file:rsc/bg/feld.png");
 
 	/*
 	 * ============================= GRID =============================
@@ -192,8 +192,15 @@ public class IL {
 	public static Image ibbabyhamster = new Image("file:rsc/game/ui/buttons/button_babyhamster.png");
 	public static Image ibzeitleiste = new Image("file:rsc/game/ui/buttons/button_zeitleiste.png");
 	public static Image ibclipboard = new Image("file:rsc/game/ui/buttons/button_clipboard.png");
-	public static Image ibcompiler = new Image("file:rsc/game/ui/buttons/button_compiler.png");
+	public static Image ibcompiler = new Image("file:rsc/game/ui/buttons/button_compiler.png"); 
+	public static Image ibback = new Image("file:rsc/game/ui/back.png"); 
 
+	/*
+	 * Anleitung Buttons 
+	 */
+	public static Image ileft = new Image("file:rsc/manual/Left.PNG");
+	public static Image iright = new Image("file:rsc/manual/Right.PNG");
+	
 	/*
 	 * ============================= SCREENS =============================
 	 */
@@ -229,6 +236,16 @@ public class IL {
 	 */
 	public static Image idefeat = new Image("file:rsc/game/ui/defeatscreen.png");
 
+	/*
+	 * ============================= MANUAL =============================
+	 */
+	public static Image ipicture = new Image("file:rsc/manual/CutOut.png"); 
+	public static Image idownKey = new Image("file:rsc/manual/downKey.png"); 
+	public static Image iupKey = new Image("file:rsc/manual/upKey.png");
+	public static Image irightKey = new Image("file:rsc/manual/rightKey.png");
+	public static Image ileftKey = new Image("file:rsc/manual/leftKey.png");
+	
+	
 	/*
 	 * ============================= GAME TIMER =============================
 	 */

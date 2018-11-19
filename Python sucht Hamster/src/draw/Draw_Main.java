@@ -5,17 +5,16 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
-
-import actions.Game;
 import chars.Enemy;
 import chars.Player;
-import clocks.SpecialTile_Creation;
-import clocks.Wall_Creation;
+import game.Game;
 import game.GameTimer;
 import game.Gamestate;
 import game.Gamestate_e;
 import game.SpecialTile;
+import game.SpecialTile_Creation;
 import game.Wall;
+import game.Wall_Creation;
 import gui.Button;
 import gui.Grid;
 import gui.Gui;
@@ -41,10 +40,17 @@ public class Draw_Main {
 		}
 
 		/*
-		 * MANUAL SCREEN
+		 * TUTORIAL MENU SCREEN
 		 */
-		if (Gamestate.state == Gamestate_e.manual) {
-			drawManual(g);
+		if (Gamestate.state == Gamestate_e.tutorialmenu) {
+			drawTutorialMenu(g);
+		}
+
+		/*
+		 * ANLEITUNGS SCREEN
+		 */
+		if (Gamestate.state == Gamestate_e.anleitung) {
+			drawAnleitung(g);
 		}
 
 		/*
@@ -88,6 +94,10 @@ public class Draw_Main {
 			if (Game.getLevel() != 101 && Game.getLevel() != 102) { // no timer in tut1 & tut2
 				drawGameTimer(g);
 			}
+			// Extrabilder für das erste Tutorial
+			if (Game.getLevel() == 101) {
+				drawPfeiltasten(g);
+			}
 
 			/*
 			 * GAME ELEMENTS: Ingame Buttons
@@ -97,7 +107,9 @@ public class Draw_Main {
 			/*
 			 * GAME ELEMENTS: Level Title
 			 */
-			drawLvlTitle(g);
+			if (Game.getLevel() < 100) { // only for regular, not for tutlvls
+				drawLvlTitle(g);
+			}
 
 //			/*
 //			 * GAME ELEMENTS: Korn Tile Activated Info
@@ -114,12 +126,13 @@ public class Draw_Main {
 //
 //						g.setTextAlign(TextAlignment.CENTER);
 //						g.setTextBaseline(VPos.CENTER);
-//						g.setFont(new Font("Verdana", 16));
+//						g.setFont(new Font("Constantia", 16));
 //						g.setFill(Color.WHITE);
 //						g.fillText("Enemy speed is boosted!", x + width / 2, (y + i * 2 * height) + height / 2);
 //					}
 //				}
 //			}
+//			
 //			/*
 //			 * GAME ELEMENTS: Time Modified Info
 //			 */
@@ -132,28 +145,28 @@ public class Draw_Main {
 //
 //					g.setTextAlign(TextAlignment.CENTER);
 //					g.setTextBaseline(VPos.CENTER);
-//					g.setFont(new Font("Verdana", 16));
+//					g.setFont(new Font("Constantia", 16));
 //					g.setFill(Color.WHITE);
 //					g.fillText("Game time is modified!", x + width / 2, y + height / 2);
 //
 //				}
 //			}
 //
-//			/*
-//			 * GAME ELEMENTS: Hamster Count
-//			 */
-//			if (Game.getLevel() == 11) {
-//				int x = Grid.getX() - 240, y = Grid.getY(), width = 220, height = 40;
-//				g.setFill(new Color(0, 0, 0, 0.4));
-//				g.fillRect(x, y, width, height);
-//
-//				g.setTextAlign(TextAlignment.CENTER);
-//				g.setTextBaseline(VPos.CENTER);
-//				g.setFont(new Font("Verdana", 16));
-//				g.setFill(Color.WHITE);
-//				g.fillText("Enemies alive: " + Game.enemies.size(), x + width / 2, y + height / 4);
-//				g.fillText("Enemies devoured: " + Game.hamstercount, x + width / 2, y + 3 * height / 4);
-//			}
+			/*
+			 * GAME ELEMENTS: Hamster Count (for Hamsterinflation)
+			 */
+			if (Game.getLevel() == 12) {
+				int x = Grid.getX() - 240, y = Grid.getY(), width = 200, height = 40;
+				g.setFill(new Color(0, 0, 0, 0.4));
+				g.fillRect(x, y, width, height);
+
+				g.setTextAlign(TextAlignment.CENTER);
+				g.setTextBaseline(VPos.CENTER);
+				g.setFont(new Font("Constantia", 16));
+				g.setFill(Color.WHITE);
+				g.fillText("Hamster am Leben: " + Game.enemies.size(), x + width / 2, y + height / 4);
+				g.fillText("Hamster verschlungen: " + Game.hamstercount, x + width / 2, y + 3 * height / 4);
+			}
 		}
 
 		/*
@@ -215,6 +228,16 @@ public class Draw_Main {
 		case 12:
 			g.drawImage(IL.ilvltitle12, x, y, width, height);
 			break;
+		default:
+			g.setFill(new Color(0, 0, 0, 0.4));
+			g.fillRect(Grid.getX() + Grid.getWidth() / 2 - 160 / 2, Grid.getY() / 2 - 40 / 2, 160, 40);
+
+			g.setTextAlign(TextAlignment.CENTER);
+			g.setTextBaseline(VPos.CENTER);
+			g.setFont(new Font("Constantia Bold Italic", 30));
+			g.setFill(Color.WHITE);
+			g.fillText("LEVEL " + Game.getLevel(), Grid.getX() + Grid.getWidth() / 2, Grid.getY() / 2);
+			break;
 		}
 	}
 
@@ -228,7 +251,7 @@ public class Draw_Main {
 			g.setStroke(Color.WHITE);
 			if (i == 1) { // for pause Button: only when ingame/pause
 				if (Gamestate.state != Gamestate_e.ingame && Gamestate.state != Gamestate_e.pause) {
-					g.setStroke(new Color(0, 0, 0, 0.4)); // dark gray border
+					g.setStroke(new Color(0, 0, 0, 0.25)); // dark gray border
 				}
 			}
 			g.strokeRect(b.getX(), b.getY(), b.getWidth(), b.getHeight());
@@ -259,6 +282,21 @@ public class Draw_Main {
 			switch (i) {
 			case 0:
 				g.drawImage(IL.ibexit, b.getX(), b.getY(), b.getWidth(), b.getHeight());
+				if (Gamestate.state == Gamestate_e.victory && Game.getLevel() == 108) { // last Tutorial level
+					// draw box with text "zurück zum Menü" underneath the button
+					int x = b.getX() + 1 * b.getHeight() / 6; // x coordinate of box
+					int y = b.getY() + b.getHeight() + 1 * b.getHeight() / 6; // y coordinate of box
+					int w = 240; // width of box
+					int h = 2 * b.getHeight() / 3; // height of box
+					g.strokeRect(x, y, w, h);
+					g.setFill(new Color(0, 0, 0, 0.2));
+					g.fillRect(x, y, w, h);
+					g.setTextAlign(TextAlignment.CENTER);
+					g.setTextBaseline(VPos.CENTER);
+					g.setFont(new Font("Constantia", 26));
+					g.setFill(Color.WHITE);
+					g.fillText("zurück zum Menü", x + w / 2, y + h / 2);
+				}
 				break;
 			case 1:
 				switch (Gamestate.state) {
@@ -340,9 +378,6 @@ public class Draw_Main {
 					g.setFill(new Color(0, 0, 0, 0.2));
 					g.fillRect(b.getX(), b.getY(), b.getWidth(), b.getHeight());
 
-					g.setTextAlign(TextAlignment.LEFT);
-					g.setFont(new Font("Verdana Italic", 26));
-					g.setFill(Color.WHITE);
 					drawLvlDesc(g, (i + 1));
 				}
 			}
@@ -398,9 +433,9 @@ public class Draw_Main {
 
 	private void drawBackground(GraphicsContext g) {
 		/*
-		 * Grass background:
+		 * Getreidefeld background:
 		 */
-		g.drawImage(IL.bggras, 0, 0, Gui.getWidth(), Gui.getHeight());
+		g.drawImage(IL.bgfeld, 0, 0, Gui.getWidth(), Gui.getHeight());
 
 		g.setFill(new Color(1, 1, 1, 0.1)); // semi-transparent layer to moderate the intense grass
 		g.fillRect(0, 0, Gui.getWidth(), Gui.getHeight());
@@ -418,7 +453,7 @@ public class Draw_Main {
 
 		g.setTextAlign(TextAlignment.CENTER);
 		g.setTextBaseline(VPos.CENTER);
-		g.setFont(new Font("Verdana Bold", 40));
+		g.setFont(new Font("Constantia Bold", 40));
 		g.setFill(Color.WHITE);
 		g.fillText("PAUSE", Grid.getX() + Grid.getWidth() / 2, Grid.getY() + Grid.getHeight() / 4);
 	}
@@ -445,9 +480,6 @@ public class Draw_Main {
 		case victory:
 			g.drawImage(IL.ivictory, x, y, w, h);
 			drawVictoryButton(g); // Button: "Next Level"
-			if (Game.getLevel() > 100) { // if victory is in a Tutorial level
-				// draw text "zum nächsten Level" with an arrow next to the button
-			}
 			break;
 		default:
 			break;
@@ -455,16 +487,28 @@ public class Draw_Main {
 	}
 
 	private void drawVictoryButton(GraphicsContext g) {
-		if (Game.getLevel() + 1 <= Gui.getnLvls() || Game.getLevel() > 100) {
-			Button b = Gui.victorybutton;
+		Button b = Gui.victorybutton;
+		if (Game.getLevel() + 1 <= Gui.getnLvls() || (Game.getLevel() > 100 && Game.getLevel() < 108)) {
 			g.strokeRect(b.getX(), b.getY(), b.getWidth(), b.getHeight());
 			g.setFill(new Color(1, 1, 1, 0.8));
 			g.fillRect(b.getX(), b.getY(), b.getWidth(), b.getHeight());
-			if (b.isHover() == true) {
-				g.setFill(new Color(0, 0, 0, 0.2));
-				g.fillRect(b.getX(), b.getY(), b.getWidth(), b.getHeight());
-			}
+			drawButtonHover(g, b, null);
 			g.drawImage(IL.ibnext, b.getX(), b.getY(), b.getWidth(), b.getHeight());
+		}
+		if (Game.getLevel() > 100 && Game.getLevel() < 108) { // if victory is in a Tutorial level
+			// draw box with text "zum nächsten Level" underneath the button
+			int x = b.getX() + 1 * b.getHeight() / 6; // x coordinate of box
+			int y = b.getY() + b.getHeight() + 1 * b.getHeight() / 6; // y coordinate of box
+			int w = 270; // width of box
+			int h = 2 * b.getHeight() / 3; // height of box
+			g.strokeRect(x, y, w, h);
+			g.setFill(new Color(0, 0, 0, 0.2));
+			g.fillRect(x, y, w, h);
+			g.setTextAlign(TextAlignment.CENTER);
+			g.setTextBaseline(VPos.CENTER);
+			g.setFont(new Font("Constantia", 26));
+			g.setFill(Color.WHITE);
+			g.fillText("zum nächsten Tutorial", x + w / 2, y + h / 2);
 		}
 	}
 
@@ -879,7 +923,7 @@ public class Draw_Main {
 //
 //			g.setTextAlign(TextAlignment.CENTER);
 //			g.setTextBaseline(VPos.CENTER);
-//			g.setFont(new Font("Verdana", 20));
+//			g.setFont(new Font("Constantia", 20));
 //			g.setFill(Color.WHITE);
 //			g.fillText("" + e.index, e.getX() + 16, e.getY() + 16);
 
@@ -1052,6 +1096,7 @@ public class Draw_Main {
 			switch (i) {
 			case 0: // Cross - Quit
 				g.drawImage(IL.ibcross, b.getX() + 3, b.getY() + 3, b.getWidth() - 6, b.getHeight() - 6);
+				drawButtonHover(g, b, null);
 				break;
 			case 1: // Hamster settings
 				switch (Gui.getHamsterSkin()) {
@@ -1081,48 +1126,40 @@ public class Draw_Main {
 				break;
 			case 3: // Question mark - Manual
 				g.drawImage(IL.ibquestionmark, b.getX() + 3, b.getY() + 3, b.getWidth() - 6, b.getHeight() - 6);
+				drawButtonHover(g, b, null);
 				break;
 			}
 			if (b.isHover()) {
-				drawHoverLayer(g, b);
-
-				g.setTextAlign(TextAlignment.LEFT);
-				g.setFont(new Font("Verdana Italic", 31));
-				g.setFill(Color.WHITE);
-
-				int x = getStartmenugridX();
-				int y = getStartmenugridY() - 90;
-
 				switch (i) {
 				case 1: // if hovering over button 1 (Hamster skins)
 					switch (Gui.getHamsterSkin()) {
 					default:
-						g.fillText("Standard-Hamster", x, y);
+						drawButtonHover(g, b, "Standard-Hamster");
 						break;
 					case 0:
-						g.fillText("Standard-Hamster", x, y);
+						drawButtonHover(g, b, "Standard-Hamster");
 						break;
 					case 1:
-						g.fillText("Zuckerwatte-Hamster", x, y);
+						drawButtonHover(g, b, "Zuckerwatte-Hamster");
 						break;
 					case 2:
-						g.fillText("Pokémon-Hamster", x, y);
+						drawButtonHover(g, b, "Pokémon-Hamster");
 						break;
 					}
 					break;
 				case 2: // if hovering over button 2 (Python skins)
 					switch (Gui.getPythonSkin()) {
 					default:
-						g.fillText("Standard-Python", x, y);
+						drawButtonHover(g, b, "Standard-Python");
 						break;
 					case 0:
-						g.fillText("Standard-Python", x, y);
+						drawButtonHover(g, b, "Standard-Python");
 						break;
 					case 1:
-						g.fillText("Blutsauger-Python", x, y);
+						drawButtonHover(g, b, "Blutsauger-Python");
 						break;
 					case 2:
-						g.fillText("Pokémon-Python", x, y);
+						drawButtonHover(g, b, "Pokémon-Python");
 						break;
 					}
 					break;
@@ -1131,62 +1168,9 @@ public class Draw_Main {
 
 		}
 
-//		g.setStroke(Color.WHITE);
-//		g.setFill(Color.WHITE);
-//
-//		/*
-//		 * Button "Start New Game"
-//		 */
-//		Button b = Gui.startmenubuttons[0];
-//		g.strokeRect(b.getX(), b.getY(), b.getWidth(), b.getHeight());
-//
-//		if (b.isHover() == true) {
-//			g.setFill(new Color(1, 1, 1, 0.2));
-//			g.fillRect(b.getX(), b.getY(), b.getWidth(), b.getHeight());
-//		}
-//
-//		g.setTextAlign(TextAlignment.CENTER);
-//		g.setTextBaseline(VPos.CENTER);
-//		g.setFont(new Font("Verdana", 46));
-//		g.setFill(Color.WHITE);
-//		g.fillText(b.getText(), b.getX() + b.getWidth() / 2, b.getY() + b.getHeight() / 2);
-//
-//		/*
-//		 * Button "Settings"
-//		 */
-//		b = Gui.startmenubuttons[1];
-//		g.strokeRect(b.getX(), b.getY(), b.getWidth(), b.getHeight());
-//
-//		if (b.isHover() == true) {
-//			g.setFill(new Color(1, 1, 1, 0.2));
-//			g.fillRect(b.getX(), b.getY(), b.getWidth(), b.getHeight());
-//		}
-//
-//		g.setTextAlign(TextAlignment.CENTER);
-//		g.setTextBaseline(VPos.CENTER);
-//		g.setFont(new Font("Verdana", 16));
-//		g.setFill(Color.WHITE);
-//		g.fillText(b.getText(), b.getX() + b.getWidth() / 2, b.getY() + b.getHeight() / 2);
-//
-//		/*
-//		 * Button "Quit"
-//		 */
-//		b = Gui.startmenubuttons[2];
-//		g.strokeRect(b.getX(), b.getY(), b.getWidth(), b.getHeight());
-//
-//		if (b.isHover() == true) {
-//			g.setFill(new Color(1, 1, 1, 0.2));
-//			g.fillRect(b.getX(), b.getY(), b.getWidth(), b.getHeight());
-//		}
-//
-//		g.setTextAlign(TextAlignment.CENTER);
-//		g.setTextBaseline(VPos.CENTER);
-//		g.setFont(new Font("Verdana", 16));
-//		g.setFill(Color.WHITE);
-//		g.fillText(b.getText(), b.getX() + b.getWidth() / 2, b.getY() + b.getHeight() / 2);
 	}
 
-	public void drawManual(GraphicsContext g) {
+	public void drawTutorialMenu(GraphicsContext g) {
 		g.drawImage(IL.itutorialmenu, 0, 0, Gui.getWidth(), Gui.getHeight());
 
 		g.setFill(new Color(1, 1, 1, 0.7)); // semi-transparent layer underneath the grid
@@ -1197,36 +1181,45 @@ public class Draw_Main {
 		// SCHLIESSEN BUTTON
 		Button b = Gui.startmenubuttons[0];
 		g.drawImage(IL.ibcross, b.getX() + 3, b.getY() + 3, b.getWidth() - 6, b.getHeight() - 6);
-		drawHoverLayer(g, b);
+		drawButtonHover(g, b, null);
 
-		// Tutorial Button 1
-		b = Gui.manualbuttons[0];
+		// Button Tutorial 101
+		b = Gui.tutorialmenubuttons[0];
 		g.drawImage(IL.ikeys, b.getX() + 3, b.getY() + 3, b.getWidth() - 6, b.getHeight() - 6);
-		drawHoverLayer(g, b);
+		drawButtonHover(g, b, null);
 
-		// Tutorial Button 2
-		b = Gui.manualbuttons[1];
+		// Button Tutorial 103
+		b = Gui.tutorialmenubuttons[1];
+		g.drawImage(IL.ibzeitleiste, b.getX() + 3, b.getY() + 3, b.getWidth() - 6, b.getHeight() - 6);
+		drawButtonHover(g, b, null);
+
+		// Button Tutorial 104
+		b = Gui.tutorialmenubuttons[2];
 		g.drawImage(IL.iwall, b.getX() + 3, b.getY() + 3, b.getWidth() - 6, b.getHeight() - 6);
-		drawHoverLayer(g, b);
+		drawButtonHover(g, b, null);
 
-		// Tutorial Button 3
-		b = Gui.manualbuttons[2];
+		// Button Tutorial 105
+		b = Gui.tutorialmenubuttons[3];
 		g.drawImage(IL.ispecialtile_korn, b.getX() + 3, b.getY() + 3, b.getWidth() - 6, b.getHeight() - 6);
-		drawHoverLayer(g, b);
+		drawButtonHover(g, b, null);
 
-		b = Gui.manualbuttons[3];
-		g.drawImage(IL.ibquestionmark, b.getX() + 3, b.getY() + 3, b.getWidth() - 6, b.getHeight() - 6);
-		drawHoverLayer(g, b);
-
-		b = Gui.manualbuttons[4];
+		// Button Tutorial 106
+		b = Gui.tutorialmenubuttons[4];
 		g.drawImage(IL.ispecialtile_hourglass, b.getX() + 3, b.getY() + 3, b.getWidth() - 6, b.getHeight() - 6);
-		drawHoverLayer(g, b);
+		drawButtonHover(g, b, null);
 
-		b = Gui.manualbuttons[5];
+		// Button Tutorial 107
+		b = Gui.tutorialmenubuttons[5];
+		g.drawImage(IL.ibbabyhamster, b.getX() + 3, b.getY() + 3, b.getWidth() - 6, b.getHeight() - 6);
+		drawButtonHover(g, b, null);
+
+		// Button Tutorial 108
+		b = Gui.tutorialmenubuttons[6];
 		g.drawImage(IL.ispecialtile_hammer, b.getX() + 3, b.getY() + 3, b.getWidth() - 6, b.getHeight() - 6);
-		drawHoverLayer(g, b);
+		drawButtonHover(g, b, null);
 
-		b = Gui.manualbuttons[6]; // Button "Level 1"
+		// Button "Level 1"
+		b = Gui.tutorialmenubuttons[8];
 		g.strokeRect(b.getX(), b.getY(), b.getWidth(), b.getHeight());
 
 		g.setFill(Color.CHOCOLATE);
@@ -1234,26 +1227,101 @@ public class Draw_Main {
 
 		g.setTextAlign(TextAlignment.CENTER);
 		g.setTextBaseline(VPos.CENTER);
-		g.setFont(new Font("Verdana", 16));
+		g.setFont(new Font("Constantia", 16));
 		g.setFill(Color.WHITE);
 		g.fillText(b.getText(), b.getX() + b.getWidth() / 2, b.getY() + b.getHeight() / 2);
+		drawButtonHover(g, b, "Starte das normale Level 1");
 
-		drawHoverLayer(g, b);
+		// Button Fragezeichen - switch between "Behind the Game" and normal Tutlvls
+		b = Gui.tutorialmenubuttons[7];
+		g.drawImage(IL.ibquestionmark, b.getX() + 3, b.getY() + 3, b.getWidth() - 6, b.getHeight() - 6);
+		drawButtonHover(g, b, "Durchlaufe das normale Tutorial");
+		if (Game.isBehindTheGame() == false) {
+			g.setFill(new Color(0, 0, 0, 0.4));
+			g.fillRect(b.getX(), b.getY(), b.getWidth(), b.getHeight());
+		}
 
-		b = Gui.manualbuttons[7];
-		g.drawImage(IL.ibzeitleiste, b.getX() + 3, b.getY() + 3, b.getWidth() - 6, b.getHeight() - 6);
-		drawHoverLayer(g, b);
+		// Button Compiler - switch between "Behind the Game" and normal Tutlvls
+		b = Gui.tutorialmenubuttons[9];
+		g.drawImage(IL.ibcompiler, b.getX() + 3, b.getY() + 3, b.getWidth() - 6, b.getHeight() - 6);
+		drawButtonHover(g, b, "Wirf einen Blick „hinter“ das Spiel");
+		if (Game.isBehindTheGame() == true) {
+			g.setFill(new Color(0, 0, 0, 0.4));
+			g.fillRect(b.getX(), b.getY(), b.getWidth(), b.getHeight());
+		}
 
-		b = Gui.manualbuttons[8];
-		g.drawImage(IL.ibbabyhamster, b.getX() + 3, b.getY() + 3, b.getWidth() - 6, b.getHeight() - 6);
-		drawHoverLayer(g, b);
+		// Button Anleitung
+		b = Gui.tutorialmenubuttons[10];
+		g.drawImage(IL.ibclipboard, b.getX() + 3, b.getY() + 3, b.getWidth() - 6, b.getHeight() - 6);
+		drawButtonHover(g, b, "Lies die Anleitung im Textformat");
+
+		// Button Back to Start Menu
+		b = Gui.tutorialmenubuttons[11];
+		g.drawImage(IL.ibback, b.getX() + 3, b.getY() + 3, b.getWidth() - 6, b.getHeight() - 6);
+		drawButtonHover(g, b, null);
 	}
 
-	private void drawHoverLayer(GraphicsContext g, Button b) {
+	private void drawButtonHover(GraphicsContext g, Button b, String hoverText) {
 		// draw Layer over the Button that is hovered on
 		if (b.isHover()) {
 			g.setFill(new Color(0, 0, 0, 0.2));
 			g.fillRect(b.getX(), b.getY(), b.getWidth(), b.getHeight());
+			if (hoverText != null) {
+				g.setTextAlign(TextAlignment.LEFT);
+				g.setFont(new Font("Constantia", 31));
+				g.setFill(Color.WHITE);
+				g.fillText(hoverText, getStartmenugridX(), getStartmenugridY() - 90);
+			}
+		}
+	}
+
+	public void drawAnleitung(GraphicsContext g) {
+		g.drawImage(IL.bgfeld, 0, 0, Gui.getWidth(), Gui.getHeight());
+
+		Button b = Gui.anleitungsbuttons[0];
+		g.strokeRect(b.getX(), b.getY(), b.getWidth(), b.getHeight());
+
+		g.setFill(new Color(1, 1, 1, 0.2));
+		g.fillRect(b.getX(), b.getY(), b.getWidth(), b.getHeight());
+
+		g.setTextAlign(TextAlignment.CENTER);
+		g.setTextBaseline(VPos.CENTER);
+		g.setFont(new Font("Constantia", 16));
+		g.setFill(Color.BLACK);
+		g.fillText(b.getText(), b.getX() + b.getWidth() / 2, b.getY() + b.getHeight() / 2);
+		/*
+		 * Level 1 Button
+		 */
+		b = Gui.anleitungsbuttons[1];
+		g.strokeRect(b.getX(), b.getY(), b.getWidth(), b.getHeight());
+
+		if (b.isHover() == true) {
+			g.setFill(new Color(1, 1, 1, 0.2));
+			g.fillRect(b.getX(), b.getY(), b.getWidth(), b.getHeight());
+		}
+		g.setFill(Color.DARKRED);
+		g.fillRect(b.getX(), b.getY(), b.getWidth(), b.getHeight());
+		g.setTextAlign(TextAlignment.CENTER);
+		g.setTextBaseline(VPos.CENTER);
+		g.setFont(new Font("Constantia", 16));
+		g.setFill(Color.WHITE);
+		g.fillText(b.getText(), b.getX() + b.getWidth() / 2, b.getY() + b.getHeight() / 2);
+
+		g.drawImage(IL.iplayer0_0, 760, 190, 30, 30);
+		g.drawImage(IL.ienemy0_0, 742, 230, 30, 30);
+		g.drawImage(IL.ipicture, 1155, 260, 250, 250);
+		g.drawImage(IL.iupKey, 853, 435, 40, 40);
+		g.drawImage(IL.idownKey, 742, 483, 40, 40);
+		g.drawImage(IL.ileftKey, 735, 435, 40, 40);
+		g.drawImage(IL.irightKey, 900, 393, 40, 40);
+	}
+
+	public void drawPfeiltasten(GraphicsContext g) {
+		if (p.getSchritte() < 6) {
+			g.drawImage(IL.iright, p.getX() + 1 * 33, Grid.getY(), 40, 40);
+			if (p.getX() > Grid.getX()) {
+				g.drawImage(IL.ileft, p.getX() - 1 * 33, Grid.getY(), 40, 40);
+			}
 		}
 	}
 

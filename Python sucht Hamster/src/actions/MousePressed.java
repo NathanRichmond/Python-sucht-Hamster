@@ -4,6 +4,7 @@ import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
 
 import data.Collision;
+import game.Game;
 import game.Gamestate;
 import game.Gamestate_e;
 import gui.Gui;
@@ -36,7 +37,7 @@ public class MousePressed implements EventHandler<MouseEvent> {
 				}
 			}
 			if (Collision.cButton(Gui.startmenubuttons[3], x, y)) {
-				Gamestate.state = Gamestate_e.manual;
+				Gamestate.state = Gamestate_e.tutorialmenu;
 			}
 			for (int i = 0; i < Gui.getnLvls(); i++) { // cycle through level select buttons
 				if (Collision.cButton(Gui.lvlselectbuttons[i], x, y)) {
@@ -47,19 +48,58 @@ public class MousePressed implements EventHandler<MouseEvent> {
 				}
 			}
 			break;
-			
-		case manual:
+
+		case tutorialmenu:
 			if (Collision.cButton(Gui.startmenubuttons[0], x, y)) {
 				System.exit(0);
 			}
-				if (Collision.cButton(Gui.manualbuttons[6], x, y)) {
-					Game.setLevel(1);
+			for (int i = 0; i < 7; i++) { // cycle through tutlevel select buttons
+				if (Collision.cButton(Gui.tutorialmenubuttons[i], x, y)) {
+					if (i == 0) {
+						Game.setLevel(101);
+					} else {
+						Game.setLevel(i + 102); // Ex.: Array index [3] - tutlvl 105 (because 102 has no button in
+												// array)
+					}
 					Game.startNewGame();
+				}
 			}
-				break;
+			if (Collision.cButton(Gui.tutorialmenubuttons[7], x, y)) { // Button Fragezeichen
+				Game.setBehindTheGame(false);
+			}
+			if (Collision.cButton(Gui.tutorialmenubuttons[8], x, y)) {
+				Game.setLevel(1);
+				Game.startNewGame();
+			}
+			if (Collision.cButton(Gui.tutorialmenubuttons[9], x, y)) { // Button Compiler
+				Game.setBehindTheGame(true);
+			}
+			if (Collision.cButton(Gui.tutorialmenubuttons[10], x, y)) {
+				Gamestate.state = Gamestate_e.anleitung;
+			}
+			if (Collision.cButton(Gui.tutorialmenubuttons[11], x, y)) {
+				Gamestate.state = Gamestate_e.startmenu;
+			}
+			if (Collision.cButton(Gui.tutorialmenubuttons[0], x, y)) {
+				Game.setLevel(101);
+				Game.startNewGame();
+			}
+			break;
+
+		case anleitung:
+			if (Collision.cButton(Gui.anleitungsbuttons[1], x, y)) {
+				Game.setLevel(1);
+				Game.startNewGame();
+			}
+			break;
+			
 		case ingame:
 			if (Collision.cButton(Gui.ingamebuttons[0], x, y)) {
-				Gamestate.state = Gamestate_e.startmenu;
+				if (Game.getLevel() < 100) {
+					Gamestate.state = Gamestate_e.startmenu;
+				} else { // return to Tutorial menu when in a Tutorial level
+					Gamestate.state = Gamestate_e.tutorialmenu;
+				}
 			}
 			if (Collision.cButton(Gui.ingamebuttons[1], x, y)) {
 				Gamestate.state = Gamestate_e.pause;
@@ -71,7 +111,11 @@ public class MousePressed implements EventHandler<MouseEvent> {
 
 		case pause:
 			if (Collision.cButton(Gui.ingamebuttons[0], x, y)) {
-				Gamestate.state = Gamestate_e.startmenu;
+				if (Game.getLevel() < 100) {
+					Gamestate.state = Gamestate_e.startmenu;
+				} else { // return to Tutorial menu when in a Tutorial level
+					Gamestate.state = Gamestate_e.tutorialmenu;
+				}
 			}
 			if (Collision.cButton(Gui.ingamebuttons[1], x, y)) {
 				Gamestate.state = Gamestate_e.ingame;
@@ -83,7 +127,11 @@ public class MousePressed implements EventHandler<MouseEvent> {
 
 		case victory:
 			if (Collision.cButton(Gui.ingamebuttons[0], x, y)) {
-				Gamestate.state = Gamestate_e.startmenu;
+				if (Game.getLevel() < 100) {
+					Gamestate.state = Gamestate_e.startmenu;
+				} else { // return to Tutorial menu when in a Tutorial level
+					Gamestate.state = Gamestate_e.tutorialmenu;
+				}
 			}
 			if (Collision.cButton(Gui.ingamebuttons[2], x, y)) {
 				Game.restartLevel();
@@ -91,7 +139,7 @@ public class MousePressed implements EventHandler<MouseEvent> {
 			if (Game.getLevel() + 1 <= Gui.getnLvls() || Game.getLevel() > 100) {
 				if (Collision.cButton(Gui.victorybutton, x, y)) {
 					Game.setLevel(Game.getLevel() + 1);
-					Game.restartLevel();
+					Game.startNewGame();
 				}
 			}
 			break;

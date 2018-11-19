@@ -1,6 +1,6 @@
 package gui;
 
-import actions.Game;
+import game.Game;
 
 public class Grid {
 
@@ -12,11 +12,11 @@ public class Grid {
 
 	public Grid() {
 		size = Game.getGridsize();
-		
+
 		/*
-		 * Determine grid width and height:
-		 * Take string input (e.g. "20x05"), explode into "20" and "05" and convert to int.
-		 * Then multiply with 33 (width/height of one grid tile) and set this as width/height.
+		 * Determine grid width and height: Take string input (e.g. "20x05"), explode
+		 * into "20" and "05" and convert to int. Then multiply with 33 (width/height of
+		 * one grid tile) and set this as width/height.
 		 */
 		String strWidth = size.substring(0, 2); // part in front of the "x"
 		String strHeight = size.substring(3); // part behind the "x"
@@ -26,7 +26,12 @@ public class Grid {
 		height = (intHeight * 33) + 1;
 
 		setX(Gui.getWidth() / 2 - getWidth() / 2);
-		setY(Gui.getHeight() / 2 - getHeight() / 2);
+
+		if (Game.getLevel() < 100) { // regular levels (that have a level title)
+			setY((Gui.getHeight() / 2 - getHeight() / 2) / 2 + 105);
+		} else { // Tutorial levels (that have no level title)
+			setY(Gui.getHeight() / 2 - getHeight() / 2);
+		}
 	}
 
 	public static int getX() {

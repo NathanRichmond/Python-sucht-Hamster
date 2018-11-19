@@ -64,7 +64,7 @@ public class Timer_Clock {
 
 					}
 
-					if (Gamestate.state == Gamestate_e.startmenu) {
+					if (Gamestate.state != Gamestate_e.ingame && Gamestate.state != Gamestate_e.pause) {
 						timer.cancel();
 					}
 				}

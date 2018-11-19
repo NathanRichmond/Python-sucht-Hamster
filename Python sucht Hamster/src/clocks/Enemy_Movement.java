@@ -3,9 +3,9 @@ package clocks;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import actions.Game;
 import chars.Enemy;
 import data.EnemyAI;
+import game.Game;
 import game.Gamestate;
 import game.Gamestate_e;
 
@@ -14,7 +14,7 @@ public class Enemy_Movement {
 	private Enemy e;
 
 	public Timer timer;
-	public int delay;
+	public long delay;
 	/*
 	 * Interval: 1 / e.speed (Enemy moves in one >second<) * 1000 (as period is in
 	 * >milliseconds<)
@@ -25,8 +25,16 @@ public class Enemy_Movement {
 
 	public Enemy_Movement(Enemy enemy) {
 		e = enemy;
-		period = (long) (1000 / e.getSpeed()); // time until next move; see above
-		delay = (int) (Math.random() * period + 1); // generate random delay in time margin of one move
+		double enemyspeed = e.getSpeed();
+		if (enemyspeed == 0) {
+			enemyspeed = 4.656612875245796924105750827168e-7; // smallest number possible to create the maximum long
+		}
+		period = (long) (1000 / enemyspeed); // time until next move; see top
+		if (e.getSpeed() != 0) {
+			delay = (long) (Math.random() * period + 1); // generate random delay in time margin of one move
+		} else { // if Enemy is not supposed to move (speed==0), make delay maximum
+			delay = period;
+		}
 	}
 
 	public void start() {
@@ -69,7 +77,7 @@ public class Enemy_Movement {
 	}
 
 	private void hamsterinflation() {
-		if (i == 10) { // every 10 moves
+		if (i == 1) { // every 1 moves
 			Game.hamsterinflation();
 			i = 0;
 		}

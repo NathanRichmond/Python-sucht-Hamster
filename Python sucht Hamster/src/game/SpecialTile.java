@@ -1,6 +1,5 @@
 package game;
 
-import actions.Game;
 import chars.Enemy;
 import chars.Player;
 import clocks.ST_BoostEnemy;
@@ -8,7 +7,7 @@ import clocks.ST_ModifyTime;
 import data.Collision;
 import data.CustomMath;
 import gui.Grid;
-import clocks.Wall_Creation;
+
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -64,7 +63,7 @@ public class SpecialTile {
 			}
 		} else {
 			if (activatedBy == "player") {
-				// destroy Korn. Is already destroyed by now (see line 24, 25), so nothing else
+				// destroy Korn. Is already destroyed by now (see line 30), so nothing else
 				// here.
 			}
 		}
