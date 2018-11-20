@@ -74,7 +74,7 @@ public class Gui {
 		stage.setTitle("Python sucht Hamster");
 		stage.setResizable(false);
 		stage.centerOnScreen();
-		stage.getIcons().add(IL.iplayer0_0); // icon in upper left corner of the window
+		stage.getIcons().add(IL.ilogo); // icon in upper left corner of the window
 
 		stage.setScene(scene);
 		stage.show();

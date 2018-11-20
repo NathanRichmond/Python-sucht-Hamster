@@ -225,14 +225,14 @@ public class Game {
 			if (GameTimer.isModified() == true) {
 				ST_ModifyTime.timer.cancel();
 			}
-			// no timer in tutlvl1 & tutlvl2. This inevitably leads to an error, as
-//			if (Game.getLevel() != 101 && Game.getLevel() != 102) {
-			try {
-				Timer_Clock.timer.cancel();
-			} catch (Exception e1) {
-				e1.printStackTrace(); // print error log
+			// no timer in tutlvl1 & tutlvl2. Might sometimes cause an error, thus try-catch
+			if (Game.getLevel() != 101 && Game.getLevel() != 102) {
+				try {
+					Timer_Clock.timer.cancel();
+				} catch (Exception e1) { // any exception that is thrown
+					e1.printStackTrace(); // print error log
+				}
 			}
-//			}
 			for (Enemy e : enemies) {
 				if (e.isSpeedBoosted() == false) {
 					e.em.timer.cancel();
@@ -428,10 +428,13 @@ public class Game {
 	private static void level106() {
 		setGridsize("15x08");
 		setCharsCoordinates(0, 7, 14, 2);
+		setGameDuration(20);
 		setWalls(true);
 		setSpecialTiles(true);
-		setHourglassEFactor(2);
-		setHourglassPFactor(0.5);
+		setHourglassEFactor(3);
+		setHourglassEDuration(2);
+		setHourglassPFactor(0.25);
+		setHourglassPDuration(1.75);
 		// playerMargin: 12 tiles
 	}
 

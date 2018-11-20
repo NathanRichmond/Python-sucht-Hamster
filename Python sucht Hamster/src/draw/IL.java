@@ -5,6 +5,11 @@ import javafx.scene.image.Image;
 public class IL {
 
 	/*
+	 * ============================= PROGRAMM-LOGO =============================
+	 */
+	public static Image ilogo = new Image("file:rsc/game/ui/icon.png");
+	
+	/*
 	 * ============================= BACKGROUND =============================
 	 */
 	public static Image bgfeld = new Image("file:rsc/bg/feld.png");
@@ -237,7 +242,7 @@ public class IL {
 	public static Image idefeat = new Image("file:rsc/game/ui/defeatscreen.png");
 
 	/*
-	 * ============================= MANUAL =============================
+	 * ============================= ANLEITUNG IMAGES =============================
 	 */
 	public static Image ipicture = new Image("file:rsc/manual/CutOut.png"); 
 	public static Image idownKey = new Image("file:rsc/manual/downKey.png"); 

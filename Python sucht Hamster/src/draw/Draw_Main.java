@@ -5,6 +5,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
+
 import chars.Enemy;
 import chars.Player;
 import game.Game;
@@ -95,7 +96,7 @@ public class Draw_Main {
 				drawGameTimer(g);
 			}
 			// Extrabilder für das erste Tutorial
-			if (Game.getLevel() == 101) {
+			if (Game.getLevel() == 101 && Game.isBehindTheGame() == false) {
 				drawPfeiltasten(g);
 			}
 
@@ -111,61 +112,22 @@ public class Draw_Main {
 				drawLvlTitle(g);
 			}
 
-//			/*
-//			 * GAME ELEMENTS: Korn Tile Activated Info
-//			 */
-//			if (Game.isSpecialTiles() == true) {
-//				int x = Grid.getX() - 240, y = Grid.getY();
-//				for (int i = 0; i < Game.enemies.size(); i++) {
-//					Enemy e = Game.enemies.get(i);
-//
-//					if (e.isSpeedBoosted() == true) {
-//						int width = 220, height = 20;
-//						g.setFill(new Color(0, 0, 0, 0.4));
-//						g.fillRect(x, y + i * 2 * height, width, height);
-//
-//						g.setTextAlign(TextAlignment.CENTER);
-//						g.setTextBaseline(VPos.CENTER);
-//						g.setFont(new Font("Constantia", 16));
-//						g.setFill(Color.WHITE);
-//						g.fillText("Enemy speed is boosted!", x + width / 2, (y + i * 2 * height) + height / 2);
-//					}
-//				}
-//			}
-//			
-//			/*
-//			 * GAME ELEMENTS: Time Modified Info
-//			 */
-//			if (Game.isSpecialTiles() == true) {
-//
-//				if (GameTimer.isModified() == true) {
-//					int x = Grid.getX() - 240, y = Grid.getY() + 2 * 20, width = 220, height = 20;
-//					g.setFill(new Color(0, 0, 0, 0.4));
-//					g.fillRect(x, y, width, height);
-//
-//					g.setTextAlign(TextAlignment.CENTER);
-//					g.setTextBaseline(VPos.CENTER);
-//					g.setFont(new Font("Constantia", 16));
-//					g.setFill(Color.WHITE);
-//					g.fillText("Game time is modified!", x + width / 2, y + height / 2);
-//
-//				}
-//			}
-//
+			/*
+			 * GAME ELEMENTS: Special Tile Activated Info
+			 */
+			if (Game.isSpecialTiles() == true) {
+//				drawSpecialTileInfo(g);
+			}
+
 			/*
 			 * GAME ELEMENTS: Hamster Count (for Hamsterinflation)
 			 */
-			if (Game.getLevel() == 12) {
-				int x = Grid.getX() - 240, y = Grid.getY(), width = 200, height = 40;
-				g.setFill(new Color(0, 0, 0, 0.4));
-				g.fillRect(x, y, width, height);
+			if (Game.isHamsterinflation() == true) {
+				drawHamstercount(g);
+			}
 
-				g.setTextAlign(TextAlignment.CENTER);
-				g.setTextBaseline(VPos.CENTER);
-				g.setFont(new Font("Constantia", 16));
-				g.setFill(Color.WHITE);
-				g.fillText("Hamster am Leben: " + Game.enemies.size(), x + width / 2, y + height / 4);
-				g.fillText("Hamster verschlungen: " + Game.hamstercount, x + width / 2, y + 3 * height / 4);
+			if (Game.isBehindTheGame() == true && Game.getLevel() > 100) {
+				drawBehindTheGame(g);
 			}
 		}
 
@@ -183,6 +145,617 @@ public class Draw_Main {
 			drawPauseScreen(g);
 		}
 
+	}
+
+	private void drawBehindTheGame(GraphicsContext g) {
+		drawBehindTheGameGrid(g);
+		drawBehindTheGameButton(g);
+		if (Game.isWalls() == true) { // if level contains walls
+			drawBehindTheGameWall(g);
+		}
+		if (Game.isSpecialTiles() == true && SpecialTile_Creation.specialtiles.size() > 0) {
+			drawBehindTheGameSpecialTile(g);
+		}
+		if (Game.getLevel() != 101 && Game.getLevel() != 102) { // no timer in tutlvl1 & tutlvl2
+			drawBehindTheGameZeitleiste(g);
+		}
+		drawBehindTheGameHamster(g);
+		drawBehindTheGamePython(g);
+	}
+
+	private void drawBehindTheGameGrid(GraphicsContext g) {
+		int w = 250, h = 92; // size of the box
+		int xb = Gui.getWidth() - (w + 50), yb = 30; // coordinates of box
+		int offset = 25; // offset around Grid
+
+		// Box with explanation
+		g.setLineWidth(1);
+		g.setStroke(new Color(1, 1, 1, 0.4));
+		g.strokeRect(xb, yb, w, h);
+		g.setFill(new Color(0, 0, 0, 0.4));
+		g.fillRect(xb, yb, w, h);
+		// text inside of it
+		// header
+		g.setTextAlign(TextAlignment.CENTER);
+		g.setTextBaseline(VPos.TOP);
+		g.setFont(new Font("Constantia", 18));
+		g.setFill(Color.WHITE);
+		g.fillText("Objekt der Klasse Grid", xb + w / 2, yb + 5);
+		// header divider
+		g.setLineWidth(1);
+		g.setStroke(Color.WHITE);
+		g.strokeLine(xb, yb + 27, xb + w, yb + 27);
+		// content text
+		g.setFont(new Font("Constantia", 15));
+		String textleft = "";
+		String textright = "";
+		int numberOfLines = 3;
+		for (int i = 0; i < numberOfLines; i++) {
+			switch (i) {
+			case 0:
+				textleft = "x = " + Grid.getX();
+				textright = "Abszisse";
+				break;
+			case 1:
+				textleft = "y = " + Grid.getY();
+				textright = "Ordinate";
+				break;
+			case 2:
+				textleft = "size = \"" + Grid.getSize() + "\"";
+				textright = "Größe";
+				break;
+			}
+			g.setTextAlign(TextAlignment.LEFT);
+			g.fillText(textleft, xb + 4, yb + 30 + i * 20);
+			g.setTextAlign(TextAlignment.RIGHT);
+			g.fillText(textright, xb + w - 4, yb + 30 + i * 20);
+
+			// Box around the Grid
+			g.setLineWidth(3);
+			g.setStroke(new Color(0, 0, 0, 0.2));
+			g.strokeRect(Grid.getX() - offset, Grid.getY() - offset, Grid.getWidth() + offset * 2,
+					Grid.getHeight() + offset * 2);
+
+			// line between them
+			g.setStroke(new Color(0, 0, 0, 0.2));
+			g.strokeLine(Grid.getX() + Grid.getWidth() + offset, Grid.getY() + offset, xb, yb + h);
+		}
+	}
+
+	private void drawBehindTheGameButton(GraphicsContext g) {
+		Button b = Gui.ingamebuttons[2]; // restart button
+		int w = 250, h = 92; // size of the box
+		int xb = b.getX() + b.getWidth() + 300, yb = b.getY(); // coordinates of box
+		int offset = 5; // offset around Button
+
+		// Box with explanation
+		g.setLineWidth(1);
+		g.setStroke(new Color(1, 1, 1, 0.4));
+		g.strokeRect(xb, yb, w, h);
+		g.setFill(new Color(0, 0, 0, 0.4));
+		g.fillRect(xb, yb, w, h);
+		// text inside of it
+		// header
+		g.setTextAlign(TextAlignment.CENTER);
+		g.setTextBaseline(VPos.TOP);
+		g.setFont(new Font("Constantia", 18));
+		g.setFill(Color.WHITE);
+		g.fillText("Objekt der Klasse Button", xb + w / 2, yb + 5);
+		// header divider
+		g.setLineWidth(1);
+		g.setStroke(Color.WHITE);
+		g.strokeLine(xb, yb + 27, xb + w, yb + 27);
+		// content text
+		g.setFont(new Font("Constantia", 15));
+		String textleft = "";
+		String textright = "";
+		int numberOfLines = 3;
+		for (int i = 0; i < numberOfLines; i++) {
+			switch (i) {
+			case 0:
+				textleft = "x = " + b.getX();
+				textright = "Abszisse";
+				break;
+			case 1:
+				textleft = "y = " + b.getY();
+				textright = "Ordinate";
+				break;
+			case 2:
+				textleft = "isHover = " + b.isHover();
+				textright = "";
+				break;
+			}
+			g.setTextAlign(TextAlignment.LEFT);
+			g.fillText(textleft, xb + 4, yb + 30 + i * 20);
+			g.setTextAlign(TextAlignment.RIGHT);
+			g.fillText(textright, xb + w - 4, yb + 30 + i * 20);
+
+			// Box around the Button
+			g.setLineWidth(3);
+			g.setStroke(new Color(0, 0, 0, 0.2));
+			g.strokeRect(b.getX() - offset, b.getY() - offset, b.getWidth() + offset * 2, b.getHeight() + offset * 2);
+
+			// line between them
+			g.setStroke(new Color(0, 0, 0, 0.2));
+			g.strokeLine(b.getX() + b.getWidth() + offset, b.getY() + offset, xb, yb);
+		}
+	}
+
+	private void drawBehindTheGameZeitleiste(GraphicsContext g) {
+		int xz = Grid.getX() + Grid.getWidth() + 50; // coordinates of Zeitleiste
+		int yz = Grid.getY() + Grid.getHeight() / 2 - 125;
+		int hz = 250, wz = 75; // size of Zeitleiste
+		int w = 250, h = 212;
+		int xb = xz + wz + 50, yb = yz + hz / 2 - h / 2; // coordinates of box: center vertically with Zeitleiste
+		int offset = 10; // offset around Zeitleiste
+
+		// Box with explanation
+		g.setLineWidth(1);
+		g.setStroke(new Color(1, 1, 1, 0.4));
+		g.strokeRect(xb, yb, w, h);
+		g.setFill(new Color(0, 0, 0, 0.4));
+		g.fillRect(xb, yb, w, h);
+		// text inside of it
+		// header
+		g.setTextAlign(TextAlignment.CENTER);
+		g.setTextBaseline(VPos.TOP);
+		g.setFont(new Font("Constantia", 18));
+		g.setFill(Color.WHITE);
+		g.fillText("Objekt der Klasse GameTimer", xb + w / 2, yb + 5);
+		// header divider
+		g.setLineWidth(1);
+		g.setStroke(Color.WHITE);
+		g.strokeLine(xb, yb + 27, xb + w, yb + 27);
+		// content text
+		g.setFont(new Font("Constantia", 15));
+		String textleft = "";
+		String textright = "";
+		int numberOfLines = 9;
+		for (int i = 0; i < numberOfLines; i++) {
+			switch (i) {
+			case 0:
+				textleft = "gameDuration = " + GameTimer.getGameDuration();
+				break;
+			case 1:
+				textleft = "";
+				textright = "Zeit in Sekunden, bis";
+				break;
+			case 2:
+				textright = "das Spiel verloren ist";
+				break;
+			case 3:
+				textleft = "gameTime = " + GameTimer.getGameTime();
+				textright = "";
+				break;
+			case 4:
+				textleft = "";
+				textright = "Aktuell angezeigtes Bild";
+				break;
+			case 5:
+				textleft = "isModified = " + GameTimer.isModified();
+				textright = "";
+				break;
+			case 6:
+				textleft = "";
+				textright = "Ist „true“, wenn ein";
+				break;
+			case 7:
+				textright = "Special Tile der Art";
+				break;
+			case 8:
+				textright = "„hourglass“ aktiviert wird";
+				break;
+			}
+			g.setTextAlign(TextAlignment.LEFT);
+			g.fillText(textleft, xb + 4, yb + 30 + i * 20);
+			g.setTextAlign(TextAlignment.RIGHT);
+			g.fillText(textright, xb + w - 4, yb + 30 + i * 20);
+
+			// Box around the Zeitleiste
+			g.setLineWidth(3);
+			g.setStroke(new Color(0, 0, 0, 0.1));
+			g.strokeRect(xz - offset, yz - offset, wz + offset * 2, hz + offset * 2);
+
+			// line between them
+			g.setStroke(new Color(0, 0, 0, 0.1));
+			g.strokeLine(xz + wz + offset, yz + offset, xb, yb);
+		}
+	}
+
+	private void drawBehindTheGameSpecialTile(GraphicsContext g) {
+		SpecialTile st;
+		int w = 235, h = 112; // size of box
+		int offset = 5; // offset around Special Tile
+		int xst = 0, yst = 0; // coordinates of one Special Tile
+		int xb = 480, yb = 764 - h; // coordinates of box
+		int wst = 32, hst = 32; // size of Special Tile
+		String type = ""; // type of Special Tile
+		for (int i = 0; i < SpecialTile_Creation.specialtiles.size(); i++) {
+			st = SpecialTile_Creation.specialtiles.get(i);
+			// get st that is closest to box
+			if (xb - st.getX() <= xb - xst && yst - st.getY() <= yb - yst) {
+				xst = st.getX();
+				yst = st.getY();
+				wst = st.getWidth();
+				hst = st.getHeight();
+				type = st.getType();
+			} else { // when above isn't possible for any reason, just take the st no matter what
+				if (xst == 0) {
+					xst = st.getX();
+				}
+				if (yst == 0) {
+					yst = st.getY();
+				}
+			}
+		}
+
+		// Box with explanation
+		g.setLineWidth(1);
+		g.setStroke(new Color(1, 1, 1, 0.4));
+		g.strokeRect(xb, yb, w, h);
+		g.setFill(new Color(0, 0, 0, 0.4));
+		g.fillRect(xb, yb, w, h);
+		// text inside of it
+		// header
+		g.setTextAlign(TextAlignment.CENTER);
+		g.setTextBaseline(VPos.TOP);
+		g.setFont(new Font("Constantia", 18));
+		g.setFill(Color.WHITE);
+		g.fillText("Objekt der Klasse SpecialTile", xb + w / 2, yb + 5);
+		// header divider
+		g.setLineWidth(1);
+		g.setStroke(Color.WHITE);
+		g.strokeLine(xb, yb + 27, xb + w, yb + 27);
+		// content text
+		g.setFont(new Font("Constantia", 15));
+		String textleft = "";
+		String textright = "";
+		int numberOfLines = 4;
+		for (int i = 0; i < numberOfLines; i++) {
+			switch (i) {
+			case 0:
+				textleft = "x = " + xst;
+				textright = "Abszisse";
+				break;
+			case 1:
+				textleft = "y = " + yst;
+				textright = "Ordinate";
+				break;
+			case 2:
+				textleft = "type = " + type;
+				textright = "Art";
+				break;
+			case 3:
+				textleft = "isAlive = true";
+				textright = "";
+				break;
+			}
+			g.setTextAlign(TextAlignment.LEFT);
+			g.fillText(textleft, xb + 4, yb + 30 + i * 20);
+			g.setTextAlign(TextAlignment.RIGHT);
+			g.fillText(textright, xb + w - 4, yb + 30 + i * 20);
+		}
+
+		// Box around the Special Tile
+		g.setLineWidth(3);
+		g.setStroke(new Color(0, 0, 0, 0.4));
+		g.strokeRect(xst - offset, yst - offset, wst + offset * 2, hst + offset * 2);
+
+		// line between them
+		g.setStroke(new Color(0, 0, 0, 0.4));
+		g.strokeLine(xst - offset, yst + wst / 2, xb + w, yb);
+	}
+
+	private void drawBehindTheGameWall(GraphicsContext g) {
+		Wall w;
+		int xw = 0, yw = 0; // coordinates of one Wall
+		int width = 200, height = 72; // size of box
+		int xb = 745, yb = 764 - height; // coordinates of box
+		int ww = 32, hw = 32; // size of Wall
+		int offset = 5; // offset around Wall
+		for (int i = 0; i < Wall_Creation.walls.size(); i++) {
+			w = Wall_Creation.walls.get(i);
+			// get wall that is closest to box
+			if (xb - w.getX() <= xb - xw && yw - w.getY() <= yb - yw) {
+				xw = w.getX();
+				yw = w.getY();
+				ww = w.getWidth();
+				hw = w.getHeight();
+			} else { // when above isn't possible for any reason, just take the wall no matter what
+				if (xw == 0) {
+					xw = w.getX();
+				}
+				if (yw == 0) {
+					yw = w.getY();
+				}
+			}
+		}
+
+		// Box with explanation
+		g.setLineWidth(1);
+		g.setStroke(new Color(1, 1, 1, 0.4));
+		g.strokeRect(xb, yb, width, height);
+		g.setFill(new Color(0, 0, 0, 0.4));
+		g.fillRect(xb, yb, width, height);
+		// text inside of it
+		// header
+		g.setTextAlign(TextAlignment.CENTER);
+		g.setTextBaseline(VPos.TOP);
+		g.setFont(new Font("Constantia", 18));
+		g.setFill(Color.WHITE);
+		g.fillText("Objekt der Klasse Wall", xb + width / 2, yb + 5);
+		// header divider
+		g.setStroke(Color.WHITE);
+		g.setLineWidth(1);
+		g.strokeLine(xb, yb + 27, xb + width, yb + 27);
+		// content text
+		g.setFont(new Font("Constantia", 15));
+		String textleft = "";
+		String textright = "";
+		int numberOfLines = 2;
+		for (int i = 0; i < numberOfLines; i++) {
+			switch (i) {
+			case 0:
+				textleft = "x = " + xw;
+				textright = "Abszisse";
+				break;
+			case 1:
+				textleft = "y = " + yw;
+				textright = "Ordinate";
+				break;
+			}
+			g.setTextAlign(TextAlignment.LEFT);
+			g.fillText(textleft, xb + 4, yb + 30 + i * 20);
+			g.setTextAlign(TextAlignment.RIGHT);
+			g.fillText(textright, xb + width - 4, yb + 30 + i * 20);
+		}
+
+		// Box around the Wall
+		g.setLineWidth(3);
+		g.setStroke(new Color(0, 0, 0, 0.4));
+		g.strokeRect(xw - offset, yw - offset, ww + offset * 2, hw + offset * 2);
+
+		// line between them
+		g.setStroke(new Color(0, 0, 0, 0.4));
+		g.strokeLine(xw + ww / 2, yw + hw + offset, xb + width, yb);
+	}
+
+	private void drawBehindTheGameHamster(GraphicsContext g) {
+		if (Game.enemies.size() > 0) {
+			Enemy e = Game.enemies.get(0); // first Enemy in the array
+			int xe = e.getX(), ye = e.getY(); // coordinates of enemy
+			int xb = 50, yb = 432; // coordinates of box
+			int w = 400, h = 332;
+			int offset = 5; // offset around Hamster
+
+			// Box on the left with explanation
+			g.setLineWidth(1);
+			g.setStroke(new Color(1, 1, 1, 0.4));
+			g.strokeRect(xb, yb, w, h);
+			g.setFill(new Color(0, 0, 0, 0.4));
+			g.fillRect(xb, yb, w, h);
+			// text inside of it
+			// header
+			g.setTextAlign(TextAlignment.CENTER);
+			g.setTextBaseline(VPos.TOP);
+			g.setFont(new Font("Constantia", 18));
+			g.setFill(Color.WHITE);
+			g.fillText("Objekt der Klasse Enemy", xb + w / 2, yb + 5);
+			// header divider
+			g.setLineWidth(1);
+			g.setStroke(Color.WHITE);
+			g.strokeLine(xb, yb + 27, xb + w, yb + 27);
+			// content text
+			g.setFont(new Font("Constantia", 15));
+			String textleft = "";
+			String textright = "";
+			int numberOfLines = 15;
+			for (int i = 0; i < numberOfLines; i++) {
+				switch (i) {
+				case 0:
+					textleft = "x = " + e.getX();
+					textright = "Abszisse";
+					break;
+				case 1:
+					textleft = "y = " + e.getY();
+					textright = "Ordinate";
+					break;
+				case 2:
+					textleft = "faceDirection = " + e.getFaceDirection();
+					textright = "Blickrichtung";
+					break;
+				case 3:
+					textleft = "speed = " + e.getSpeed();
+					textright = "Geschwindigkeit";
+					break;
+				case 4:
+					textleft = "isSpeedBoosted = " + e.isSpeedBoosted();
+					textright = "";
+					break;
+				case 5:
+					textleft = "isAlive = " + e.isAlive();
+					textright = "";
+					break;
+				case 6:
+					textleft = "";
+					textright = "";
+					break;
+				case 7:
+					textleft = "turn(int direction)";
+					break;
+				case 8:
+					textleft = "";
+					textright = "Ändert faceDirection";
+					break;
+				case 9:
+					textright = "abhängig von direction";
+					break;
+				case 10:
+					textleft = "move(int direction)";
+					textright = "";
+					break;
+				case 11:
+					textleft = "";
+					textright = "Ändert x und y abhängig";
+					break;
+				case 12:
+					textright = "von faceDirection um 33";
+					break;
+				case 13:
+					textleft = "killEnemy()";
+					textright = "";
+					break;
+				case 14:
+					textleft = "";
+					textright = "Setzt isAlive auf false";
+					break;
+				}
+				g.setTextAlign(TextAlignment.LEFT);
+				g.fillText(textleft, xb + 4, yb + 30 + i * 20);
+				g.setTextAlign(TextAlignment.RIGHT);
+				g.fillText(textright, xb + w - 4, yb + 30 + i * 20);
+			}
+
+			// Box around the Hamster
+			g.setLineWidth(3);
+			g.setStroke(new Color(0, 0, 0, 0.4));
+			g.strokeRect(xe - offset, ye - offset, e.getWidth() + offset * 2, e.getHeight() + offset * 2);
+
+			// line between them
+			g.setStroke(new Color(0, 0, 0, 0.4));
+			g.strokeLine(xe - offset, ye + e.getWidth() / 2, xb + w, yb);
+		}
+	}
+
+	private void drawBehindTheGamePython(GraphicsContext g) {
+		int xp = p.getX(), yp = p.getY(); // coordinates of player
+		int xb = 50, yb = 170; // coordinates of box
+		int w = 400, h = 232;
+		int offset = 5; // offset around Python
+
+		// Box on the left with explanation
+		g.setLineWidth(1);
+		g.setStroke(new Color(1, 1, 1, 0.4));
+		g.strokeRect(xb, yb, w, h);
+		g.setFill(new Color(0, 0, 0, 0.4));
+		g.fillRect(xb, yb, w, h);
+		// text inside of it
+		// header
+		g.setTextAlign(TextAlignment.CENTER);
+		g.setTextBaseline(VPos.TOP);
+		g.setFont(new Font("Constantia", 18));
+		g.setFill(Color.WHITE);
+		g.fillText("Objekt der Klasse Player", xb + w / 2, yb + 5);
+		// header divider
+		g.setLineWidth(0.5);
+		g.setStroke(Color.WHITE);
+		g.strokeLine(xb, yb + 27, xb + w, yb + 27);
+		// content text
+		g.setFont(new Font("Constantia", 15));
+		String textleft = "";
+		String textright = "";
+		int numberOfLines = 10;
+		for (int i = 0; i < numberOfLines; i++) {
+			switch (i) {
+			case 0:
+				textleft = "x = " + p.getX();
+				textright = "Abszisse";
+				break;
+			case 1:
+				textleft = "y = " + p.getY();
+				textright = "Ordinate";
+				break;
+			case 2:
+				textleft = "faceDirection = " + p.getFaceDirection();
+				textright = "Blickr.";
+				break;
+			case 3:
+				textleft = "";
+				textright = "";
+				break;
+			case 4:
+				textleft = "turn(int direction)";
+				break;
+			case 5:
+				textleft = "";
+				textright = "Ändert faceDirection";
+				break;
+			case 6:
+				textright = "abhängig von direction";
+				break;
+			case 7:
+				textleft = "move(int direction)";
+				textright = "";
+				break;
+			case 8:
+				textleft = "";
+				textright = "Ändert x und y abhängig";
+				break;
+			case 9:
+				textright = "von faceDirection um 33";
+				break;
+			}
+			g.setTextAlign(TextAlignment.LEFT);
+			g.fillText(textleft, xb + 4, yb + 30 + i * 20);
+			g.setTextAlign(TextAlignment.RIGHT);
+			g.fillText(textright, xb + w - 4, yb + 30 + i * 20);
+		}
+
+		// Box around the Python
+		g.setLineWidth(3);
+		g.setStroke(new Color(0, 0, 0, 0.4));
+		g.strokeRect(xp - offset, yp - offset, p.getWidth() + offset * 2, p.getHeight() + offset * 2);
+
+		// line between them
+		g.setStroke(new Color(0, 0, 0, 0.4));
+		g.strokeLine(xp + p.getWidth() / 2, yp - offset, xb + w, yb);
+	}
+
+	@SuppressWarnings("unused")
+	private void drawSpecialTileInfo(GraphicsContext g) {
+		// Enemy speed is boosted
+		int x = Grid.getX() - 240, y = Grid.getY();
+		int width = 240, height = 20;
+		for (int i = 0; i < Game.enemies.size(); i++) {
+			Enemy e = Game.enemies.get(i);
+			if (e.isSpeedBoosted() == true) {
+				g.setFill(new Color(0, 0, 0, 0.4));
+				g.fillRect(x, y + i * 2 * height, width, height);
+				g.setTextAlign(TextAlignment.CENTER);
+				g.setTextBaseline(VPos.CENTER);
+				g.setFont(new Font("Constantia", 16));
+				g.setFill(Color.WHITE);
+				g.fillText("Hamstergeschwindigkeit erhöht!", x + width / 2, (y + i * 2 * height) + height / 2);
+			}
+		}
+
+		// Time is modified
+
+		if (GameTimer.isModified() == true) {
+			y = Grid.getY() + 2 * 20;
+			width = 160;
+			g.setFill(new Color(0, 0, 0, 0.4));
+			g.fillRect(x, y, width, height);
+
+			g.setTextAlign(TextAlignment.CENTER);
+			g.setTextBaseline(VPos.CENTER);
+			g.setFont(new Font("Constantia", 16));
+			g.setFill(Color.WHITE);
+			g.fillText("Spielzeit modifiziert!", x + width / 2, y + height / 2);
+		}
+	}
+
+	private void drawHamstercount(GraphicsContext g) {
+		int x = Grid.getX() - 240, y = Grid.getY(), width = 200, height = 40;
+		g.setFill(new Color(0, 0, 0, 0.4));
+		g.fillRect(x, y, width, height);
+
+		g.setTextAlign(TextAlignment.CENTER);
+		g.setTextBaseline(VPos.CENTER);
+		g.setFont(new Font("Constantia", 16));
+		g.setFill(Color.WHITE);
+		g.fillText("Hamster am Leben: " + Game.enemies.size(), x + width / 2, y + height / 4);
+		g.fillText("Hamster verschlungen: " + Game.hamstercount, x + width / 2, y + 3 * height / 4);
 	}
 
 	private void drawLvlTitle(GraphicsContext g) {
@@ -249,6 +822,7 @@ public class Draw_Main {
 			 * Button border
 			 */
 			g.setStroke(Color.WHITE);
+			g.setLineWidth(1);
 			if (i == 1) { // for pause Button: only when ingame/pause
 				if (Gamestate.state != Gamestate_e.ingame && Gamestate.state != Gamestate_e.pause) {
 					g.setStroke(new Color(0, 0, 0, 0.25)); // dark gray border
@@ -389,7 +963,10 @@ public class Draw_Main {
 		int y = getStartmenugridY() - 90;
 		switch (level) {
 		default:
-			g.fillText("[Description of level " + level + " here]", x, y);
+			g.setFont(new Font("Constantia", 30));
+			g.setFill(Color.WHITE);
+			g.setTextBaseline(VPos.TOP);
+			g.fillText("[Beschreibung für Level " + level + "]", x, y);
 			break;
 		case 1:
 			g.drawImage(IL.ilvldesc1, x, y);
@@ -471,6 +1048,7 @@ public class Draw_Main {
 
 		// border around the image (placeholder while there is no image)
 		g.setStroke(Color.WHITE);
+		g.setLineWidth(1);
 		g.strokeRect(x, y, w, h);
 
 		switch (Gamestate.state) {
@@ -518,276 +1096,276 @@ public class Draw_Main {
 		 */
 		int x = Grid.getX() + Grid.getWidth() + 50; // is vertically centered with grid
 		int y = Grid.getY() + Grid.getHeight() / 2 - 125;
-		int h = 75;
-		int w = 250;
+		int w = 75;
+		int h = 250;
 
 		switch (GameTimer.getGameTime()) {
 		case 1:
-			g.drawImage(IL.igametimer01, x, y, h, w);
+			g.drawImage(IL.igametimer01, x, y, w, h);
 			break;
 		case 2:
-			g.drawImage(IL.igametimer02, x, y, h, w);
+			g.drawImage(IL.igametimer02, x, y, w, h);
 			break;
 		case 3:
-			g.drawImage(IL.igametimer03, x, y, h, w);
+			g.drawImage(IL.igametimer03, x, y, w, h);
 			break;
 		case 4:
-			g.drawImage(IL.igametimer04, x, y, h, w);
+			g.drawImage(IL.igametimer04, x, y, w, h);
 			break;
 		case 5:
-			g.drawImage(IL.igametimer05, x, y, h, w);
+			g.drawImage(IL.igametimer05, x, y, w, h);
 			break;
 		case 6:
-			g.drawImage(IL.igametimer06, x, y, h, w);
+			g.drawImage(IL.igametimer06, x, y, w, h);
 			break;
 		case 7:
-			g.drawImage(IL.igametimer07, x, y, h, w);
+			g.drawImage(IL.igametimer07, x, y, w, h);
 			break;
 		case 8:
-			g.drawImage(IL.igametimer08, x, y, h, w);
+			g.drawImage(IL.igametimer08, x, y, w, h);
 			break;
 		case 9:
-			g.drawImage(IL.igametimer09, x, y, h, w);
+			g.drawImage(IL.igametimer09, x, y, w, h);
 			break;
 		case 10:
-			g.drawImage(IL.igametimer10, x, y, h, w);
+			g.drawImage(IL.igametimer10, x, y, w, h);
 			break;
 		case 11:
-			g.drawImage(IL.igametimer11, x, y, h, w);
+			g.drawImage(IL.igametimer11, x, y, w, h);
 			break;
 		case 12:
-			g.drawImage(IL.igametimer12, x, y, h, w);
+			g.drawImage(IL.igametimer12, x, y, w, h);
 			break;
 		case 13:
-			g.drawImage(IL.igametimer13, x, y, h, w);
+			g.drawImage(IL.igametimer13, x, y, w, h);
 			break;
 		case 14:
-			g.drawImage(IL.igametimer14, x, y, h, w);
+			g.drawImage(IL.igametimer14, x, y, w, h);
 			break;
 		case 15:
-			g.drawImage(IL.igametimer15, x, y, h, w);
+			g.drawImage(IL.igametimer15, x, y, w, h);
 			break;
 		case 16:
-			g.drawImage(IL.igametimer16, x, y, h, w);
+			g.drawImage(IL.igametimer16, x, y, w, h);
 			break;
 		case 17:
-			g.drawImage(IL.igametimer17, x, y, h, w);
+			g.drawImage(IL.igametimer17, x, y, w, h);
 			break;
 		case 18:
-			g.drawImage(IL.igametimer18, x, y, h, w);
+			g.drawImage(IL.igametimer18, x, y, w, h);
 			break;
 		case 19:
-			g.drawImage(IL.igametimer19, x, y, h, w);
+			g.drawImage(IL.igametimer19, x, y, w, h);
 			break;
 		case 20:
-			g.drawImage(IL.igametimer20, x, y, h, w);
+			g.drawImage(IL.igametimer20, x, y, w, h);
 			break;
 		case 21:
-			g.drawImage(IL.igametimer21, x, y, h, w);
+			g.drawImage(IL.igametimer21, x, y, w, h);
 			break;
 		case 22:
-			g.drawImage(IL.igametimer22, x, y, h, w);
+			g.drawImage(IL.igametimer22, x, y, w, h);
 			break;
 		case 23:
-			g.drawImage(IL.igametimer23, x, y, h, w);
+			g.drawImage(IL.igametimer23, x, y, w, h);
 			break;
 		case 24:
-			g.drawImage(IL.igametimer24, x, y, h, w);
+			g.drawImage(IL.igametimer24, x, y, w, h);
 			break;
 		case 25:
-			g.drawImage(IL.igametimer25, x, y, h, w);
+			g.drawImage(IL.igametimer25, x, y, w, h);
 			break;
 		case 26:
-			g.drawImage(IL.igametimer26, x, y, h, w);
+			g.drawImage(IL.igametimer26, x, y, w, h);
 			break;
 		case 27:
-			g.drawImage(IL.igametimer27, x, y, h, w);
+			g.drawImage(IL.igametimer27, x, y, w, h);
 			break;
 		case 28:
-			g.drawImage(IL.igametimer28, x, y, h, w);
+			g.drawImage(IL.igametimer28, x, y, w, h);
 			break;
 		case 29:
-			g.drawImage(IL.igametimer29, x, y, h, w);
+			g.drawImage(IL.igametimer29, x, y, w, h);
 			break;
 		case 30:
-			g.drawImage(IL.igametimer30, x, y, h, w);
+			g.drawImage(IL.igametimer30, x, y, w, h);
 			break;
 		case 31:
-			g.drawImage(IL.igametimer31, x, y, h, w);
+			g.drawImage(IL.igametimer31, x, y, w, h);
 			break;
 		case 32:
-			g.drawImage(IL.igametimer32, x, y, h, w);
+			g.drawImage(IL.igametimer32, x, y, w, h);
 			break;
 		case 33:
-			g.drawImage(IL.igametimer33, x, y, h, w);
+			g.drawImage(IL.igametimer33, x, y, w, h);
 			break;
 		case 34:
-			g.drawImage(IL.igametimer34, x, y, h, w);
+			g.drawImage(IL.igametimer34, x, y, w, h);
 			break;
 		case 35:
-			g.drawImage(IL.igametimer35, x, y, h, w);
+			g.drawImage(IL.igametimer35, x, y, w, h);
 			break;
 		case 36:
-			g.drawImage(IL.igametimer36, x, y, h, w);
+			g.drawImage(IL.igametimer36, x, y, w, h);
 			break;
 		case 37:
-			g.drawImage(IL.igametimer37, x, y, h, w);
+			g.drawImage(IL.igametimer37, x, y, w, h);
 			break;
 		case 38:
-			g.drawImage(IL.igametimer38, x, y, h, w);
+			g.drawImage(IL.igametimer38, x, y, w, h);
 			break;
 		case 39:
-			g.drawImage(IL.igametimer39, x, y, h, w);
+			g.drawImage(IL.igametimer39, x, y, w, h);
 			break;
 		case 40:
-			g.drawImage(IL.igametimer40, x, y, h, w);
+			g.drawImage(IL.igametimer40, x, y, w, h);
 			break;
 		case 41:
-			g.drawImage(IL.igametimer41, x, y, h, w);
+			g.drawImage(IL.igametimer41, x, y, w, h);
 			break;
 		case 42:
-			g.drawImage(IL.igametimer42, x, y, h, w);
+			g.drawImage(IL.igametimer42, x, y, w, h);
 			break;
 		case 43:
-			g.drawImage(IL.igametimer43, x, y, h, w);
+			g.drawImage(IL.igametimer43, x, y, w, h);
 			break;
 		case 44:
-			g.drawImage(IL.igametimer44, x, y, h, w);
+			g.drawImage(IL.igametimer44, x, y, w, h);
 			break;
 		case 45:
-			g.drawImage(IL.igametimer45, x, y, h, w);
+			g.drawImage(IL.igametimer45, x, y, w, h);
 			break;
 		case 46:
-			g.drawImage(IL.igametimer46, x, y, h, w);
+			g.drawImage(IL.igametimer46, x, y, w, h);
 			break;
 		case 47:
-			g.drawImage(IL.igametimer47, x, y, h, w);
+			g.drawImage(IL.igametimer47, x, y, w, h);
 			break;
 		case 48:
-			g.drawImage(IL.igametimer48, x, y, h, w);
+			g.drawImage(IL.igametimer48, x, y, w, h);
 			break;
 		case 49:
-			g.drawImage(IL.igametimer49, x, y, h, w);
+			g.drawImage(IL.igametimer49, x, y, w, h);
 			break;
 		case 50:
-			g.drawImage(IL.igametimer50, x, y, h, w);
+			g.drawImage(IL.igametimer50, x, y, w, h);
 			break;
 		case 51:
-			g.drawImage(IL.igametimer51, x, y, h, w);
+			g.drawImage(IL.igametimer51, x, y, w, h);
 			break;
 		case 52:
-			g.drawImage(IL.igametimer52, x, y, h, w);
+			g.drawImage(IL.igametimer52, x, y, w, h);
 			break;
 		case 53:
-			g.drawImage(IL.igametimer53, x, y, h, w);
+			g.drawImage(IL.igametimer53, x, y, w, h);
 			break;
 		case 54:
-			g.drawImage(IL.igametimer54, x, y, h, w);
+			g.drawImage(IL.igametimer54, x, y, w, h);
 			break;
 		case 55:
-			g.drawImage(IL.igametimer55, x, y, h, w);
+			g.drawImage(IL.igametimer55, x, y, w, h);
 			break;
 		case 56:
-			g.drawImage(IL.igametimer56, x, y, h, w);
+			g.drawImage(IL.igametimer56, x, y, w, h);
 			break;
 		case 57:
-			g.drawImage(IL.igametimer57, x, y, h, w);
+			g.drawImage(IL.igametimer57, x, y, w, h);
 			break;
 		case 58:
-			g.drawImage(IL.igametimer58, x, y, h, w);
+			g.drawImage(IL.igametimer58, x, y, w, h);
 			break;
 		case 59:
-			g.drawImage(IL.igametimer59, x, y, h, w);
+			g.drawImage(IL.igametimer59, x, y, w, h);
 			break;
 		case 60:
-			g.drawImage(IL.igametimer60, x, y, h, w);
+			g.drawImage(IL.igametimer60, x, y, w, h);
 			break;
 		case 61:
-			g.drawImage(IL.igametimer61, x, y, h, w);
+			g.drawImage(IL.igametimer61, x, y, w, h);
 			break;
 		case 62:
-			g.drawImage(IL.igametimer62, x, y, h, w);
+			g.drawImage(IL.igametimer62, x, y, w, h);
 			break;
 		case 63:
-			g.drawImage(IL.igametimer63, x, y, h, w);
+			g.drawImage(IL.igametimer63, x, y, w, h);
 			break;
 		case 64:
-			g.drawImage(IL.igametimer64, x, y, h, w);
+			g.drawImage(IL.igametimer64, x, y, w, h);
 			break;
 		case 65:
-			g.drawImage(IL.igametimer65, x, y, h, w);
+			g.drawImage(IL.igametimer65, x, y, w, h);
 			break;
 		case 66:
-			g.drawImage(IL.igametimer66, x, y, h, w);
+			g.drawImage(IL.igametimer66, x, y, w, h);
 			break;
 		case 67:
-			g.drawImage(IL.igametimer67, x, y, h, w);
+			g.drawImage(IL.igametimer67, x, y, w, h);
 			break;
 		case 68:
-			g.drawImage(IL.igametimer68, x, y, h, w);
+			g.drawImage(IL.igametimer68, x, y, w, h);
 			break;
 		case 69:
-			g.drawImage(IL.igametimer69, x, y, h, w);
+			g.drawImage(IL.igametimer69, x, y, w, h);
 			break;
 		case 70:
-			g.drawImage(IL.igametimer70, x, y, h, w);
+			g.drawImage(IL.igametimer70, x, y, w, h);
 			break;
 		case 71:
-			g.drawImage(IL.igametimer71, x, y, h, w);
+			g.drawImage(IL.igametimer71, x, y, w, h);
 			break;
 		case 72:
-			g.drawImage(IL.igametimer72, x, y, h, w);
+			g.drawImage(IL.igametimer72, x, y, w, h);
 			break;
 		case 73:
-			g.drawImage(IL.igametimer73, x, y, h, w);
+			g.drawImage(IL.igametimer73, x, y, w, h);
 			break;
 		case 74:
-			g.drawImage(IL.igametimer74, x, y, h, w);
+			g.drawImage(IL.igametimer74, x, y, w, h);
 			break;
 		case 75:
-			g.drawImage(IL.igametimer75, x, y, h, w);
+			g.drawImage(IL.igametimer75, x, y, w, h);
 			break;
 		case 76:
-			g.drawImage(IL.igametimer76, x, y, h, w);
+			g.drawImage(IL.igametimer76, x, y, w, h);
 			break;
 		case 77:
-			g.drawImage(IL.igametimer77, x, y, h, w);
+			g.drawImage(IL.igametimer77, x, y, w, h);
 			break;
 		case 78:
-			g.drawImage(IL.igametimer78, x, y, h, w);
+			g.drawImage(IL.igametimer78, x, y, w, h);
 			break;
 		case 79:
-			g.drawImage(IL.igametimer79, x, y, h, w);
+			g.drawImage(IL.igametimer79, x, y, w, h);
 			break;
 		case 80:
-			g.drawImage(IL.igametimer80, x, y, h, w);
+			g.drawImage(IL.igametimer80, x, y, w, h);
 			break;
 		case 81:
-			g.drawImage(IL.igametimer81, x, y, h, w);
+			g.drawImage(IL.igametimer81, x, y, w, h);
 			break;
 		case 82:
-			g.drawImage(IL.igametimer82, x, y, h, w);
+			g.drawImage(IL.igametimer82, x, y, w, h);
 			break;
 		case 83:
-			g.drawImage(IL.igametimer83, x, y, h, w);
+			g.drawImage(IL.igametimer83, x, y, w, h);
 			break;
 		case 84:
-			g.drawImage(IL.igametimer84, x, y, h, w);
+			g.drawImage(IL.igametimer84, x, y, w, h);
 			break;
 		case 85:
-			g.drawImage(IL.igametimer85, x, y, h, w);
+			g.drawImage(IL.igametimer85, x, y, w, h);
 			break;
 		case 86:
-			g.drawImage(IL.igametimer86, x, y, h, w);
+			g.drawImage(IL.igametimer86, x, y, w, h);
 			break;
 		case 87:
-			g.drawImage(IL.igametimer87, x, y, h, w);
+			g.drawImage(IL.igametimer87, x, y, w, h);
 			break;
 		case 88:
-			g.drawImage(IL.igametimer88, x, y, h, w);
+			g.drawImage(IL.igametimer88, x, y, w, h);
 			break;
 		case 89:
-			g.drawImage(IL.igametimer89, x, y, h, w);
+			g.drawImage(IL.igametimer89, x, y, w, h);
 			break;
 		}
 
