@@ -39,6 +39,7 @@ public class Collision {
 				if (p.getX() == e.getX() && p.getY() == e.getY()) {
 					e.killEnemy(); // Kill Enemy that Player collided with
 					flag = true;
+					p.setSchritte(0);
 				} else {
 					flag = false;
 				}
