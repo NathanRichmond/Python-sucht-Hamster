@@ -12,7 +12,7 @@ public class IL {
 	/*
 	 * ============================= BACKGROUND =============================
 	 */
-	public static Image bgfeld = new Image("file:rsc/bg/feld.png");
+	public static Image bgfeld = new Image("file:rsc/bg/feld.jpg");
 
 	/*
 	 * ============================= GRID =============================
@@ -205,6 +205,8 @@ public class IL {
 	 */
 	public static Image ileft = new Image("file:rsc/manual/Left.PNG");
 	public static Image iright = new Image("file:rsc/manual/Right.PNG");
+	public static Image iup = new Image("file:rsc/manual/Oben.PNG"); 
+    public static Image idown = new Image("file:rsc/manual/Unten.PNG"); 
 	
 	/*
 	 * ============================= SCREENS =============================
@@ -343,5 +345,4 @@ public class IL {
 	public static Image igametimer87 = new Image("file:rsc/game/gametimer/frames/gametimer_87.png");
 	public static Image igametimer88 = new Image("file:rsc/game/gametimer/frames/gametimer_88.png");
 	public static Image igametimer89 = new Image("file:rsc/game/gametimer/frames/gametimer_89.png");
-
 }

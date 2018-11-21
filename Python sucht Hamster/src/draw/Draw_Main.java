@@ -95,9 +95,13 @@ public class Draw_Main {
 			if (Game.getLevel() != 101 && Game.getLevel() != 102) { // no timer in tut1 & tut2
 				drawGameTimer(g);
 			}
-			// Extrabilder für das erste Tutorial
+			// Extrabilder fÃ¼r das erste Tutorial
 			if (Game.getLevel() == 101 && Game.isBehindTheGame() == false) {
-				drawPfeiltasten(g);
+				drawPfeiltasten1(g);
+			}
+			//Extrabilder fÃ¼r das zweite Tutorial 
+			if (Game.getLevel() == 102 && Game.isBehindTheGame() == false) {
+				drawPfeiltasten2(g);
 			}
 
 			/*
@@ -202,7 +206,7 @@ public class Draw_Main {
 				break;
 			case 2:
 				textleft = "size = \"" + Grid.getSize() + "\"";
-				textright = "Größe";
+				textright = "GrÃ¶ÃŸe";
 				break;
 			}
 			g.setTextAlign(TextAlignment.LEFT);
@@ -337,13 +341,13 @@ public class Draw_Main {
 				break;
 			case 6:
 				textleft = "";
-				textright = "Ist „true“, wenn ein";
+				textright = "Ist Â„trueÂ“, wenn ein";
 				break;
 			case 7:
 				textright = "Special Tile der Art";
 				break;
 			case 8:
-				textright = "„hourglass“ aktiviert wird";
+				textright = "Â„hourglassÂ“ aktiviert wird";
 				break;
 			}
 			g.setTextAlign(TextAlignment.LEFT);
@@ -585,10 +589,10 @@ public class Draw_Main {
 					break;
 				case 8:
 					textleft = "";
-					textright = "Ändert faceDirection";
+					textright = "Ã„ndert faceDirection";
 					break;
 				case 9:
-					textright = "abhängig von direction";
+					textright = "abhÃ¤ngig von direction";
 					break;
 				case 10:
 					textleft = "move(int direction)";
@@ -596,7 +600,7 @@ public class Draw_Main {
 					break;
 				case 11:
 					textleft = "";
-					textright = "Ändert x und y abhängig";
+					textright = "Ã„ndert x und y abhÃ¤ngig";
 					break;
 				case 12:
 					textright = "von faceDirection um 33";
@@ -678,10 +682,10 @@ public class Draw_Main {
 				break;
 			case 5:
 				textleft = "";
-				textright = "Ändert faceDirection";
+				textright = "Ã„ndert faceDirection";
 				break;
 			case 6:
-				textright = "abhängig von direction";
+				textright = "abhÃ¤ngig von direction";
 				break;
 			case 7:
 				textleft = "move(int direction)";
@@ -689,7 +693,7 @@ public class Draw_Main {
 				break;
 			case 8:
 				textleft = "";
-				textright = "Ändert x und y abhängig";
+				textright = "Ã„ndert x und y abhÃ¤ngig";
 				break;
 			case 9:
 				textright = "von faceDirection um 33";
@@ -725,7 +729,7 @@ public class Draw_Main {
 				g.setTextBaseline(VPos.CENTER);
 				g.setFont(new Font("Constantia", 16));
 				g.setFill(Color.WHITE);
-				g.fillText("Hamstergeschwindigkeit erhöht!", x + width / 2, (y + i * 2 * height) + height / 2);
+				g.fillText("Hamstergeschwindigkeit erhÃ¶ht!", x + width / 2, (y + i * 2 * height) + height / 2);
 			}
 		}
 
@@ -857,7 +861,7 @@ public class Draw_Main {
 			case 0:
 				g.drawImage(IL.ibexit, b.getX(), b.getY(), b.getWidth(), b.getHeight());
 				if (Gamestate.state == Gamestate_e.victory && Game.getLevel() == 108) { // last Tutorial level
-					// draw box with text "zurück zum Menü" underneath the button
+					// draw box with text "zurÃ¼ck zum MenÃ¼" underneath the button
 					int x = b.getX() + 1 * b.getHeight() / 6; // x coordinate of box
 					int y = b.getY() + b.getHeight() + 1 * b.getHeight() / 6; // y coordinate of box
 					int w = 240; // width of box
@@ -869,7 +873,7 @@ public class Draw_Main {
 					g.setTextBaseline(VPos.CENTER);
 					g.setFont(new Font("Constantia", 26));
 					g.setFill(Color.WHITE);
-					g.fillText("zurück zum Menü", x + w / 2, y + h / 2);
+					g.fillText("zurÃ¼ck zum MenÃ¼", x + w / 2, y + h / 2);
 				}
 				break;
 			case 1:
@@ -966,7 +970,7 @@ public class Draw_Main {
 			g.setFont(new Font("Constantia", 30));
 			g.setFill(Color.WHITE);
 			g.setTextBaseline(VPos.TOP);
-			g.fillText("[Beschreibung für Level " + level + "]", x, y);
+			g.fillText("[Beschreibung fÃ¼r Level " + level + "]", x, y);
 			break;
 		case 1:
 			g.drawImage(IL.ilvldesc1, x, y);
@@ -1074,7 +1078,7 @@ public class Draw_Main {
 			g.drawImage(IL.ibnext, b.getX(), b.getY(), b.getWidth(), b.getHeight());
 		}
 		if (Game.getLevel() > 100 && Game.getLevel() < 108) { // if victory is in a Tutorial level
-			// draw box with text "zum nächsten Level" underneath the button
+			// draw box with text "zum nÃ¤chsten Level" underneath the button
 			int x = b.getX() + 1 * b.getHeight() / 6; // x coordinate of box
 			int y = b.getY() + b.getHeight() + 1 * b.getHeight() / 6; // y coordinate of box
 			int w = 270; // width of box
@@ -1086,7 +1090,7 @@ public class Draw_Main {
 			g.setTextBaseline(VPos.CENTER);
 			g.setFont(new Font("Constantia", 26));
 			g.setFill(Color.WHITE);
-			g.fillText("zum nächsten Tutorial", x + w / 2, y + h / 2);
+			g.fillText("zum nÃ¤chsten Tutorial", x + w / 2, y + h / 2);
 		}
 	}
 
@@ -1721,7 +1725,7 @@ public class Draw_Main {
 						drawButtonHover(g, b, "Zuckerwatte-Hamster");
 						break;
 					case 2:
-						drawButtonHover(g, b, "Pokémon-Hamster");
+						drawButtonHover(g, b, "PokÃ©mon-Hamster");
 						break;
 					}
 					break;
@@ -1737,7 +1741,7 @@ public class Draw_Main {
 						drawButtonHover(g, b, "Blutsauger-Python");
 						break;
 					case 2:
-						drawButtonHover(g, b, "Pokémon-Python");
+						drawButtonHover(g, b, "PokÃ©mon-Python");
 						break;
 					}
 					break;
@@ -1822,7 +1826,7 @@ public class Draw_Main {
 		// Button Compiler - switch between "Behind the Game" and normal Tutlvls
 		b = Gui.tutorialmenubuttons[9];
 		g.drawImage(IL.ibcompiler, b.getX() + 3, b.getY() + 3, b.getWidth() - 6, b.getHeight() - 6);
-		drawButtonHover(g, b, "Wirf einen Blick „hinter“ das Spiel");
+		drawButtonHover(g, b, "Wirf einen Blick Â„hinterÂ“ das Spiel");
 		if (Game.isBehindTheGame() == true) {
 			g.setFill(new Color(0, 0, 0, 0.4));
 			g.fillRect(b.getX(), b.getY(), b.getWidth(), b.getHeight());
@@ -1894,11 +1898,28 @@ public class Draw_Main {
 		g.drawImage(IL.irightKey, 900, 393, 40, 40);
 	}
 
-	public void drawPfeiltasten(GraphicsContext g) {
+	public void drawPfeiltasten1(GraphicsContext g) {
 		if (p.getSchritte() < 6) {
 			g.drawImage(IL.iright, p.getX() + 1 * 33, Grid.getY(), 40, 40);
-			if (p.getX() > Grid.getX()) {
+			if (p.getX() > Grid.getX()+1*33) {
 				g.drawImage(IL.ileft, p.getX() - 1 * 33, Grid.getY(), 40, 40);
+			}
+		}
+	}
+	
+	public void drawPfeiltasten2(GraphicsContext g) {
+		if (p.getSchritte() < 15) {
+			if (p.getX() < Grid.getX()+9*33) {
+				g.drawImage(IL.iright, p.getX() + 1 * 33, p.getY(), 40, 40);
+			}
+			if (p.getX() > Grid.getX() +1*33) {
+				g.drawImage(IL.ileft, p.getX() - 1 * 33, p.getY(), 40, 40);
+			}
+			if (p.getY() > Grid.getY() +1*33 ) {
+				g.drawImage(IL.iup, p.getX(), p.getY()-1*33, 40, 40);
+			}
+			if (p.getY()< Grid.getY()+9*33) {
+				g.drawImage(IL.idown, p.getX(), p.getY()+1*33, 40, 40);
 			}
 		}
 	}
