@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import chars.Enemy;
 import chars.Player;
-import data.Collision;
 import gui.Grid;
 
 public class Wall_Creation {
@@ -24,8 +23,9 @@ public class Wall_Creation {
 		 */
 		Player p = Game.p;
 		for (int i = 0; i < walls.size(); i++) {
+			Wall w = walls.get(i);
 			for (Enemy e : Game.enemies) {
-				if (Collision.cWall(p.getX(), p.getY()) == true || Collision.cWall(e.getX(), e.getY()) == true) {
+				if ((e.getX() == w.getX() && e.getY() == w.getY()) || p.getX() == w.getX() && p.getY() == w.getY()) {
 					walls.remove(i);
 				}
 			}

@@ -17,7 +17,7 @@ public class Game {
 	public static int ex, ey, px, py; // Koordinaten für die nicht zufällig gesetzten Chars
 
 	private static int level;
-	private static int maxLevelAvailable = 1; // highest level that was won in current session
+	private static int maxLevelAvailable = 12; // highest level that was won in current session
 	private static boolean behindTheGame = false; // whether tutlevels show behind the game info
 
 	private static boolean firstKeyPressInGame = true;
@@ -209,14 +209,6 @@ public class Game {
 		}
 	}
 
-//	unused method, kept in case it becomes necessary again:
-
-//	private static void applyLevelPropertiesToChars() {
-//		for (Enemy e : enemies) {
-//			e.setSpeed(getEspeed());
-//		}
-//	}
-
 	public static void restartLevel() {
 		if (isFirstKeyPressInGame() == false) {
 			/*
@@ -276,69 +268,71 @@ public class Game {
 	/*
 	 * Properties for the individual levels:
 	 */
-	private static void level1() {
+	private static void level1() { // "Die Jagd beginnt..."
 		setGameDuration(3);
 	}
 
-	private static void level2() {
+	private static void level2() { // "Um Mauern schlängeln"
 		setEspeed(5.5);
 		setGameDuration(8.5);
 		setWalls(true);
-		setnWalls(1);
+		setnWalls(12);
 	}
 
-	private static void level3() {
-		setGameDuration(5);
+	private static void level3() { // "Wie eine Fliege"
+		setGridsize("08x05");
+		setEspeed(16);
+		setGameDuration(6);
 		setWalls(true);
-		setnWalls(5);
+		setnWalls(15);
 		setSpecialTiles(true);
-		setnKorn(5);
-		setKornDuration(1);
+		setnKorn(2);
+		setKornDuration(6);
 		setKornBoost(3);
 	}
 
-	private static void level4() {
-		setGridsize("20x20");
+	private static void level4() { // "Im Labyrinth"
+		setGridsize("32x20");
 		setEspeed(6.6);
-		setGameDuration(20);
+		setGameDuration(13);
 		setWalls(true);
-		setnWalls(220);
+		setnWalls(360);
 	}
 
-	private static void level5() {
-		setGridsize("05x10");
+	private static void level5() { // "Chronismus"
+		setGridsize("10x10");
 		setEspeed(5);
-		setGameDuration(2.4);
-	}
-
-	private static void level6() {
-		setGridsize("10x05");
-		setEspeed(3);
 		setGameDuration(10);
 		setSpecialTiles(true);
-		setnKorn(1);
-		setKornDuration(6);
-		setKornBoost(2.5);
-		setnHourglass(3);
+		setnHourglass(50);
 		setHourglassEDuration(1);
-		setHourglassEFactor(2.5);
+		setHourglassEFactor(10);
 		setHourglassPDuration(1);
-		setHourglassPFactor(0.25);
+		setHourglassPFactor(0.3);
 	}
 
-	private static void level7() {
-		setGridsize("20x20");
-		setnEnemy(3);
+	private static void level6() { // "Im Silo"
+		setGridsize("32x20");
+		setnEnemy(5);
+		setEspeed(4);
 		setGameDuration(30);
+		setPlayerMargin(6.5); // at Gridsize 32x20 that's about 4 tiles
+		setSpecialTiles(true);
+		setnKorn(600);
+		setKornDuration(0.2);
+		setKornBoost(5);
+	}
+
+	private static void level7() { // "Familientreffen"
+		setGridsize("15x08");
+		setnEnemy(30);
+		setEspeed(1.5);
+		setGameDuration(16);
 		setWalls(true);
 		setnWalls(10);
-		setSpecialTiles(true);
-		setnBabyhamsterTwo(25);
-		setnBabyhamsterThree(15);
-		setnBabyhamsterFour(10);
 	}
 
-	private static void level8() {
+	private static void level8() { // "Zugemauert"
 		setGridsize("32x20");
 		setGameDuration(20);
 		setPlayerMargin(6.5); // at Gridsize 32x20 that's about 4 tiles
@@ -346,29 +340,32 @@ public class Game {
 		setnWalls(200);
 		setSpecialTiles(true);
 		setnKorn(125);
-		setKornDuration(0.6);
+		setKornDuration(0.75);
 		setKornBoost(5);
+		setnHammer(100);
 	}
 
-	private static void level9() {
+	private static void level9() { // "Das volle Programm"
 		setGridsize("32x20");
 		setEspeed(4);
 		setGameDuration(20);
 		setWalls(true);
 		setnWalls(125);
 		setSpecialTiles(true);
-		setnKorn(50);
-		setKornDuration(1);
-		setKornBoost(2);
+		setnKorn(100);
+		setKornBoost(3);
+		setnBabyhamsterTwo(30);
+		setnBabyhamsterThree(25);
+		setnBabyhamsterFour(20);
 		setnHourglass(50);
-		setHourglassEDuration(0.5);
-		setHourglassEFactor(2);
-		setHourglassPDuration(0.5);
+		setHourglassEDuration(1);
+		setHourglassEFactor(3);
+		setHourglassPDuration(1);
 		setHourglassPFactor(0.5);
-		setnHammer(50);
+		setnHammer(75);
 	}
 
-	private static void level10() {
+	private static void level10() { // "Baustelle"
 		setGridsize("20x20");
 		setGameDuration(99);
 		setWalls(true);
@@ -377,21 +374,23 @@ public class Game {
 		setnHammer(200);
 	}
 
-	private static void level11() {
+	private static void level11() { // "Im Hamsternest"
 		setGridsize("32x20");
-		setnEnemy(3);
-		setGameDuration(20);
-		setPlayerMargin(6.5); // at Gridsize 32x20 that's about 4 tiles
+		setnEnemy(10);
+		setGameDuration(40);
+		setWalls(true);
+		setnWalls(50);
 		setSpecialTiles(true);
-		setnKorn(680);
-		setKornDuration(0.2);
-		setKornBoost(4);
+		setnKorn(20);
+		setKornBoost(3);
+		setnBabyhamsterTwo(120);
+		setnBabyhamsterThree(120);
+		setnBabyhamsterFour(100);
 	}
 
-	private static void level12() {
+	private static void level12() { // "Hamsterinflation"
 		setGridsize("20x20");
-		setEspeed(10);
-		setGameDuration(10);
+		setEspeed(7);
 		setHamsterinflation(true);
 	}
 

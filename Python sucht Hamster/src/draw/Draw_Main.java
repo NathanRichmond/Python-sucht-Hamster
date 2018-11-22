@@ -964,12 +964,48 @@ public class Draw_Main {
 	private void drawLvlDesc(GraphicsContext g, int level) {
 		int x = getStartmenugridX();
 		int y = getStartmenugridY() - 90;
+		g.setFont(new Font("Constantia", 30));
+		g.setFill(Color.WHITE);
+		g.setTextBaseline(VPos.TOP);
 		switch (level) {
 		default:
-			g.setFont(new Font("Constantia", 30));
-			g.setFill(Color.WHITE);
-			g.setTextBaseline(VPos.TOP);
 			g.fillText("Level " + level, x, y);
+			break;
+		case 1:
+			g.fillText("Level " + level + ": Die Jagd beginnt...", x, y);
+			break;
+		case 2:
+			g.fillText("Level " + level + ": Um Mauern schlängeln", x, y);
+			break;
+		case 3:
+			g.fillText("Level " + level + ": Wie eine Fliege", x, y);
+			break;
+		case 4:
+			g.fillText("Level " + level + ": Im Labyrinth", x, y);
+			break;
+		case 5:
+			g.fillText("Level " + level + ": Chronismus", x, y);
+			break;
+		case 6:
+			g.fillText("Level " + level + ": Im Silo", x, y);
+			break;
+		case 7:
+			g.fillText("Level " + level + ": Familientreffen", x, y);
+			break;
+		case 8:
+			g.fillText("Level " + level + ": Zugemauert", x, y);
+			break;
+		case 9:
+			g.fillText("Level " + level + ": Das volle Programm", x, y);
+			break;
+		case 10:
+			g.fillText("Level " + level + ": Baustelle", x, y);
+			break;
+		case 11:
+			g.fillText("Level " + level + ": Im Hamsternest", x, y);
+			break;
+		case 12:
+			g.fillText("Level " + level + ": Hamsterinflation", x, y);
 			break;
 		}
 
@@ -1007,37 +1043,46 @@ public class Draw_Main {
 		g.setFill(new Color(0, 0, 0, 0.7));
 		g.fillRect(Grid.getX(), Grid.getY(), Grid.getWidth(), Grid.getHeight());
 
-		int w = 166; // width of GIF
-		int h = 166; // height of GIF
-		if (Grid.getHeight() <= 166) { // center text when there's on space for GIF
+		int w = 166; // width of rectangle
+		int h = 166; // height of rectangle
+		if (Grid.getHeight() <= 166) { // center text when there's no space for GIF
 			h = 0;
 		}
-		// position of GIF: centered on grid
+		// position of rectangle: centered on grid
 		int x = Grid.getX() + (Grid.getWidth() / 2 - w / 2);
 		int y = Grid.getY() + (Grid.getHeight() / 2 - h / 2);
 
+		g.setFill(Color.WHITE);
 		switch (Gamestate.state) {
 		case defeat:
 			g.setTextAlign(TextAlignment.CENTER);
-			g.setTextBaseline(VPos.CENTER);
 			if (Grid.getHeight() > 166) {
-				g.drawImage(IL.idefeat, x + w / 6, y + h / 3, 2 * w / 3, 2 * h / 3);
+				g.drawImage(IL.idefeat, x + w / 4, y + h / 6, w / 2, h / 2);
 				g.setTextBaseline(VPos.TOP);
+				g.setFont(new Font("Constantia", 22));
+				g.fillText("Brr! Du bist\nerfroren.", x + w / 2, y + 3 * h / 4);
+			} else { // center text when there's little space
+				g.setTextBaseline(VPos.CENTER);
 			}
-			g.setFont(new Font("Constantia", 24));
-			g.setFill(Color.WHITE);
+			g.setFont(new Font("Constantia", 32));
 			g.fillText("NIEDERLAGE!", x + w / 2, y);
 			break;
 		case victory:
 			g.setTextAlign(TextAlignment.CENTER);
-			g.setTextBaseline(VPos.CENTER);
 			if (Grid.getHeight() > 166) {
-				g.drawImage(IL.ivictory, x + w / 6, y + h / 3, 2 * w / 3, 2 * h / 3);
+				g.drawImage(IL.ivictory, x + w / 4, y + h / 6, w / 2, h / 2);
 				g.setTextBaseline(VPos.TOP);
+				g.setFont(new Font("Constantia", 22));
+				g.fillText("Hamster platt,\nPython satt.", x + w / 2, y + 3 * h / 4);
+			} else {
+				g.setTextBaseline(VPos.CENTER);
 			}
-			g.setFont(new Font("Constantia", 24));
-			g.setFill(Color.WHITE);
+			g.setFont(new Font("Constantia", 44));
+			if (Grid.getHeight() <= 46) {
+				g.setFont(new Font("Constantia", Grid.getHeight() - 2));
+			}
 			g.fillText("SIEG!", x + w / 2, y);
+
 			drawVictoryButton(g); // Button: "Next Level"
 			break;
 		default:
@@ -1882,7 +1927,7 @@ public class Draw_Main {
 	}
 
 	public void drawPfeiltasten(GraphicsContext g) {
-		int w = 30, h = 30; // size of the images
+		int w = 32, h = 32; // size of the images
 		switch (Game.getLevel()) {
 		case 101:
 			if (p.getSchritte() < 6) {
