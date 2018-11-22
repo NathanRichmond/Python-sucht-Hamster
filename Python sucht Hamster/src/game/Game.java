@@ -17,7 +17,7 @@ public class Game {
 	public static int ex, ey, px, py; // Koordinaten für die nicht zufällig gesetzten Chars
 
 	private static int level;
-	private static int maxLevelAvailable = 12; // highest level that was won in current session
+	private static int maxLevelAvailable = 1; // highest level that was won in current session
 	private static boolean behindTheGame = false; // whether tutlevels show behind the game info
 
 	private static boolean firstKeyPressInGame = true;
@@ -422,7 +422,7 @@ public class Game {
 		setEspeed(4);
 		setWalls(true);
 		setSpecialTiles(true);
-		setKornBoost(3.5);
+		setKornBoost(2);
 	}
 
 	private static void level106() {
