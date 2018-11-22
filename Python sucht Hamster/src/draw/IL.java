@@ -189,6 +189,11 @@ public class IL {
 	 * Question mark button
 	 */
 	public static Image ibquestionmark = new Image("file:rsc/game/ui/buttons/button_questionmark.png");
+	
+	/*
+	 * House button
+	 */
+	public static Image ibhouse = new Image("file:rsc/game/ui/buttons/button_house.png");
 
 	/*
 	 * Manual Buttons
