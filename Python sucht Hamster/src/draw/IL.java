@@ -215,18 +215,6 @@ public class IL {
 	 * Start Menu Screen
 	 */
 	public static Image istartmenu = new Image("file:rsc/game/ui/startmenu.png");
-	public static Image ilvldesc1 = new Image("file:rsc/game/ui/lvl_description/leveldesc1.png");
-	public static Image ilvldesc2 = new Image("file:rsc/game/ui/lvl_description/leveldesc2.png");
-	public static Image ilvldesc3 = new Image("file:rsc/game/ui/lvl_description/leveldesc3.png");
-	public static Image ilvldesc4 = new Image("file:rsc/game/ui/lvl_description/leveldesc4.png");
-	public static Image ilvldesc5 = new Image("file:rsc/game/ui/lvl_description/leveldesc5.png");
-	public static Image ilvldesc6 = new Image("file:rsc/game/ui/lvl_description/leveldesc6.png");
-	public static Image ilvldesc7 = new Image("file:rsc/game/ui/lvl_description/leveldesc7.png");
-	public static Image ilvldesc8 = new Image("file:rsc/game/ui/lvl_description/leveldesc8.png");
-	public static Image ilvldesc9 = new Image("file:rsc/game/ui/lvl_description/leveldesc9.png");
-	public static Image ilvldesc10 = new Image("file:rsc/game/ui/lvl_description/leveldesc10.png");
-	public static Image ilvldesc11 = new Image("file:rsc/game/ui/lvl_description/leveldesc11.png");
-	public static Image ilvldesc12 = new Image("file:rsc/game/ui/lvl_description/leveldesc12.png");
 
 	/*
 	 * Tutorial Menu Screen
@@ -234,14 +222,14 @@ public class IL {
 	public static Image itutorialmenu = new Image("file:rsc/game/ui/tutorialmenuscreen.png");
 
 	/*
-	 * Victory Screen
+	 * Victory GIF
 	 */
-	public static Image ivictory = new Image("file:rsc/game/ui/victoryscreen.png");
+	public static Image ivictory = new Image("file:rsc/game/ui/mdified victory.gif");
 
 	/*
-	 * Defeat Screen
+	 * Defeat GIF
 	 */
-	public static Image idefeat = new Image("file:rsc/game/ui/defeatscreen.png");
+	public static Image idefeat = new Image("file:rsc/game/ui/defeat.gif");
 
 	/*
 	 * ============================= ANLEITUNG IMAGES =============================

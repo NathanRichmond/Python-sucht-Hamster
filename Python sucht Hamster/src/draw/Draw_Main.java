@@ -967,43 +967,7 @@ public class Draw_Main {
 			g.setFont(new Font("Constantia", 30));
 			g.setFill(Color.WHITE);
 			g.setTextBaseline(VPos.TOP);
-			g.fillText("[Beschreibung für Level " + level + "]", x, y);
-			break;
-		case 1:
-			g.drawImage(IL.ilvldesc1, x, y);
-			break;
-		case 2:
-			g.drawImage(IL.ilvldesc2, x, y);
-			break;
-		case 3:
-			g.drawImage(IL.ilvldesc3, x, y);
-			break;
-		case 4:
-			g.drawImage(IL.ilvldesc4, x, y);
-			break;
-		case 5:
-			g.drawImage(IL.ilvldesc5, x, y);
-			break;
-		case 6:
-			g.drawImage(IL.ilvldesc6, x, y);
-			break;
-		case 7:
-			g.drawImage(IL.ilvldesc7, x, y);
-			break;
-		case 8:
-			g.drawImage(IL.ilvldesc8, x, y);
-			break;
-		case 9:
-			g.drawImage(IL.ilvldesc9, x, y);
-			break;
-		case 10:
-			g.drawImage(IL.ilvldesc10, x, y);
-			break;
-		case 11:
-			g.drawImage(IL.ilvldesc11, x, y);
-			break;
-		case 12:
-			g.drawImage(IL.ilvldesc12, x, y);
+			g.fillText("Level " + level, x, y);
 			break;
 		}
 
@@ -1015,7 +979,7 @@ public class Draw_Main {
 		 */
 		g.drawImage(IL.bgfeld, 0, 0, Gui.getWidth(), Gui.getHeight());
 
-		g.setFill(new Color(1, 1, 1, 0.1)); // semi-transparent layer to moderate the intense grass
+		g.setFill(new Color(1, 1, 1, 0.1)); // semi-transparent layer to moderate the intense corn field
 		g.fillRect(0, 0, Gui.getWidth(), Gui.getHeight());
 
 		/*
@@ -1041,23 +1005,37 @@ public class Draw_Main {
 		g.setFill(new Color(0, 0, 0, 0.7));
 		g.fillRect(Grid.getX(), Grid.getY(), Grid.getWidth(), Grid.getHeight());
 
-		int w = 166; // width of image
-		int h = 166; // height of image
-		// position of image: centered on grid
+		int w = 166; // width of GIF
+		int h = 166; // height of GIF
+		if (Grid.getHeight() <= 166) { // center text when there's on space for GIF
+			h = 0;
+		}
+		// position of GIF: centered on grid
 		int x = Grid.getX() + (Grid.getWidth() / 2 - w / 2);
 		int y = Grid.getY() + (Grid.getHeight() / 2 - h / 2);
 
-		// border around the image (placeholder while there is no image)
-		g.setStroke(Color.WHITE);
-		g.setLineWidth(1);
-		g.strokeRect(x, y, w, h);
-
 		switch (Gamestate.state) {
 		case defeat:
-			g.drawImage(IL.idefeat, x, y, w, h);
+			g.setTextAlign(TextAlignment.CENTER);
+			g.setTextBaseline(VPos.CENTER);
+			if (Grid.getHeight() > 166) {
+				g.drawImage(IL.idefeat, x + w / 6, y + h / 3, 2 * w / 3, 2 * h / 3);
+				g.setTextBaseline(VPos.TOP);
+			}
+			g.setFont(new Font("Constantia", 24));
+			g.setFill(Color.WHITE);
+			g.fillText("NIEDERLAGE!", x + w / 2, y);
 			break;
 		case victory:
-			g.drawImage(IL.ivictory, x, y, w, h);
+			g.setTextAlign(TextAlignment.CENTER);
+			g.setTextBaseline(VPos.CENTER);
+			if (Grid.getHeight() > 166) {
+				g.drawImage(IL.ivictory, x + w / 6, y + h / 3, 2 * w / 3, 2 * h / 3);
+				g.setTextBaseline(VPos.TOP);
+			}
+			g.setFont(new Font("Constantia", 24));
+			g.setFill(Color.WHITE);
+			g.fillText("SIEG!", x + w / 2, y);
 			drawVictoryButton(g); // Button: "Next Level"
 			break;
 		default:
