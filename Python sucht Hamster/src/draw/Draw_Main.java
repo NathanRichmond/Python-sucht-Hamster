@@ -863,6 +863,8 @@ public class Draw_Main {
 					int y = b.getY() + b.getHeight() + 1 * b.getHeight() / 6; // y coordinate of box
 					int w = 240; // width of box
 					int h = 2 * b.getHeight() / 3; // height of box
+					g.setStroke(Color.WHITE);
+					g.setLineWidth(1);
 					g.strokeRect(x, y, w, h);
 					g.setFill(new Color(0, 0, 0, 0.2));
 					g.fillRect(x, y, w, h);
@@ -1045,6 +1047,8 @@ public class Draw_Main {
 
 	private void drawVictoryButton(GraphicsContext g) {
 		Button b = Gui.victorybutton;
+		g.setStroke(Color.WHITE);
+		g.setLineWidth(1);
 		if (Game.getLevel() + 1 <= Gui.getnLvls() || (Game.getLevel() > 100 && Game.getLevel() < 108)) {
 			g.strokeRect(b.getX(), b.getY(), b.getWidth(), b.getHeight());
 			g.setFill(new Color(1, 1, 1, 0.8));
@@ -1556,6 +1560,10 @@ public class Draw_Main {
 			break;
 		}
 
+//		// draw playerMargin:
+//		double pm = 33 * Game.getPlayerMargin();
+//		g.setStroke(Color.DARKRED);
+//		g.strokeRect(p.getX() - pm, p.getY() - pm, pm * 2 + p.getWidth(), pm * 2 + p.getHeight());
 	}
 
 	private void drawWall(GraphicsContext g) {
@@ -1814,7 +1822,7 @@ public class Draw_Main {
 
 		// Button Back to Start Menu
 		b = Gui.tutorialmenubuttons[11];
-		g.drawImage(IL.ibback, b.getX() + 3, b.getY() + 3, b.getWidth() - 6, b.getHeight() - 6);
+		g.drawImage(IL.ibhouse, b.getX() + 3, b.getY() + 3, b.getWidth() - 6, b.getHeight() - 6);
 		drawButtonHover(g, b, null);
 	}
 
