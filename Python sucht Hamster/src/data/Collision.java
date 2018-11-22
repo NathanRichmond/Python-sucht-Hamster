@@ -84,21 +84,11 @@ public class Collision {
 	 */
 	public static boolean cBabyhamster(int x, int y) {
 		boolean flag = false;
-		for (SpecialTile st : SpecialTile_Creation.specialtiles) {
-			if (st.getType() == "babyhamsterTwo" && x == st.getX() && y == st.getY()) {
-				flag = true;
-				break;
-			} else {
-				if (st.getType() == "babyhamsterThree" && x == st.getX() && y == st.getY()) {
+		if (Game.isSpecialTiles() == true) {
+			for (SpecialTile st : SpecialTile_Creation.specialtiles) {
+				if ((st.getType() == "babyhamsterTwo" || st.getType() == "babyhamsterThree"
+						|| st.getType() == "babyhamsterFour") && x == st.getX() && y == st.getY()) {
 					flag = true;
-					break;
-				} else {
-					if (st.getType() == "babyhamsterFour" && x == st.getX() && y == st.getY()) {
-						flag = true;
-						break;
-					} else {
-						flag = false;
-					}
 				}
 			}
 		}
