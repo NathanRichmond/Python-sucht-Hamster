@@ -198,7 +198,7 @@ public class IL {
 	/*
 	 * Manual Buttons
 	 */
-	public static Image ikeys = new Image("file:rsc/manual/300px-Arrow_keys[1].jpg");
+	public static Image ikeys = new Image("file:rsc/manual/300px-Arrow_keys[1].png");
 	public static Image ibbabyhamster = new Image("file:rsc/game/ui/buttons/button_babyhamster.png");
 	public static Image ibzeitleiste = new Image("file:rsc/game/ui/buttons/button_zeitleiste.png");
 	public static Image ibclipboard = new Image("file:rsc/game/ui/buttons/button_clipboard.png");
@@ -208,10 +208,10 @@ public class IL {
 	/*
 	 * Anleitung Buttons
 	 */
-	public static Image ileft = new Image("file:rsc/manual/Left.PNG");
-	public static Image iright = new Image("file:rsc/manual/Right.PNG");
-	public static Image iup = new Image("file:rsc/manual/Oben.PNG");
-	public static Image idown = new Image("file:rsc/manual/Unten.PNG");
+	public static Image ileft = new Image("file:rsc/manual/Left.png");
+	public static Image iright = new Image("file:rsc/manual/Right.png");
+	public static Image iup = new Image("file:rsc/manual/Oben.png");
+	public static Image idown = new Image("file:rsc/manual/Unten.png");
 
 	/*
 	 * ============================= SCREENS =============================
