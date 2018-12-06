@@ -1,6 +1,5 @@
 package chars;
 
-//import actions.Game;
 import clocks.Enemy_Movement;
 import clocks.ST_BoostEnemy;
 import data.Collision;
@@ -9,6 +8,7 @@ import game.Game;
 import game.Gamestate;
 import game.Gamestate_e;
 import gui.Grid;
+import gui.Gui;
 
 public class Enemy {
 
@@ -26,24 +26,24 @@ public class Enemy {
 	public Enemy() {
 //		this.index = index;
 		this.setValidSpawn(); // Spawn at random position
-		this.width = 32;
-		this.height = 32;
+		this.width = Gui.getTile() - 1;
+		this.height = Gui.getTile() - 1;
 		this.faceDirection = (int) (Math.random() * 3); // random faceDirection
 		this.speed = Game.getEspeed();
 		this.isAlive = true;
 		this.isSpeedBoosted = false;
 	}
-	
-	  public Enemy(int a, int b) {
-		    this.x = a; 
-		    this.y = b; 
-			this.width = 32;
-			this.height = 32;
-			this.faceDirection = (int) (Math.random() * 3); // random faceDirection
-			this.speed = Game.getEspeed();
-			this.isAlive = true;
-			this.isSpeedBoosted = false;
-		}
+
+	public Enemy(int a, int b) {
+		this.x = a;
+		this.y = b;
+		this.width = Gui.getTile() - 1;
+		this.height = Gui.getTile() - 1;
+		this.faceDirection = (int) (Math.random() * 3); // random faceDirection
+		this.speed = Game.getEspeed();
+		this.isAlive = true;
+		this.isSpeedBoosted = false;
+	}
 
 	private void setValidSpawn() {
 		/*
@@ -66,19 +66,19 @@ public class Enemy {
 				switch (direction) {
 				case 0:
 					this.turn(0);
-					this.y = this.y - 33; // move up
+					this.y = this.y - Gui.getTile(); // move up
 					break;
 				case 1:
 					this.turn(1);
-					this.x = this.x + 33; // move right
+					this.x = this.x + Gui.getTile(); // move right
 					break;
 				case 2:
 					this.turn(2);
-					this.y = this.y + 33; // move down
+					this.y = this.y + Gui.getTile(); // move down
 					break;
 				case 3:
 					this.turn(3);
-					this.x = this.x - 33; // move left
+					this.x = this.x - Gui.getTile(); // move left
 					break;
 				}
 			}

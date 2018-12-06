@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import chars.Enemy;
 import chars.Player;
 import gui.Grid;
+import gui.Gui;
 
 public class Wall_Creation {
 
@@ -138,8 +139,8 @@ public class Wall_Creation {
 	 */
 	private void addWall(int x, int y) {
 		Wall w = new Wall();
-		w.setX(Grid.getX() + (x * 33 + 1));
-		w.setY(Grid.getY() + (y * 33 + 1));
+		w.setX(Grid.getX() + (x * Gui.getTile() + 1));
+		w.setY(Grid.getY() + (y * Gui.getTile() + 1));
 		walls.add(w);
 	}
 

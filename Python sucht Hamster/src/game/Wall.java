@@ -3,11 +3,12 @@ package game;
 import data.Collision;
 import data.CustomMath;
 import gui.Grid;
+import gui.Gui;
 
 public class Wall {
 
 	private int x, y;
-	private int width = 32, height = 32;
+	private int width = Gui.getTile() - 1, height = Gui.getTile() - 1;
 
 	/*
 	 * Constructor without parameters: For initial random distribution

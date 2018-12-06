@@ -22,13 +22,14 @@ public class Grid {
 		String strHeight = size.substring(3); // part behind the "x"
 		int intWidth = Integer.parseInt(strWidth); // convert String to int
 		int intHeight = Integer.parseInt(strHeight);
-		width = (intWidth * 33) + 1;
-		height = (intHeight * 33) + 1;
+		width = (intWidth * Gui.getTile()) + 1;
+		height = (intHeight * Gui.getTile()) + 1;
 
 		setX(Gui.getWidth() / 2 - getWidth() / 2);
 
 		if (Game.getLevel() < 100) { // regular levels (that have a level title)
-			setY((Gui.getHeight() / 2 - getHeight() / 2) / 2 + 105);
+			setY((Gui.getHeight() / 2 - getHeight() / 2) / 2
+					+ (int) (Gui.getHeight() / 8.2285714285714285714285714285714));
 		} else { // Tutorial levels (that have no level title)
 			setY(Gui.getHeight() / 2 - getHeight() / 2);
 		}

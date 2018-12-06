@@ -18,7 +18,7 @@ public class Collision {
 	public Collision() {
 		p = Game.p;
 	}
-
+	
 	/*
 	 * Check collision with any button
 	 */
@@ -27,6 +27,9 @@ public class Collision {
 				&& y > button.getY());
 	}
 
+	// Always round all coordinates to tile, because the dynmic sizing of all game
+	// elements might sometimes result in unfortunate rounding
+	
 	/*
 	 * Check collision of Enemy and Player. Caution: Although this method is a
 	 * boolean method, it kills the Enemy that was collided with in the process.
@@ -36,7 +39,8 @@ public class Collision {
 		boolean flag = false;
 		if (Gamestate.state == Gamestate_e.ingame) {
 			for (Enemy e : Game.enemies) {
-				if (p.getX() == e.getX() && p.getY() == e.getY()) {
+				if (CustomMath.roundToTile(p.getX()) == CustomMath.roundToTile(e.getX())
+						&& CustomMath.roundToTile(p.getY()) == CustomMath.roundToTile(e.getY())) {
 					e.killEnemy(); // Kill Enemy that Player collided with
 					flag = true;
 				} else {
@@ -53,7 +57,8 @@ public class Collision {
 	public static boolean cWall(int x, int y) {
 		boolean flag = false;
 		for (Wall w : Wall_Creation.walls) {
-			if (x == w.getX() && y == w.getY()) {
+			if (CustomMath.roundToTile(x) == CustomMath.roundToTile(w.getX())
+					&& CustomMath.roundToTile(y) == CustomMath.roundToTile(w.getY())) {
 				flag = true;
 				break;
 			} else {
@@ -69,7 +74,8 @@ public class Collision {
 	public static boolean cSpecialTile(int x, int y) {
 		boolean flag = false;
 		for (SpecialTile st : SpecialTile_Creation.specialtiles) {
-			if (x == st.getX() && y == st.getY()) {
+			if (CustomMath.roundToTile(x) == CustomMath.roundToTile(st.getX())
+					&& CustomMath.roundToTile(y) == CustomMath.roundToTile(st.getY())) {
 				flag = true;
 				break;
 			} else {
@@ -87,7 +93,9 @@ public class Collision {
 		if (Game.isSpecialTiles() == true) {
 			for (SpecialTile st : SpecialTile_Creation.specialtiles) {
 				if ((st.getType() == "babyhamsterTwo" || st.getType() == "babyhamsterThree"
-						|| st.getType() == "babyhamsterFour") && x == st.getX() && y == st.getY()) {
+						|| st.getType() == "babyhamsterFour")
+						&& CustomMath.roundToTile(x) == CustomMath.roundToTile(st.getX())
+						&& CustomMath.roundToTile(y) == CustomMath.roundToTile(st.getY())) {
 					flag = true;
 				}
 			}
@@ -102,11 +110,13 @@ public class Collision {
 	public static boolean cPlayerOrEnemy(int x, int y) {
 		p = Game.p;
 		boolean flag = false;
-		if (x == p.getX() && y == p.getY()) {
+		if (CustomMath.roundToTile(x) == CustomMath.roundToTile(p.getX())
+				&& CustomMath.roundToTile(y) == CustomMath.roundToTile(p.getY())) {
 			flag = true;
 		}
 		for (Enemy e : Game.enemies) {
-			if (x == e.getX() && y == e.getY()) {
+			if (CustomMath.roundToTile(x) == CustomMath.roundToTile(e.getX())
+					&& CustomMath.roundToTile(y) == CustomMath.roundToTile(e.getY())) {
 				flag = true;
 			}
 		}
@@ -119,7 +129,8 @@ public class Collision {
 	public static boolean cPlayer(int x, int y) {
 		p = Game.p;
 		boolean flag = false;
-		if (x == p.getX() && y == p.getY()) {
+		if (CustomMath.roundToTile(x) == CustomMath.roundToTile(p.getX())
+				&& CustomMath.roundToTile(y) == CustomMath.roundToTile(p.getY())) {
 			flag = true;
 		} else {
 			flag = false;

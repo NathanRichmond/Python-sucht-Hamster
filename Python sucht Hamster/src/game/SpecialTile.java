@@ -7,6 +7,7 @@ import clocks.ST_ModifyTime;
 import data.Collision;
 import data.CustomMath;
 import gui.Grid;
+import gui.Gui;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -14,12 +15,12 @@ import java.util.TimerTask;
 public class SpecialTile {
 
 	private int x, y;
-	private int width = 32, height = 32;
+	private int width = Gui.getTile() - 1, height = Gui.getTile() - 1;
 	private String type;
 	private boolean isAlive;
-	
+
 	private int stepsWent;
-	
+
 	public SpecialTile(String type) {
 		this.setValidSpawn();
 		this.isAlive = true;
@@ -63,8 +64,7 @@ public class SpecialTile {
 			}
 		} else {
 			if (activatedBy == "player") {
-				// destroy Korn. Is already destroyed by now (see line 30), so nothing else
-				// here.
+				// destroy Korn. Is already destroyed by now (see line 31), so nothing else here.
 			}
 		}
 	}
@@ -75,24 +75,23 @@ public class SpecialTile {
 		} else {
 			if (activatedBy == "player") {
 				// do a fast dash of two tiles in the face direction
-				p.move(p.getFaceDirection());					// One instant step, followed by the others, each after a delay
+				p.move(p.getFaceDirection()); // One instant step, followed by the others, each after a delay
 				stepsWent++;
 				Timer timer = new Timer();
 				timer.schedule(new TimerTask() {
-					
+
 					public void run() {
 						if (stepsWent < 2) {
 							stepsWent++;
 							p.move(p.getFaceDirection());
-						}
-						else {
+						} else {
 							stepsWent = 0;
 							timer.cancel();
 						}
-					
+
 					}
 				}, 30, 30);
-					
+
 			}
 		}
 	}
@@ -103,21 +102,20 @@ public class SpecialTile {
 		} else {
 			if (activatedBy == "player") {
 				// do a fast dash of three tiles in the face direction
-				p.move(p.getFaceDirection());					// One instant step, followed by the others, each after a delay
+				p.move(p.getFaceDirection()); // One instant step, followed by the others, each after a delay
 				stepsWent++;
 				Timer timer = new Timer();
 				timer.schedule(new TimerTask() {
-					
+
 					public void run() {
 						if (stepsWent < 3) {
 							stepsWent++;
 							p.move(p.getFaceDirection());
-						}
-						else {
+						} else {
 							stepsWent = 0;
 							timer.cancel();
 						}
-					
+
 					}
 				}, 30, 30);
 			}
@@ -130,21 +128,20 @@ public class SpecialTile {
 		} else {
 			if (activatedBy == "player") {
 				// do a fast dash of four tiles in the face direction
-				p.move(p.getFaceDirection());					// One instant step, followed by the others, each after a delay
+				p.move(p.getFaceDirection()); // One instant step, followed by the others, each after a delay
 				stepsWent++;
 				Timer timer = new Timer();
 				timer.schedule(new TimerTask() {
-					
+
 					public void run() {
 						if (stepsWent < 4) {
 							stepsWent++;
 							p.move(p.getFaceDirection());
-						}
-						else {
+						} else {
 							stepsWent = 0;
 							timer.cancel();
 						}
-					
+
 					}
 				}, 30, 30);
 			}
@@ -170,8 +167,9 @@ public class SpecialTile {
 			if (activatedBy == "player") {
 				// slow down game speed for limited period of time
 				double duration = Game.getHourglassPDuration(); // duration in seconds
-				double factor = Game.getHourglassPFactor(); // factor by which time is increased. Needs to be 0<factor<1 to have it slow
-										// down the time
+				double factor = Game.getHourglassPFactor(); // factor by which time is increased. Needs to be 0<factor<1
+															// to have it slow
+				// down the time
 				if (GameTimer.isModified() == false) {
 					new ST_ModifyTime(duration, factor, "player").start();
 				} else { // if time is currently modified
@@ -191,24 +189,24 @@ public class SpecialTile {
 			// generate Walls behind Enemy
 			switch (e.getFaceDirection()) {
 			case 0:
-				Wall_Creation.walls.add(new Wall(e.getX() - 33, e.getY() + 33));
-				Wall_Creation.walls.add(new Wall(e.getX(), e.getY() + 33));
-				Wall_Creation.walls.add(new Wall(e.getX() + 33, e.getY() + 33));
+				Wall_Creation.walls.add(new Wall(e.getX() - Gui.getTile(), e.getY() + Gui.getTile()));
+				Wall_Creation.walls.add(new Wall(e.getX(), e.getY() + Gui.getTile()));
+				Wall_Creation.walls.add(new Wall(e.getX() + Gui.getTile(), e.getY() + Gui.getTile()));
 				break;
 			case 1:
-				Wall_Creation.walls.add(new Wall(e.getX() - 33, e.getY() - 33));
-				Wall_Creation.walls.add(new Wall(e.getX() - 33, e.getY()));
-				Wall_Creation.walls.add(new Wall(e.getX() - 33, e.getY() + 33));
+				Wall_Creation.walls.add(new Wall(e.getX() - Gui.getTile(), e.getY() - Gui.getTile()));
+				Wall_Creation.walls.add(new Wall(e.getX() - Gui.getTile(), e.getY()));
+				Wall_Creation.walls.add(new Wall(e.getX() - Gui.getTile(), e.getY() + Gui.getTile()));
 				break;
 			case 2:
-				Wall_Creation.walls.add(new Wall(e.getX() + 33, e.getY() - 33));
-				Wall_Creation.walls.add(new Wall(e.getX(), e.getY() - 33));
-				Wall_Creation.walls.add(new Wall(e.getX() - 33, e.getY() - 33));
+				Wall_Creation.walls.add(new Wall(e.getX() + Gui.getTile(), e.getY() - Gui.getTile()));
+				Wall_Creation.walls.add(new Wall(e.getX(), e.getY() - Gui.getTile()));
+				Wall_Creation.walls.add(new Wall(e.getX() - Gui.getTile(), e.getY() - Gui.getTile()));
 				break;
 			case 3:
-				Wall_Creation.walls.add(new Wall(e.getX() + 33, e.getY() + 33));
-				Wall_Creation.walls.add(new Wall(e.getX() + 33, e.getY()));
-				Wall_Creation.walls.add(new Wall(e.getX() + 33, e.getY() - 33));
+				Wall_Creation.walls.add(new Wall(e.getX() + Gui.getTile(), e.getY() + Gui.getTile()));
+				Wall_Creation.walls.add(new Wall(e.getX() + Gui.getTile(), e.getY()));
+				Wall_Creation.walls.add(new Wall(e.getX() + Gui.getTile(), e.getY() - Gui.getTile()));
 				break;
 			}
 		} else {
@@ -216,24 +214,24 @@ public class SpecialTile {
 				// generate Walls in front of Player
 				switch (p.getFaceDirection()) {
 				case 0:
-					Wall_Creation.walls.add(new Wall(p.getX() + 33, p.getY() - 33));
-					Wall_Creation.walls.add(new Wall(p.getX(), p.getY() - 33));
-					Wall_Creation.walls.add(new Wall(p.getX() - 33, p.getY() - 33));
+					Wall_Creation.walls.add(new Wall(p.getX() + Gui.getTile(), p.getY() - Gui.getTile()));
+					Wall_Creation.walls.add(new Wall(p.getX(), p.getY() - Gui.getTile()));
+					Wall_Creation.walls.add(new Wall(p.getX() - Gui.getTile(), p.getY() - Gui.getTile()));
 					break;
 				case 1:
-					Wall_Creation.walls.add(new Wall(p.getX() + 33, p.getY() + 33));
-					Wall_Creation.walls.add(new Wall(p.getX() + 33, p.getY()));
-					Wall_Creation.walls.add(new Wall(p.getX() + 33, p.getY() - 33));
+					Wall_Creation.walls.add(new Wall(p.getX() + Gui.getTile(), p.getY() + Gui.getTile()));
+					Wall_Creation.walls.add(new Wall(p.getX() + Gui.getTile(), p.getY()));
+					Wall_Creation.walls.add(new Wall(p.getX() + Gui.getTile(), p.getY() - Gui.getTile()));
 					break;
 				case 2:
-					Wall_Creation.walls.add(new Wall(p.getX() - 33, p.getY() + 33));
-					Wall_Creation.walls.add(new Wall(p.getX(), p.getY() + 33));
-					Wall_Creation.walls.add(new Wall(p.getX() + 33, p.getY() + 33));
+					Wall_Creation.walls.add(new Wall(p.getX() - Gui.getTile(), p.getY() + Gui.getTile()));
+					Wall_Creation.walls.add(new Wall(p.getX(), p.getY() + Gui.getTile()));
+					Wall_Creation.walls.add(new Wall(p.getX() + Gui.getTile(), p.getY() + Gui.getTile()));
 					break;
 				case 3:
-					Wall_Creation.walls.add(new Wall(p.getX() - 33, p.getY() - 33));
-					Wall_Creation.walls.add(new Wall(p.getX() - 33, p.getY()));
-					Wall_Creation.walls.add(new Wall(p.getX() - 33, p.getY() + 33));
+					Wall_Creation.walls.add(new Wall(p.getX() - Gui.getTile(), p.getY() - Gui.getTile()));
+					Wall_Creation.walls.add(new Wall(p.getX() - Gui.getTile(), p.getY()));
+					Wall_Creation.walls.add(new Wall(p.getX() - Gui.getTile(), p.getY() + Gui.getTile()));
 					break;
 				}
 			}

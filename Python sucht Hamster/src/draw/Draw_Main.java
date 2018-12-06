@@ -24,8 +24,8 @@ public class Draw_Main {
 
 	private static Player p;
 
-	private static int startmenugridWidth = 794;
-	private static int startmenugridHeight = 266;
+	private static int startmenugridWidth = (int) (Gui.getWidth() / 1.934508816120906801007556675063);
+	private static int startmenugridHeight = (int) (Gui.getHeight() / 3.2481203007518796992481203007519);
 	private static int startmenugridX = Gui.getWidth() / 2 - startmenugridWidth / 2;
 	private static int startmenugridY = 3 * (Gui.getHeight() / 4) - startmenugridHeight / 2;
 
@@ -127,6 +127,9 @@ public class Draw_Main {
 				drawHamstercount(g);
 			}
 
+			/*
+			 * BEHIND THE GAME
+			 */
 			if (Game.isBehindTheGame() == true && Game.getLevel() > 100) {
 				drawBehindTheGame(g);
 			}
@@ -165,9 +168,11 @@ public class Draw_Main {
 	}
 
 	private void drawBehindTheGameGrid(GraphicsContext g) {
-		int w = 250, h = 92; // size of the box
-		int xb = Gui.getWidth() - (w + 50), yb = 30; // coordinates of box
-		int offset = 25; // offset around Grid
+		int w = (int) (Gui.getWidth() / 6.144);
+		int h = (int) (Gui.getHeight() / 9.3913043478260869565217391304348); // size of the box
+		int xb = (int) (Gui.getWidth() - (w + (Gui.getWidth() / 30.72)));
+		int yb = (int) (Gui.getHeight() / 28.8); // coordinates of box
+		int offset = (int) ((Gui.getWidth() * Gui.getHeight()) / 26542.08) / 2; // offset around Grid
 
 		// Box with explanation
 		g.setLineWidth(1);
@@ -179,15 +184,15 @@ public class Draw_Main {
 		// header
 		g.setTextAlign(TextAlignment.CENTER);
 		g.setTextBaseline(VPos.TOP);
-		g.setFont(new Font("Constantia", 18));
+		g.setFont(new Font("Constantia", ((Gui.getWidth() * Gui.getHeight()) / 36864) / 2));
 		g.setFill(Color.WHITE);
-		g.fillText("Objekt der Klasse Grid", xb + w / 2, yb + 5);
+		g.fillText("Objekt der Klasse Grid", xb + w / 2, yb + (Gui.getHeight() / 172.8));
 		// header divider
 		g.setLineWidth(1);
 		g.setStroke(Color.WHITE);
-		g.strokeLine(xb, yb + 27, xb + w, yb + 27);
+		g.strokeLine(xb, yb + (Gui.getHeight() / 32), xb + w, yb + (Gui.getHeight() / 32));
 		// content text
-		g.setFont(new Font("Constantia", 15));
+		g.setFont(new Font("Constantia", ((Gui.getWidth() * Gui.getHeight()) / 44236.8) / 2));
 		String textleft = "";
 		String textright = "";
 		int numberOfLines = 3;
@@ -207,9 +212,11 @@ public class Draw_Main {
 				break;
 			}
 			g.setTextAlign(TextAlignment.LEFT);
-			g.fillText(textleft, xb + 4, yb + 30 + i * 20);
+			g.fillText(textleft, xb + (Gui.getWidth() / 384),
+					yb + (Gui.getHeight() / 28.8) + i * (Gui.getHeight() / 43.2));
 			g.setTextAlign(TextAlignment.RIGHT);
-			g.fillText(textright, xb + w - 4, yb + 30 + i * 20);
+			g.fillText(textright, xb + w - (Gui.getWidth() / 384),
+					yb + (Gui.getHeight() / 28.8) + i * (Gui.getHeight() / 43.2));
 
 			// Box around the Grid
 			g.setLineWidth(3);
@@ -225,9 +232,10 @@ public class Draw_Main {
 
 	private void drawBehindTheGameButton(GraphicsContext g) {
 		Button b = Gui.ingamebuttons[2]; // restart button
-		int w = 250, h = 92; // size of the box
-		int xb = b.getX() + b.getWidth() + 300, yb = b.getY(); // coordinates of box
-		int offset = 5; // offset around Button
+		int w = (int) (Gui.getWidth() / 6.144);
+		int h = (int) (Gui.getHeight() / 9.3913043478260869565217391304348); // size of the box
+		int xb = (int) (b.getX() + b.getWidth() + (Gui.getWidth() / 5.12)), yb = b.getY(); // coordinates of box
+		int offset = (int) ((Gui.getWidth() * Gui.getHeight()) / 132710.4) / 2; // offset around Grid
 
 		// Box with explanation
 		g.setLineWidth(1);
@@ -239,15 +247,15 @@ public class Draw_Main {
 		// header
 		g.setTextAlign(TextAlignment.CENTER);
 		g.setTextBaseline(VPos.TOP);
-		g.setFont(new Font("Constantia", 18));
+		g.setFont(new Font("Constantia", ((Gui.getWidth() * Gui.getHeight()) / 36864) / 2));
 		g.setFill(Color.WHITE);
-		g.fillText("Objekt der Klasse Button", xb + w / 2, yb + 5);
+		g.fillText("Objekt der Klasse Button", xb + w / 2, yb + (Gui.getHeight() / 172.8));
 		// header divider
 		g.setLineWidth(1);
 		g.setStroke(Color.WHITE);
-		g.strokeLine(xb, yb + 27, xb + w, yb + 27);
+		g.strokeLine(xb, yb + (Gui.getHeight() / 32), xb + w, yb + (Gui.getHeight() / 32));
 		// content text
-		g.setFont(new Font("Constantia", 15));
+		g.setFont(new Font("Constantia", ((Gui.getWidth() * Gui.getHeight()) / 44236.8) / 2));
 		String textleft = "";
 		String textright = "";
 		int numberOfLines = 3;
@@ -267,9 +275,11 @@ public class Draw_Main {
 				break;
 			}
 			g.setTextAlign(TextAlignment.LEFT);
-			g.fillText(textleft, xb + 4, yb + 30 + i * 20);
+			g.fillText(textleft, xb + (Gui.getWidth() / 384),
+					yb + (Gui.getHeight() / 28.8) + i * (Gui.getHeight() / 43.2));
 			g.setTextAlign(TextAlignment.RIGHT);
-			g.fillText(textright, xb + w - 4, yb + 30 + i * 20);
+			g.fillText(textright, xb + w - (Gui.getWidth() / 384),
+					yb + (Gui.getHeight() / 28.8) + i * (Gui.getHeight() / 43.2));
 
 			// Box around the Button
 			g.setLineWidth(3);
@@ -283,12 +293,13 @@ public class Draw_Main {
 	}
 
 	private void drawBehindTheGameZeitleiste(GraphicsContext g) {
-		int xz = Grid.getX() + Grid.getWidth() + 50; // coordinates of Zeitleiste
-		int yz = Grid.getY() + Grid.getHeight() / 2 - 125;
-		int hz = 250, wz = 75; // size of Zeitleiste
-		int w = 250, h = 212;
-		int xb = xz + wz + 50, yb = yz + hz / 2 - h / 2; // coordinates of box: center vertically with Zeitleiste
-		int offset = 10; // offset around Zeitleiste
+		int xz = (int) (Grid.getX() + Grid.getWidth() + (Gui.getWidth() / 30.72)); // coordinates of Zeitleiste
+		int yz = (int) (Grid.getY() + Grid.getHeight() / 2 - (Gui.getHeight() / 6.912));
+		int wz = (int) (Gui.getWidth() / 20.48), hz = (int) (Gui.getHeight() / 3.456); // size of Zeitleiste
+		int w = (int) (Gui.getWidth() / 6.144), h = (int) (Gui.getHeight() / 4.0754716981132075471698113207547);
+		int xb = (int) (xz + wz + (Gui.getWidth() / 30.72));
+		int yb = yz + hz / 2 - h / 2; // coordinates of box: center vertically with Zeitleiste
+		int offset = (int) ((Gui.getWidth() * Gui.getHeight()) / 66355.2) / 2; // offset around Zeitleiste
 
 		// Box with explanation
 		g.setLineWidth(1);
@@ -300,15 +311,15 @@ public class Draw_Main {
 		// header
 		g.setTextAlign(TextAlignment.CENTER);
 		g.setTextBaseline(VPos.TOP);
-		g.setFont(new Font("Constantia", 18));
+		g.setFont(new Font("Constantia", ((Gui.getWidth() * Gui.getHeight()) / 36864) / 2));
 		g.setFill(Color.WHITE);
-		g.fillText("Objekt der Klasse GameTimer", xb + w / 2, yb + 5);
+		g.fillText("Objekt der Klasse GameTimer", xb + w / 2, yb + (Gui.getHeight() / 172.8));
 		// header divider
 		g.setLineWidth(1);
 		g.setStroke(Color.WHITE);
-		g.strokeLine(xb, yb + 27, xb + w, yb + 27);
+		g.strokeLine(xb, yb + (Gui.getHeight() / 32), xb + w, yb + (Gui.getHeight() / 32));
 		// content text
-		g.setFont(new Font("Constantia", 15));
+		g.setFont(new Font("Constantia", ((Gui.getWidth() * Gui.getHeight()) / 44236.8) / 2));
 		String textleft = "";
 		String textright = "";
 		int numberOfLines = 9;
@@ -348,9 +359,11 @@ public class Draw_Main {
 				break;
 			}
 			g.setTextAlign(TextAlignment.LEFT);
-			g.fillText(textleft, xb + 4, yb + 30 + i * 20);
+			g.fillText(textleft, xb + (Gui.getWidth() / 384),
+					yb + (Gui.getHeight() / 28.8) + i * (Gui.getHeight() / 43.2));
 			g.setTextAlign(TextAlignment.RIGHT);
-			g.fillText(textright, xb + w - 4, yb + 30 + i * 20);
+			g.fillText(textright, xb + w - (Gui.getWidth() / 384),
+					yb + (Gui.getHeight() / 28.8) + i * (Gui.getHeight() / 43.2));
 
 			// Box around the Zeitleiste
 			g.setLineWidth(3);
@@ -365,11 +378,13 @@ public class Draw_Main {
 
 	private void drawBehindTheGameSpecialTile(GraphicsContext g) {
 		SpecialTile st;
-		int w = 235, h = 112; // size of box
-		int offset = 5; // offset around Special Tile
+		int w = (int) (Gui.getWidth() / 6.5361702127659574468085106382979);
+		int h = (int) (Gui.getHeight() / 7.7142857142857142857142857142857); // size of box
+		int offset = (int) ((Gui.getWidth() * Gui.getHeight()) / 132710.4) / 2; // offset around Special Tile
 		int xst = 0, yst = 0; // coordinates of one Special Tile
-		int xb = 480, yb = 764 - h; // coordinates of box
-		int wst = 32, hst = 32; // size of Special Tile
+		int xb = (int) (Gui.getWidth() / 3.2);
+		int yb = (int) (Gui.getHeight() / 1.1308900523560209424083769633508) - h; // coordinates of box
+		int wst = (int) Gui.getTile() - 1, hst = (int) Gui.getTile() - 1; // size of Special Tile
 		String type = ""; // type of Special Tile
 		for (int i = 0; i < SpecialTile_Creation.specialtiles.size(); i++) {
 			st = SpecialTile_Creation.specialtiles.get(i);
@@ -400,15 +415,15 @@ public class Draw_Main {
 		// header
 		g.setTextAlign(TextAlignment.CENTER);
 		g.setTextBaseline(VPos.TOP);
-		g.setFont(new Font("Constantia", 18));
+		g.setFont(new Font("Constantia", ((Gui.getWidth() * Gui.getHeight()) / 36864) / 2));
 		g.setFill(Color.WHITE);
-		g.fillText("Objekt der Klasse SpecialTile", xb + w / 2, yb + 5);
+		g.fillText("Objekt der Klasse SpecialTile", xb + w / 2, yb + (Gui.getHeight() / 172.8));
 		// header divider
 		g.setLineWidth(1);
 		g.setStroke(Color.WHITE);
-		g.strokeLine(xb, yb + 27, xb + w, yb + 27);
+		g.strokeLine(xb, yb + (Gui.getHeight() / 32), xb + w, yb + (Gui.getHeight() / 32));
 		// content text
-		g.setFont(new Font("Constantia", 15));
+		g.setFont(new Font("Constantia", ((Gui.getWidth() * Gui.getHeight()) / 44236.8) / 2));
 		String textleft = "";
 		String textright = "";
 		int numberOfLines = 4;
@@ -432,9 +447,11 @@ public class Draw_Main {
 				break;
 			}
 			g.setTextAlign(TextAlignment.LEFT);
-			g.fillText(textleft, xb + 4, yb + 30 + i * 20);
+			g.fillText(textleft, xb + (Gui.getWidth() / 384),
+					yb + (Gui.getHeight() / 28.8) + i * (Gui.getHeight() / 43.2));
 			g.setTextAlign(TextAlignment.RIGHT);
-			g.fillText(textright, xb + w - 4, yb + 30 + i * 20);
+			g.fillText(textright, xb + w - (Gui.getWidth() / 384),
+					yb + (Gui.getHeight() / 28.8) + i * (Gui.getHeight() / 43.2));
 		}
 
 		// Box around the Special Tile
@@ -450,10 +467,11 @@ public class Draw_Main {
 	private void drawBehindTheGameWall(GraphicsContext g) {
 		Wall w;
 		int xw = 0, yw = 0; // coordinates of one Wall
-		int width = 200, height = 72; // size of box
-		int xb = 745, yb = 764 - height; // coordinates of box
-		int ww = 32, hw = 32; // size of Wall
-		int offset = 5; // offset around Wall
+		int width = (int) (Gui.getWidth() / 7.68), height = (Gui.getHeight() / 12); // size of box
+		int xb = (int) (Gui.getWidth() / 2.0617449664429530201342281879195);
+		int yb = (int) (Gui.getHeight() / 1.1308900523560209424083769633508) - height; // coordinates of box
+		int ww = Gui.getTile() - 1, hw = Gui.getTile() - 1; // size of Wall
+		int offset = (int) ((Gui.getWidth() * Gui.getHeight()) / 132710.4) / 2; // offset around Wall
 		for (int i = 0; i < Wall_Creation.walls.size(); i++) {
 			w = Wall_Creation.walls.get(i);
 			// get wall that is closest to box
@@ -482,15 +500,15 @@ public class Draw_Main {
 		// header
 		g.setTextAlign(TextAlignment.CENTER);
 		g.setTextBaseline(VPos.TOP);
-		g.setFont(new Font("Constantia", 18));
+		g.setFont(new Font("Constantia", ((Gui.getWidth() * Gui.getHeight()) / 36864) / 2));
 		g.setFill(Color.WHITE);
-		g.fillText("Objekt der Klasse Wall", xb + width / 2, yb + 5);
+		g.fillText("Objekt der Klasse Wall", xb + width / 2, yb + (Gui.getHeight() / 172.8));
 		// header divider
 		g.setStroke(Color.WHITE);
 		g.setLineWidth(1);
-		g.strokeLine(xb, yb + 27, xb + width, yb + 27);
+		g.strokeLine(xb, yb + (Gui.getHeight() / 32), xb + width, yb + (Gui.getHeight() / 32));
 		// content text
-		g.setFont(new Font("Constantia", 15));
+		g.setFont(new Font("Constantia", ((Gui.getWidth() * Gui.getHeight()) / 44236.8) / 2));
 		String textleft = "";
 		String textright = "";
 		int numberOfLines = 2;
@@ -506,9 +524,10 @@ public class Draw_Main {
 				break;
 			}
 			g.setTextAlign(TextAlignment.LEFT);
-			g.fillText(textleft, xb + 4, yb + 30 + i * 20);
+			g.fillText(textleft, xb + (Gui.getWidth() / 384),
+					yb + (Gui.getHeight() / 28.8) + i * (Gui.getHeight() / 43.2));
 			g.setTextAlign(TextAlignment.RIGHT);
-			g.fillText(textright, xb + width - 4, yb + 30 + i * 20);
+			g.fillText(textright, xb + width - 4, yb + (Gui.getHeight() / 28.8) + i * (Gui.getHeight() / 43.2));
 		}
 
 		// Box around the Wall
@@ -525,9 +544,9 @@ public class Draw_Main {
 		if (Game.enemies.size() > 0) {
 			Enemy e = Game.enemies.get(0); // first Enemy in the array
 			int xe = e.getX(), ye = e.getY(); // coordinates of enemy
-			int xb = 50, yb = 432; // coordinates of box
-			int w = 400, h = 332;
-			int offset = 5; // offset around Hamster
+			int xb = (int) (Gui.getWidth() / 30.72), yb = (int) (Gui.getHeight() / 2); // coordinates of box
+			int w = (int) (Gui.getWidth() / 3.84), h = (int) (Gui.getHeight() / 2.6024096385542168674698795180723);
+			int offset = (int) ((Gui.getWidth() * Gui.getHeight()) / 132710.4) / 2; // offset around Hamster
 
 			// Box on the left with explanation
 			g.setLineWidth(1);
@@ -539,15 +558,15 @@ public class Draw_Main {
 			// header
 			g.setTextAlign(TextAlignment.CENTER);
 			g.setTextBaseline(VPos.TOP);
-			g.setFont(new Font("Constantia", 18));
+			g.setFont(new Font("Constantia", ((Gui.getWidth() * Gui.getHeight()) / 36864) / 2));
 			g.setFill(Color.WHITE);
-			g.fillText("Objekt der Klasse Enemy", xb + w / 2, yb + 5);
+			g.fillText("Objekt der Klasse Enemy", xb + w / 2, yb + (Gui.getHeight() / 172.8));
 			// header divider
 			g.setLineWidth(1);
 			g.setStroke(Color.WHITE);
-			g.strokeLine(xb, yb + 27, xb + w, yb + 27);
+			g.strokeLine(xb, yb + (Gui.getHeight() / 32), xb + w, yb + (Gui.getHeight() / 32));
 			// content text
-			g.setFont(new Font("Constantia", 15));
+			g.setFont(new Font("Constantia", ((Gui.getWidth() * Gui.getHeight()) / 44236.8) / 2));
 			String textleft = "";
 			String textright = "";
 			int numberOfLines = 15;
@@ -612,9 +631,11 @@ public class Draw_Main {
 					break;
 				}
 				g.setTextAlign(TextAlignment.LEFT);
-				g.fillText(textleft, xb + 4, yb + 30 + i * 20);
+				g.fillText(textleft, xb + (Gui.getWidth() / 384),
+						yb + (Gui.getHeight() / 28.8) + i * (Gui.getHeight() / 43.2));
 				g.setTextAlign(TextAlignment.RIGHT);
-				g.fillText(textright, xb + w - 4, yb + 30 + i * 20);
+				g.fillText(textright, xb + w - (Gui.getWidth() / 384),
+						yb + (Gui.getHeight() / 28.8) + i * (Gui.getHeight() / 43.2));
 			}
 
 			// Box around the Hamster
@@ -630,9 +651,10 @@ public class Draw_Main {
 
 	private void drawBehindTheGamePython(GraphicsContext g) {
 		int xp = p.getX(), yp = p.getY(); // coordinates of player
-		int xb = 50, yb = 170; // coordinates of box
-		int w = 400, h = 232;
-		int offset = 5; // offset around Python
+		int xb = (int) (Gui.getWidth() / 30.72);
+		int yb = (int) (Gui.getHeight() / 5.0823529411764705882352941176471); // coordinates of box
+		int w = (int) (Gui.getWidth() / 3.84), h = (int) (Gui.getHeight() / 3.7241379310344827586206896551724);
+		int offset = (int) ((Gui.getWidth() * Gui.getHeight()) / 132710.4) / 2; // offset around Python
 
 		// Box on the left with explanation
 		g.setLineWidth(1);
@@ -644,15 +666,15 @@ public class Draw_Main {
 		// header
 		g.setTextAlign(TextAlignment.CENTER);
 		g.setTextBaseline(VPos.TOP);
-		g.setFont(new Font("Constantia", 18));
+		g.setFont(new Font("Constantia", ((Gui.getWidth() * Gui.getHeight()) / 36864) / 2));
 		g.setFill(Color.WHITE);
-		g.fillText("Objekt der Klasse Player", xb + w / 2, yb + 5);
+		g.fillText("Objekt der Klasse Player", xb + w / 2, yb + (Gui.getHeight() / 172.8));
 		// header divider
 		g.setLineWidth(0.5);
 		g.setStroke(Color.WHITE);
-		g.strokeLine(xb, yb + 27, xb + w, yb + 27);
+		g.strokeLine(xb, yb + (Gui.getHeight() / 32), xb + w, yb + (Gui.getHeight() / 32));
 		// content text
-		g.setFont(new Font("Constantia", 15));
+		g.setFont(new Font("Constantia", ((Gui.getWidth() * Gui.getHeight()) / 44236.8) / 2));
 		String textleft = "";
 		String textright = "";
 		int numberOfLines = 10;
@@ -697,9 +719,11 @@ public class Draw_Main {
 				break;
 			}
 			g.setTextAlign(TextAlignment.LEFT);
-			g.fillText(textleft, xb + 4, yb + 30 + i * 20);
+			g.fillText(textleft, xb + (Gui.getWidth() / 384),
+					yb + (Gui.getHeight() / 28.8) + i * (Gui.getHeight() / 43.2));
 			g.setTextAlign(TextAlignment.RIGHT);
-			g.fillText(textright, xb + w - 4, yb + 30 + i * 20);
+			g.fillText(textright, xb + w - (Gui.getWidth() / 384),
+					yb + (Gui.getHeight() / 28.8) + i * (Gui.getHeight() / 43.2));
 		}
 
 		// Box around the Python
@@ -715,8 +739,8 @@ public class Draw_Main {
 	@SuppressWarnings("unused")
 	private void drawSpecialTileInfo(GraphicsContext g) {
 		// Enemy speed is boosted
-		int x = Grid.getX() - 240, y = Grid.getY();
-		int width = 240, height = 20;
+		int x = Grid.getX() - (int) (Gui.getWidth() / 6.4), y = Grid.getY();
+		int width = (int) (Gui.getWidth() / 6.4), height = (int) (Gui.getHeight() / 43.2);
 		for (int i = 0; i < Game.enemies.size(); i++) {
 			Enemy e = Game.enemies.get(i);
 			if (e.isSpeedBoosted() == true) {
@@ -724,7 +748,7 @@ public class Draw_Main {
 				g.fillRect(x, y + i * 2 * height, width, height);
 				g.setTextAlign(TextAlignment.CENTER);
 				g.setTextBaseline(VPos.CENTER);
-				g.setFont(new Font("Constantia", 16));
+				g.setFont(new Font("Constantia", ((Gui.getWidth() * Gui.getHeight()) / 41472) / 2));
 				g.setFill(Color.WHITE);
 				g.fillText("Hamstergeschwindigkeit erhöht!", x + width / 2, (y + i * 2 * height) + height / 2);
 			}
@@ -733,35 +757,38 @@ public class Draw_Main {
 		// Time is modified
 
 		if (GameTimer.isModified() == true) {
-			y = Grid.getY() + 2 * 20;
-			width = 160;
+			y = (int) (Grid.getY() + 2 * (Gui.getHeight() / 43.2));
+			width = (int) (Gui.getWidth() / 9.6);
 			g.setFill(new Color(0, 0, 0, 0.4));
 			g.fillRect(x, y, width, height);
 
 			g.setTextAlign(TextAlignment.CENTER);
 			g.setTextBaseline(VPos.CENTER);
-			g.setFont(new Font("Constantia", 16));
+			g.setFont(new Font("Constantia", ((Gui.getWidth() * Gui.getHeight()) / 41472) / 2));
 			g.setFill(Color.WHITE);
 			g.fillText("Spielzeit modifiziert!", x + width / 2, y + height / 2);
 		}
 	}
 
 	private void drawHamstercount(GraphicsContext g) {
-		int x = Grid.getX() - 240, y = Grid.getY(), width = 200, height = 40;
+		int x = (int) (Grid.getX() - (Gui.getWidth() / 6.4));
+		int y = Grid.getY();
+		int width = (int) (Gui.getWidth() / 7.68);
+		int height = (int) (Gui.getHeight() / 21.6);
 		g.setFill(new Color(0, 0, 0, 0.4));
 		g.fillRect(x, y, width, height);
 
 		g.setTextAlign(TextAlignment.CENTER);
 		g.setTextBaseline(VPos.CENTER);
-		g.setFont(new Font("Constantia", 16));
+		g.setFont(new Font("Constantia", ((Gui.getWidth() * Gui.getHeight()) / 41472) / 2));
 		g.setFill(Color.WHITE);
 		g.fillText("Hamster am Leben: " + Game.enemies.size(), x + width / 2, y + height / 4);
 		g.fillText("Hamster verschlungen: " + Game.hamstercount, x + width / 2, y + 3 * height / 4);
 	}
 
 	private void drawLvlTitle(GraphicsContext g) {
-		int width = 150; // width of the lvl title box
-		int height = 70; // height of the lvl title box
+		int width = (int) (Gui.getWidth() / 10.24); // width of the lvl title box
+		int height = (int) (Gui.getHeight() / 12.342857142857142857142857142857); // height of the lvl title box
 		int x = Grid.getX() + Grid.getWidth() / 2 - width / 2; // x coordinate of the lvl title box
 		int y = Grid.getY() / 2 - height / 2; // y coordinate of the lvl title box
 
@@ -804,11 +831,12 @@ public class Draw_Main {
 			break;
 		default:
 			g.setFill(new Color(0, 0, 0, 0.4));
-			g.fillRect(Grid.getX() + Grid.getWidth() / 2 - 160 / 2, Grid.getY() / 2 - 40 / 2, 160, 40);
+			g.fillRect(Grid.getX() + Grid.getWidth() / 2 - (Gui.getWidth() / 9.6) / 2,
+					Grid.getY() / 2 - (Gui.getHeight() / 21.6) / 2, (Gui.getWidth() / 9.6), (Gui.getHeight() / 21.6));
 
 			g.setTextAlign(TextAlignment.CENTER);
 			g.setTextBaseline(VPos.CENTER);
-			g.setFont(new Font("Constantia Bold Italic", 30));
+			g.setFont(new Font("Constantia Bold Italic", ((Gui.getWidth() * Gui.getHeight()) / 22118.4) / 2));
 			g.setFill(Color.WHITE);
 			g.fillText("LEVEL " + Game.getLevel(), Grid.getX() + Grid.getWidth() / 2, Grid.getY() / 2);
 			break;
@@ -870,7 +898,8 @@ public class Draw_Main {
 					g.fillRect(x, y, w, h);
 					g.setTextAlign(TextAlignment.CENTER);
 					g.setTextBaseline(VPos.CENTER);
-					g.setFont(new Font("Constantia", 26));
+					g.setFont(new Font("Constantia",
+							((Gui.getWidth() * Gui.getHeight()) / 25521.230769230769230769230769231) / 2));
 					g.setFill(Color.WHITE);
 					g.fillText("zurück zum Menü", x + w / 2, y + h / 2);
 				}
@@ -963,8 +992,8 @@ public class Draw_Main {
 
 	private void drawLvlDesc(GraphicsContext g, int level) {
 		int x = getStartmenugridX();
-		int y = getStartmenugridY() - 90;
-		g.setFont(new Font("Constantia", 30));
+		int y = (int) (getStartmenugridY() - (Gui.getHeight() / 9.6));
+		g.setFont(new Font("Constantia", ((Gui.getWidth() * Gui.getHeight()) / 22118.4) / 2));
 		g.setFill(Color.WHITE);
 		g.setTextBaseline(VPos.TOP);
 		switch (level) {
@@ -1033,7 +1062,7 @@ public class Draw_Main {
 
 		g.setTextAlign(TextAlignment.CENTER);
 		g.setTextBaseline(VPos.CENTER);
-		g.setFont(new Font("Constantia Bold", 40));
+		g.setFont(new Font("Constantia Bold", ((Gui.getWidth() * Gui.getHeight()) / 16588.8) / 2));
 		g.setFill(Color.WHITE);
 		g.fillText("PAUSE", Grid.getX() + Grid.getWidth() / 2, Grid.getY() + Grid.getHeight() / 4);
 	}
@@ -1043,9 +1072,11 @@ public class Draw_Main {
 		g.setFill(new Color(0, 0, 0, 0.7));
 		g.fillRect(Grid.getX(), Grid.getY(), Grid.getWidth(), Grid.getHeight());
 
-		int w = 166; // width of rectangle
-		int h = 166; // height of rectangle
-		if (Grid.getHeight() <= 166) { // center text when there's no space for GIF
+		int w = (int) (Gui.getWidth() / 9.2530120481927710843373493975904); // width of rectangle
+		int h = (int) (Gui.getHeight() / 5.2048192771084337349397590361446); // height of rectangle
+		int threshold = (int) (Gui.getHeight() / 5.2048192771084337349397590361446); // if space is lower than this, no
+																						// GIF
+		if (Grid.getHeight() <= threshold) { // center text when there's no space for GIF
 			h = 0;
 		}
 		// position of rectangle: centered on grid
@@ -1056,29 +1087,32 @@ public class Draw_Main {
 		switch (Gamestate.state) {
 		case defeat:
 			g.setTextAlign(TextAlignment.CENTER);
-			if (Grid.getHeight() > 166) {
+			if (Grid.getHeight() > threshold) {
 				g.drawImage(IL.idefeat, x + w / 4, y + h / 6, w / 2, h / 2);
 				g.setTextBaseline(VPos.TOP);
-				g.setFont(new Font("Constantia", 22));
+				g.setFont(new Font("Constantia",
+						((Gui.getWidth() * Gui.getHeight()) / 30161.454545454545454545454545455) / 2));
 				g.fillText("Brr! Du bist\nerfroren.", x + w / 2, y + 3 * h / 4);
 			} else { // center text when there's little space
 				g.setTextBaseline(VPos.CENTER);
 			}
-			g.setFont(new Font("Constantia", 32));
+			g.setFont(new Font("Constantia", ((Gui.getWidth() * Gui.getHeight()) / 20736) / 2));
 			g.fillText("NIEDERLAGE!", x + w / 2, y);
 			break;
 		case victory:
 			g.setTextAlign(TextAlignment.CENTER);
-			if (Grid.getHeight() > 166) {
+			if (Grid.getHeight() > threshold) {
 				g.drawImage(IL.ivictory, x + w / 4, y + h / 6, w / 2, h / 2);
 				g.setTextBaseline(VPos.TOP);
-				g.setFont(new Font("Constantia", 22));
+				g.setFont(new Font("Constantia",
+						((Gui.getWidth() * Gui.getHeight()) / 30161.454545454545454545454545455) / 2));
 				g.fillText("Hamster platt,\nPython satt.", x + w / 2, y + 3 * h / 4);
 			} else {
 				g.setTextBaseline(VPos.CENTER);
 			}
-			g.setFont(new Font("Constantia", 44));
-			if (Grid.getHeight() <= 46) {
+			g.setFont(new Font("Constantia",
+					((Gui.getWidth() * Gui.getHeight()) / 15080.727272727272727272727272727) / 2));
+			if (Grid.getHeight() <= (Gui.getHeight() / 18.78260869565217391304347826087)) {
 				g.setFont(new Font("Constantia", Grid.getHeight() - 2));
 			}
 			g.fillText("SIEG!", x + w / 2, y);
@@ -1112,7 +1146,8 @@ public class Draw_Main {
 			g.fillRect(x, y, w, h);
 			g.setTextAlign(TextAlignment.CENTER);
 			g.setTextBaseline(VPos.CENTER);
-			g.setFont(new Font("Constantia", 26));
+			g.setFont(new Font("Constantia",
+					((Gui.getWidth() * Gui.getHeight()) / 25521.230769230769230769230769231) / 2));
 			g.setFill(Color.WHITE);
 			g.fillText("zum nächsten Tutorial", x + w / 2, y + h / 2);
 		}
@@ -1122,10 +1157,10 @@ public class Draw_Main {
 		/*
 		 * Long method; collapse it!
 		 */
-		int x = Grid.getX() + Grid.getWidth() + 50; // is vertically centered with grid
-		int y = Grid.getY() + Grid.getHeight() / 2 - 125;
-		int w = 75;
-		int h = 250;
+		int x = (int) (Grid.getX() + Grid.getWidth() + (Gui.getWidth() / 30.72)); // is vertically centered with grid
+		int y = (int) (Grid.getY() + Grid.getHeight() / 2 - (Gui.getHeight() / 6.912));
+		int w = (int) (Gui.getWidth() / 20.48);
+		int h = (int) (Gui.getHeight() / 3.456);
 
 		switch (GameTimer.getGameTime()) {
 		case 1:
@@ -1525,13 +1560,13 @@ public class Draw_Main {
 			 * Draw index of Enemy
 			 */
 //			g.setFill(new Color(0, 0, 0, 0.4));
-//			g.fillRect(e.getX(), e.getY(), 32, 32);
+//			g.fillRect(e.getX(), e.getY(), e.getWidth(), e.getHeight());
 //
 //			g.setTextAlign(TextAlignment.CENTER);
 //			g.setTextBaseline(VPos.CENTER);
-//			g.setFont(new Font("Constantia", 20));
+//			g.setFont(new Font("Constantia", ((Gui.getWidth() * Gui.getHeight()) / 33177.6) / 2));
 //			g.setFill(Color.WHITE);
-//			g.fillText("" + e.index, e.getX() + 16, e.getY() + 16);
+//			g.fillText("" + e.index, e.getX() + (e.getWidth()/2), e.getY() + (e.getHeight()/2));
 
 		}
 	}
@@ -1606,7 +1641,7 @@ public class Draw_Main {
 		}
 
 //		// draw playerMargin:
-//		double pm = 33 * Game.getPlayerMargin();
+//		double pm = Gui.getTile() * Game.getPlayerMargin();
 //		g.setStroke(Color.DARKRED);
 //		g.strokeRect(p.getX() - pm, p.getY() - pm, pm * 2 + p.getWidth(), pm * 2 + p.getHeight());
 	}
@@ -1837,7 +1872,7 @@ public class Draw_Main {
 
 		g.setTextAlign(TextAlignment.CENTER);
 		g.setTextBaseline(VPos.CENTER);
-		g.setFont(new Font("Constantia", 16));
+		g.setFont(new Font("Constantia", ((Gui.getWidth() * Gui.getHeight()) / 41472) / 2));
 		g.setFill(Color.WHITE);
 		g.fillText(b.getText(), b.getX() + b.getWidth() / 2, b.getY() + b.getHeight() / 2);
 		drawButtonHover(g, b, "Starte das normale Level 1");
@@ -1878,9 +1913,10 @@ public class Draw_Main {
 			g.fillRect(b.getX(), b.getY(), b.getWidth(), b.getHeight());
 			if (hoverText != null) {
 				g.setTextAlign(TextAlignment.LEFT);
-				g.setFont(new Font("Constantia", 31));
+				g.setFont(new Font("Constantia",
+						((Gui.getWidth() * Gui.getHeight()) / 21404.903225806451612903225806452) / 2));
 				g.setFill(Color.WHITE);
-				g.fillText(hoverText, getStartmenugridX(), getStartmenugridY() - 90);
+				g.fillText(hoverText, getStartmenugridX(), getStartmenugridY() - (Gui.getHeight() / 9.6));
 			}
 		}
 	}
@@ -1896,7 +1932,7 @@ public class Draw_Main {
 
 		g.setTextAlign(TextAlignment.CENTER);
 		g.setTextBaseline(VPos.CENTER);
-		g.setFont(new Font("Constantia", 16));
+		g.setFont(new Font("Constantia", ((Gui.getWidth() * Gui.getHeight()) / 41472) / 2));
 		g.setFill(Color.BLACK);
 		g.fillText(b.getText(), b.getX() + b.getWidth() / 2, b.getY() + b.getHeight() / 2);
 		/*
@@ -1913,43 +1949,57 @@ public class Draw_Main {
 		g.fillRect(b.getX(), b.getY(), b.getWidth(), b.getHeight());
 		g.setTextAlign(TextAlignment.CENTER);
 		g.setTextBaseline(VPos.CENTER);
-		g.setFont(new Font("Constantia", 16));
+		g.setFont(new Font("Constantia", ((Gui.getWidth() * Gui.getHeight()) / 41472) / 2));
 		g.setFill(Color.WHITE);
 		g.fillText(b.getText(), b.getX() + b.getWidth() / 2, b.getY() + b.getHeight() / 2);
 
-		g.drawImage(IL.iplayer0_0, 760, 190, 30, 30);
-		g.drawImage(IL.ienemy0_0, 742, 230, 30, 30);
-		g.drawImage(IL.ipicture, 1155, 260, 250, 250);
-		g.drawImage(IL.iupKey, 853, 435, 40, 40);
-		g.drawImage(IL.idownKey, 742, 483, 40, 40);
-		g.drawImage(IL.ileftKey, 735, 435, 40, 40);
-		g.drawImage(IL.irightKey, 900, 393, 40, 40);
+		g.drawImage(IL.iplayer0_0, (Gui.getWidth() / 2.0210526315789473684210526315789),
+				(Gui.getHeight() / 4.5473684210526315789473684210526), (Gui.getWidth() / 51.2),
+				(Gui.getHeight() / 28.8));
+		g.drawImage(IL.ienemy0_0, (Gui.getWidth() / 2.0700808625336927223719676549865),
+				(Gui.getHeight() / 3.7565217391304347826086956521739), (Gui.getWidth() / 51.2),
+				(Gui.getHeight() / 28.8));
+		g.drawImage(IL.ipicture, (Gui.getWidth() / 1.3298701298701298701298701298701),
+				(Gui.getHeight() / 3.3230769230769230769230769230769), (Gui.getWidth() / 6144),
+				(Gui.getHeight() / 3456));
+		g.drawImage(IL.iupKey, (Gui.getWidth() / 1.8007033997655334114888628370457),
+				(Gui.getHeight() / 1.9862068965517241379310344827586), (Gui.getWidth() / 38.4),
+				(Gui.getHeight() / 21.6));
+		g.drawImage(IL.idownKey, (Gui.getWidth() / 2.0700808625336927223719676549865),
+				(Gui.getHeight() / 1.788819875776397515527950310559), (Gui.getWidth() / 38.4),
+				(Gui.getHeight() / 21.6));
+		g.drawImage(IL.ileftKey, (Gui.getWidth() / 2.0897959183673469387755102040816),
+				(Gui.getHeight() / 1.9862068965517241379310344827586), (Gui.getWidth() / 38.4),
+				(Gui.getHeight() / 21.6));
+		g.drawImage(IL.irightKey, (Gui.getWidth() / 1.7066666666666666666666666666667),
+				(Gui.getHeight() / 2.1984732824427480916030534351145), (Gui.getWidth() / 38.4),
+				(Gui.getHeight() / 21.6));
 	}
 
 	public void drawPfeiltasten(GraphicsContext g) {
-		int w = 32, h = 32; // size of the images
+		int w = Gui.getTile() - 1, h = Gui.getTile() - 1; // size of the images
 		switch (Game.getLevel()) {
 		case 101:
 			if (p.getSchritte() < 6) {
-				g.drawImage(IL.iright, p.getX() + 33, p.getY() + (p.getHeight() / 2 - h / 2), w, h);
+				g.drawImage(IL.iright, p.getX() + Gui.getTile(), p.getY() + (p.getHeight() / 2 - h / 2), w, h);
 				if (p.getX() > Grid.getX() + 1) {
-					g.drawImage(IL.ileft, p.getX() - 33, p.getY() + (p.getHeight() / 2 - h / 2), w, h);
+					g.drawImage(IL.ileft, p.getX() - Gui.getTile(), p.getY() + (p.getHeight() / 2 - h / 2), w, h);
 				}
 			}
 			break;
 		case 102:
 			if (p.getSchritte() < 15) {
-				if (p.getX() < Grid.getX() + 9 * 33) {
-					g.drawImage(IL.iright, p.getX() + 33, p.getY() + (p.getHeight() / 2 - h / 2), w, h);
+				if (p.getX() < Grid.getX() + 9 * Gui.getTile()) {
+					g.drawImage(IL.iright, p.getX() + Gui.getTile(), p.getY() + (p.getHeight() / 2 - h / 2), w, h);
 				}
 				if (p.getX() > Grid.getX() + 1) {
-					g.drawImage(IL.ileft, p.getX() - 33, p.getY() + (p.getHeight() / 2 - h / 2), w, h);
+					g.drawImage(IL.ileft, p.getX() - Gui.getTile(), p.getY() + (p.getHeight() / 2 - h / 2), w, h);
 				}
 				if (p.getY() > Grid.getY() + 1) {
-					g.drawImage(IL.iup, p.getX() + (p.getWidth() / 2 - w / 2), p.getY() - 33, w, h);
+					g.drawImage(IL.iup, p.getX() + (p.getWidth() / 2 - w / 2), p.getY() - Gui.getTile(), w, h);
 				}
-				if (p.getY() < Grid.getY() + 9 * 33) {
-					g.drawImage(IL.idown, p.getX() + (p.getWidth() / 2 - w / 2), p.getY() + 33, w, h);
+				if (p.getY() < Grid.getY() + 9 * Gui.getTile()) {
+					g.drawImage(IL.idown, p.getX() + (p.getWidth() / 2 - w / 2), p.getY() + Gui.getTile(), w, h);
 				}
 			}
 			break;

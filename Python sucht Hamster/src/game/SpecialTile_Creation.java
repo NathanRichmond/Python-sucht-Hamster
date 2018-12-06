@@ -3,6 +3,7 @@ package game;
 import java.util.ArrayList;
 
 import gui.Grid;
+import gui.Gui;
 
 public class SpecialTile_Creation {
 
@@ -106,8 +107,8 @@ public class SpecialTile_Creation {
 	 */
 	private void addSpecialTile(String type, int x, int y) {
 		SpecialTile st = new SpecialTile(type);
-		st.setX(Grid.getX() + (x * 33 + 1));
-		st.setY(Grid.getY() + (y * 33 + 1));
+		st.setX(Grid.getX() + (x * Gui.getTile() + 1));
+		st.setY(Grid.getY() + (y * Gui.getTile() + 1));
 		specialtiles.add(st);
 	}
 
