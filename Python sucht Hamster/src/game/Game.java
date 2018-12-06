@@ -8,6 +8,7 @@ import clocks.Enemy_Movement;
 import clocks.ST_ModifyTime;
 import clocks.Timer_Clock;
 import gui.Grid;
+import gui.Gui;
 
 public class Game {
 
@@ -17,7 +18,7 @@ public class Game {
 	public static int ex, ey, px, py; // Koordinaten für die nicht zufällig gesetzten Chars
 
 	private static int level;
-	private static int maxLevelAvailable = 12; // highest level that was won in current session
+	private static int maxLevelAvailable = 1; // highest level that was won in current session
 	private static boolean behindTheGame = false; // whether tutlevels show behind the game info
 
 	private static boolean firstKeyPressInGame = true;
@@ -202,8 +203,7 @@ public class Game {
 			for (int i = 0; i < getnEnemy(); i++) {
 				enemies.add(new Enemy());
 			}
-		} else { // for Tutorial levels: manual placement (coordinates are set in Level
-					// properties)
+		} else { // for Tutorial levels: manual placement (coordinates are set in Level properties)
 			p = new Player(Grid.getX() + getPx(), Grid.getY() + getPy());
 			enemies.add(new Enemy(Grid.getX() + getEx(), Grid.getY() + getEy()));
 		}
@@ -315,7 +315,7 @@ public class Game {
 		setGridsize("32x20");
 		setnEnemy(5);
 		setEspeed(4);
-		setGameDuration(30);
+		setGameDuration(35);
 		setPlayerMargin(6.5); // at Gridsize 32x20 that's about 4 tiles
 		setSpecialTiles(true);
 		setnKorn(600);
@@ -398,7 +398,6 @@ public class Game {
 		setGridsize("15x01");
 		setEspeed(0);
 		setCharsCoordinates(0, 0, 14, 0);
-		// playerMargin: 1 or 2 tiles
 	}
 
 	private static void level102() {
@@ -453,10 +452,10 @@ public class Game {
 	}
 
 	private static void setCharsCoordinates(int px, int py, int ex, int ey) {
-		Game.px = px * 33 + 1; // *33 because 33 is size of one tile, +1 for placement fix
-		Game.py = py * 33 + 1;
-		Game.ex = ex * 33 + 1;
-		Game.ey = ey * 33 + 1;
+		Game.px = px * Gui.getTile() + 1; // *(size of one tile), +1 for placement fix
+		Game.py = py * Gui.getTile() + 1;
+		Game.ex = ex * Gui.getTile() + 1;
+		Game.ey = ey * Gui.getTile() + 1;
 	}
 
 	public static int getEx() {

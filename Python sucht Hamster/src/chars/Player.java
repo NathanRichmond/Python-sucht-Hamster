@@ -6,6 +6,7 @@ import data.CustomMath;
 import game.Gamestate;
 import game.Gamestate_e;
 import gui.Grid;
+import gui.Gui;
 
 public class Player {
 
@@ -17,16 +18,16 @@ public class Player {
 
 	public Player() {
 		this.setValidSpawn(); // spawns at random position
-		this.width = 32;
-		this.height = 32;
+		this.width = Gui.getTile() - 1;
+		this.height = Gui.getTile() - 1;
 		this.faceDirection = 0;
 	}
 
 	public Player(int a, int b) {
 		x = a;
 		y = b;
-		this.width = 32;
-		this.height = 32;
+		this.width = Gui.getTile() - 1;
+		this.height = Gui.getTile() - 1;
 		this.faceDirection = 0;
 	}
 
@@ -77,16 +78,16 @@ public class Player {
 	private void setCoords(int direction) {
 		switch (direction) {
 		case 0:
-			this.yAfterMove = this.y - 33;
+			this.yAfterMove = this.y - Gui.getTile();
 			break;
 		case 1:
-			this.xAfterMove = this.x + 33;
+			this.xAfterMove = this.x + Gui.getTile();
 			break;
 		case 2:
-			this.yAfterMove = this.y + 33;
+			this.yAfterMove = this.y + Gui.getTile();
 			break;
 		case 3:
-			this.xAfterMove = this.x - 33;
+			this.xAfterMove = this.x - Gui.getTile();
 			break;
 		default:
 			break;

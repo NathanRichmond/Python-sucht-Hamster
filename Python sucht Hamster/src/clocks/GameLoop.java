@@ -19,7 +19,7 @@ public class GameLoop implements Runnable {
 	public void run() {
 
 		long lastTime = System.nanoTime();
-		final double FPS = 60.0;
+		final double FPS = 30.0;
 		double ns = 1000000000 / FPS;
 		double deltaTime = 0;
 

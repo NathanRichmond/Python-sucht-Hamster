@@ -4,6 +4,7 @@ import chars.Enemy;
 import chars.Player;
 import game.Game;
 import gui.Grid;
+import gui.Gui;
 
 public class EnemyAI {
 
@@ -11,8 +12,8 @@ public class EnemyAI {
 	private Enemy e;
 
 	/*
-	 * Area around the player that is blocked for enemy.
-	 * Input: 1 = whole grid; 100 = 1 tile. (exponential)
+	 * Area around the player that is blocked for enemy. Input: 1 = whole grid; 100
+	 * = 1 tile. (exponential)
 	 */
 	private int playerMargin = CustomMath.calcPlayerMargin(Game.getPlayerMargin());
 
@@ -60,15 +61,8 @@ public class EnemyAI {
 		 */
 		int pos = 0;
 		/*
-		 * int pos:
-		 * 0 = North.
-		 * 1 = Northeast.
-		 * 2 = East.
-		 * 3 = South-east.
-		 * 4 = South.
-		 * 5 = South-west.
-		 * 6 = West. 
-		 * 7 = Northwest.
+		 * int pos: 0 = North. 1 = Northeast. 2 = East. 3 = South-east. 4 = South. 5 =
+		 * South-west. 6 = West. 7 = Northwest.
 		 */
 		if (e.getY() < p.getY()) { // if N of player
 			pos = 0;
@@ -96,8 +90,8 @@ public class EnemyAI {
 		}
 
 		/*
-		 * Generate random move number that won't move enemy towards player.
-		 * If pos == 1 || 3 || 5 || 7, that doesn't matter --> dir1 = 4 (don't care)
+		 * Generate random move number that won't move enemy towards player. If pos == 1
+		 * || 3 || 5 || 7, that doesn't matter --> dir1 = 4 (don't care)
 		 */
 		switch (pos) {
 		case 0:
@@ -201,19 +195,19 @@ public class EnemyAI {
 	public void setCoords(int direction) {
 		switch (direction) {
 		case 0:
-			e.setyAfterMove(e.getY() - 33);
+			e.setyAfterMove(e.getY() - Gui.getTile());
 			e.setxAfterMove(e.getX());
 			break;
 		case 1:
-			e.setxAfterMove(e.getX() + 33);
+			e.setxAfterMove(e.getX() + Gui.getTile());
 			e.setyAfterMove(e.getY());
 			break;
 		case 2:
-			e.setyAfterMove(e.getY() + 33);
+			e.setyAfterMove(e.getY() + Gui.getTile());
 			e.setxAfterMove(e.getX());
 			break;
 		case 3:
-			e.setxAfterMove(e.getX() - 33);
+			e.setxAfterMove(e.getX() - Gui.getTile());
 			e.setyAfterMove(e.getY());
 			break;
 		default:

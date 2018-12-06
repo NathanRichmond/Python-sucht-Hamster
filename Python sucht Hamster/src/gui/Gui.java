@@ -22,8 +22,13 @@ public class Gui {
 
 	public static GraphicsContext gc_main;
 
-	private static int width = 1536, height = 864; // size of window, normal resolution
-//	private static int width = 1152, height = 648; // size of the window, for 1280x800
+	// size of the window: width = height * 1.77777 -- always retain this ratio!!
+	private static int width = 1536, height = 864; // optimal size, normal resolution
+//	private static int width = 1280, height = 720; // for 1280x800
+//	private static int width = 640, height = 360; // small and ugly
+
+	private static int tile = (int) Math.round(width / 46.545454545454545454545454545455); // width & height of 1 grid
+																							// tile
 
 	private static int nLvls = 12; // number of levels
 
@@ -99,20 +104,26 @@ public class Gui {
 		initTutorialMenuButtons();
 		initAnleitungsbuttons();
 
-		victorybutton = new Button(260, 30, 60, 60); // Next Level
+		victorybutton = new Button((int) (Gui.getWidth() / 5.9076923076923076923076923076923),
+				(int) (Gui.getHeight() / 28.8), (int) (Gui.getWidth() / 25.6), (int) (Gui.getHeight() / 14.4)); // Next
+		// Level
 	}
 
 	private void initIngameButtons() {
-		ingamebuttons[0] = new Button(50, 30, 60, 60); // Exit to Menu
-		ingamebuttons[1] = new Button(120, 30, 60, 60); // Pause
-		ingamebuttons[2] = new Button(190, 30, 60, 60); // Restart
+		ingamebuttons[0] = new Button((int) (Gui.getWidth() / 30.72), (int) (Gui.getHeight() / 28.8),
+				(int) (Gui.getWidth() / 25.6), (int) (Gui.getHeight() / 14.4)); // Exit to Menu
+		ingamebuttons[1] = new Button((int) (Gui.getWidth() / 12.8), (int) (Gui.getHeight() / 28.8),
+				(int) (Gui.getWidth() / 25.6), (int) (Gui.getHeight() / 14.4)); // Pause
+		ingamebuttons[2] = new Button((int) (Gui.getWidth() / 8.0842105263157894736842105263158),
+				(int) (Gui.getHeight() / 28.8), (int) (Gui.getWidth() / 25.6), (int) (Gui.getHeight() / 14.4)); // Restart
 	}
 
 	private void initLvlSelectButtons() {
 		int buttonX = gridx + 3; // general offset into tile
-		int buttonY = gridy + 3 + 3 * 66; // on fourth row of grid
-		int buttonWidth = 62;
-		int buttonHeight = 62;
+		int buttonY = (int) (gridy + 3 + 3 * (Gui.getHeight() / 13.090909090909090909090909090909)); // on fourth row of
+																										// grid
+		int buttonWidth = (int) (Gui.getWidth() / 24.774193548387096774193548387097);
+		int buttonHeight = (int) (Gui.getHeight() / 13.935483870967741935483870967742);
 		int buttonsPerLine = 12;
 		int innerSpace = 4; // space between individual buttons: 1px until tile border, 2px tile border, 1px
 							// offset into tile
@@ -121,7 +132,7 @@ public class Gui {
 		for (int i = 0; i < getnLvls(); i++) {
 			j = i % buttonsPerLine;
 			if (j == 0 && i != 0) { // if end of line is reached
-				buttonY = buttonY + 66; // apply line break
+				buttonY = (int) (buttonY + (Gui.getHeight() / 13.090909090909090909090909090909)); // apply line break
 			}
 			buttonX = (buttonWidth + innerSpace) * j + gridx + 3;
 			lvlselectbuttons[i] = new Button(buttonX, buttonY, buttonWidth, buttonHeight);
@@ -131,26 +142,77 @@ public class Gui {
 	private void initStartMenuButtons() {
 		initLvlSelectButtons();
 
-		startmenubuttons[0] = new Button(gridx + 3 + 11 * 66, gridy + 3, 62, 62); // Cross - Quit
-		startmenubuttons[1] = new Button(gridx + 3, gridy + 3, 62, 62); // Hamster Skins
-		startmenubuttons[2] = new Button(gridx + 3 + 2 * 66, gridy + 3, 62, 62); // Python Skins
-		startmenubuttons[3] = new Button(gridx + 3 + 9 * 66, gridy + 3, 62, 62); // Question Mark - Manual
+		startmenubuttons[0] = new Button((int) (gridx + 3 + 11 * (Gui.getHeight() / 13.090909090909090909090909090909)),
+				gridy + 3, (int) (Gui.getWidth() / 24.774193548387096774193548387097),
+				(int) (Gui.getHeight() / 13.935483870967741935483870967742)); // Cross - Quit
+		startmenubuttons[1] = new Button(gridx + 3, gridy + 3,
+				(int) (Gui.getWidth() / 24.774193548387096774193548387097),
+				(int) (Gui.getHeight() / 13.935483870967741935483870967742)); // Hamster Skins
+		startmenubuttons[2] = new Button((int) (gridx + 3 + 2 * (Gui.getHeight() / 13.090909090909090909090909090909)),
+				gridy + 3, (int) (Gui.getWidth() / 24.774193548387096774193548387097),
+				(int) (Gui.getHeight() / 13.935483870967741935483870967742)); // Python Skins
+		startmenubuttons[3] = new Button((int) (gridx + 3 + 9 * (Gui.getHeight() / 13.090909090909090909090909090909)),
+				gridy + 3, (int) (Gui.getWidth() / 24.774193548387096774193548387097),
+				(int) (Gui.getHeight() / 13.935483870967741935483870967742)); // Question Mark - Manual
 	}
 
 	private void initTutorialMenuButtons() {
-		tutorialmenubuttons[0] = new Button(gridx + 3 + 2 * 66, gridy + 3 + 2 * 66, 62, 62); // Keys - tutlvl 101
-		tutorialmenubuttons[1] = new Button(gridx + 3 + 3 * 66, gridy + 3 + 3 * 66, 62, 62); // Zeitleiste - tutlvl 103
-		tutorialmenubuttons[2] = new Button(gridx + 3 + 4 * 66, gridy + 3 + 2 * 66, 62, 62); // Wall - tutlvl 104
-		tutorialmenubuttons[3] = new Button(gridx + 3 + 5 * 66, gridy + 3 + 3 * 66, 62, 62); // Korn - tutlvl 105
-		tutorialmenubuttons[4] = new Button(gridx + 3 + 6 * 66, gridy + 3 + 2 * 66, 62, 62); // Sanduhr - tutlvl 106
-		tutorialmenubuttons[5] = new Button(gridx + 3 + 7 * 66, gridy + 3 + 3 * 66, 62, 62); // Babyhamster - tutlvl 107
-		tutorialmenubuttons[6] = new Button(gridx + 3 + 8 * 66, gridy + 3 + 2 * 66, 62, 62); // Hammer - tutlvl 108
-		tutorialmenubuttons[7] = new Button(gridx + 3, gridy + 3, 62, 62); // Fragezeichen
-		tutorialmenubuttons[8] = new Button(gridx + 3 + 10 * 66, gridy + 3 + 2 * 66, 62, 62); // zu Level 1
+		tutorialmenubuttons[0] = new Button(
+				(int) (gridx + 3 + 2 * (Gui.getHeight() / 13.090909090909090909090909090909)),
+				(int) (gridy + 3 + 2 * (Gui.getHeight() / 13.090909090909090909090909090909)),
+				(int) (Gui.getWidth() / 24.774193548387096774193548387097),
+				(int) (Gui.getHeight() / 13.935483870967741935483870967742)); // Keys - tutlvl 101
+		tutorialmenubuttons[1] = new Button(
+				(int) (gridx + 3 + 3 * (Gui.getHeight() / 13.090909090909090909090909090909)),
+				(int) (gridy + 3 + 3 * (Gui.getHeight() / 13.090909090909090909090909090909)),
+				(int) (Gui.getWidth() / 24.774193548387096774193548387097),
+				(int) (Gui.getHeight() / 13.935483870967741935483870967742)); // Zeitleiste - tutlvl 103
+		tutorialmenubuttons[2] = new Button(
+				(int) (gridx + 3 + 4 * (Gui.getHeight() / 13.090909090909090909090909090909)),
+				(int) (gridy + 3 + 2 * (Gui.getHeight() / 13.090909090909090909090909090909)),
+				(int) (Gui.getWidth() / 24.774193548387096774193548387097),
+				(int) (Gui.getHeight() / 13.935483870967741935483870967742)); // Wall - tutlvl 104
+		tutorialmenubuttons[3] = new Button(
+				(int) (gridx + 3 + 5 * (Gui.getHeight() / 13.090909090909090909090909090909)),
+				(int) (gridy + 3 + 3 * (Gui.getHeight() / 13.090909090909090909090909090909)),
+				(int) (Gui.getWidth() / 24.774193548387096774193548387097),
+				(int) (Gui.getHeight() / 13.935483870967741935483870967742)); // Korn - tutlvl 105
+		tutorialmenubuttons[4] = new Button(
+				(int) (gridx + 3 + 6 * (Gui.getHeight() / 13.090909090909090909090909090909)),
+				(int) (gridy + 3 + 2 * (Gui.getHeight() / 13.090909090909090909090909090909)),
+				(int) (Gui.getWidth() / 24.774193548387096774193548387097),
+				(int) (Gui.getHeight() / 13.935483870967741935483870967742)); // Sanduhr - tutlvl 106
+		tutorialmenubuttons[5] = new Button(
+				(int) (gridx + 3 + 7 * (Gui.getHeight() / 13.090909090909090909090909090909)),
+				(int) (gridy + 3 + 3 * (Gui.getHeight() / 13.090909090909090909090909090909)),
+				(int) (Gui.getWidth() / 24.774193548387096774193548387097),
+				(int) (Gui.getHeight() / 13.935483870967741935483870967742)); // Babyhamster - tutlvl 107
+		tutorialmenubuttons[6] = new Button(
+				(int) (gridx + 3 + 8 * (Gui.getHeight() / 13.090909090909090909090909090909)),
+				(int) (gridy + 3 + 2 * (Gui.getHeight() / 13.090909090909090909090909090909)),
+				(int) (Gui.getWidth() / 24.774193548387096774193548387097),
+				(int) (Gui.getHeight() / 13.935483870967741935483870967742)); // Hammer - tutlvl 108
+		tutorialmenubuttons[7] = new Button(gridx + 3, gridy + 3,
+				(int) (Gui.getWidth() / 24.774193548387096774193548387097),
+				(int) (Gui.getHeight() / 13.935483870967741935483870967742)); // Fragezeichen
+		tutorialmenubuttons[8] = new Button(
+				(int) (gridx + 3 + 10 * (Gui.getHeight() / 13.090909090909090909090909090909)),
+				(int) (gridy + 3 + 2 * (Gui.getHeight() / 13.090909090909090909090909090909)),
+				(int) (Gui.getWidth() / 24.774193548387096774193548387097),
+				(int) (Gui.getHeight() / 13.935483870967741935483870967742)); // zu Level 1
 		tutorialmenubuttons[8].setText("Level 1");
-		tutorialmenubuttons[9] = new Button(gridx + 3 + 1 * 66, gridy + 3, 62, 62); // Compiler
-		tutorialmenubuttons[10] = new Button(gridx + 3 + 6 * 66, gridy + 3, 62, 62); // Clipboard
-		tutorialmenubuttons[11] = new Button(gridx + 3 + 9 * 66, gridy + 3, 62, 62); // Back
+		tutorialmenubuttons[9] = new Button(
+				(int) (gridx + 3 + 1 * (Gui.getHeight() / 13.090909090909090909090909090909)), gridy + 3,
+				(int) (Gui.getWidth() / 24.774193548387096774193548387097),
+				(int) (Gui.getHeight() / 13.935483870967741935483870967742)); // Compiler
+		tutorialmenubuttons[10] = new Button(
+				(int) (gridx + 3 + 6 * (Gui.getHeight() / 13.090909090909090909090909090909)), gridy + 3,
+				(int) (Gui.getWidth() / 24.774193548387096774193548387097),
+				(int) (Gui.getHeight() / 13.935483870967741935483870967742)); // Clipboard
+		tutorialmenubuttons[11] = new Button(
+				(int) (gridx + 3 + 9 * (Gui.getHeight() / 13.090909090909090909090909090909)), gridy + 3,
+				(int) (Gui.getWidth() / 24.774193548387096774193548387097),
+				(int) (Gui.getHeight() / 13.935483870967741935483870967742)); // Back
 	}
 
 	private void initAnleitungsbuttons() {
@@ -176,11 +238,13 @@ public class Gui {
 				+ "Im ersten Level ist die Schwierigkeit, dass du den Hamster in einer bestimmten Zeit fangen musst. \n"
 				+ "Pythons sind Kaltblüter, deshalb ist die Sonne sehr wichtig für sie. \n"
 				+ "Ohne das wärmende Sonnenlicht erstarren sie. Die stylische Zeitleiste rechts von dem Spielfeld zeigt dir den Sonnenstand \n"
-				+ "und läuft kontinuierlich ab. \n" + "(Bild der Zeitleiste einfügen) \n"
+				+ "und läuft kontinuierlich ab. \n"
 				+ "Ist die Sonne untergegangen hast du verloren! \n" + "\n" + "Hier kommst du zum ersten Level:  \n"
 				+ "");
 
-		anleitungsbuttons[1] = new Button(getWidth() - 460, getHeight() - 50, 150, 35);
+		anleitungsbuttons[1] = new Button((int) (getWidth() - (Gui.getWidth() / 3.3391304347826086956521739130435)),
+				(int) (getHeight() - (Gui.getHeight() / 17.28)), (int) (Gui.getHeight() / 10.24),
+				(int) (Gui.getHeight() / 24.685714285714285714285714285714));
 		anleitungsbuttons[1].setText("Level 1");
 
 	}
@@ -199,6 +263,14 @@ public class Gui {
 
 	public static void setHeight(int height) {
 		Gui.height = height;
+	}
+
+	public static int getTile() {
+		return tile;
+	}
+
+	public static void setTile(int tile) {
+		Gui.tile = tile;
 	}
 
 	public static int getnLvls() {
