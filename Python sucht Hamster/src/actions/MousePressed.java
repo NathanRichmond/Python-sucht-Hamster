@@ -75,7 +75,11 @@ public class MousePressed implements EventHandler<MouseEvent> {
 				Game.setBehindTheGame(true);
 			}
 			if (Collision.cButton(Gui.tutorialmenubuttons[10], x, y)) {
-				Gamestate.state = Gamestate_e.anleitung;
+				if(Game.isAltManual()==true) {
+				Gamestate.state = Gamestate_e.manual;
+				} else {
+					Gamestate.state = Gamestate_e.anleitung;
+				}
 			}
 			if (Collision.cButton(Gui.tutorialmenubuttons[11], x, y)) {
 				Gamestate.state = Gamestate_e.startmenu;
@@ -88,6 +92,16 @@ public class MousePressed implements EventHandler<MouseEvent> {
 
 		case anleitung:
 			if (Collision.cButton(Gui.anleitungsbuttons[1], x, y)) {
+				Game.setLevel(1);
+				Game.startNewGame();
+			}
+			break;
+			
+		case manual:
+			if (Collision.cButton(Gui.manualbuttons[1], x, y)) {
+				Game.setManualpage(1);
+			}
+			if (Collision.cButton(Gui.manualbuttons[2], x, y)) {
 				Game.setLevel(1);
 				Game.startNewGame();
 			}

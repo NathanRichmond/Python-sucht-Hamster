@@ -34,6 +34,13 @@ public class Grid {
 			setY(Gui.getHeight() / 2 - getHeight() / 2);
 		}
 	}
+	
+	public Grid(int width, int height, int x, int y) { // constr for navigational manual grid
+		Grid.width = width;
+		Grid.height = height;
+		Grid.x = x;
+		Grid.y = y;
+	}
 
 	public static int getX() {
 		return x;

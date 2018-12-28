@@ -24,7 +24,7 @@ public class Gui {
 
 	// size of the window: width = height * 1.77777 -- always retain this ratio!!
 	private static int width = 1536, height = 864; // optimal size, normal resolution
-//	private static int width = 1280, height = 720; // for 1280x800
+//	private static int width = 1280, height = 720; // for 1280x800, more stable
 //	private static int width = 640, height = 360; // small and ugly
 
 	private static int tile = (int) Math.round(width / 46.545454545454545454545454545455); // width & height of 1 grid
@@ -42,6 +42,7 @@ public class Gui {
 	public static Button[] lvlselectbuttons = new Button[getnLvls()]; // Koerner for level selection in Start Menu
 	public static Button[] tutorialmenubuttons = new Button[12];
 	public static Button[] anleitungsbuttons = new Button[2];
+	public static Button[] manualbuttons = new Button[3];
 	public static Button[] ingamebuttons = new Button[3]; // Back to Menu, Pause, Restart
 	public static Button victorybutton; // Go to next Level
 
@@ -103,6 +104,7 @@ public class Gui {
 		initIngameButtons();
 		initTutorialMenuButtons();
 		initAnleitungsbuttons();
+		initManualButtons();
 
 		victorybutton = new Button((int) (Gui.getWidth() / 5.9076923076923076923076923076923),
 				(int) (Gui.getHeight() / 28.8), (int) (Gui.getWidth() / 25.6), (int) (Gui.getHeight() / 14.4)); // Next
@@ -238,15 +240,31 @@ public class Gui {
 				+ "Im ersten Level ist die Schwierigkeit, dass du den Hamster in einer bestimmten Zeit fangen musst. \n"
 				+ "Pythons sind Kaltblüter, deshalb ist die Sonne sehr wichtig für sie. \n"
 				+ "Ohne das wärmende Sonnenlicht erstarren sie. Die stylische Zeitleiste rechts von dem Spielfeld zeigt dir den Sonnenstand \n"
-				+ "und läuft kontinuierlich ab. \n"
-				+ "Ist die Sonne untergegangen hast du verloren! \n" + "\n" + "Hier kommst du zum ersten Level:  \n"
-				+ "");
+				+ "und läuft kontinuierlich ab. \n" + "Ist die Sonne untergegangen hast du verloren! \n" + "\n"
+				+ "Hier kommst du zum ersten Level:  \n" + "");
 
 		anleitungsbuttons[1] = new Button((int) (getWidth() - (Gui.getWidth() / 3.3391304347826086956521739130435)),
 				(int) (getHeight() - (Gui.getHeight() / 17.28)), (int) (Gui.getHeight() / 10.24),
 				(int) (Gui.getHeight() / 24.685714285714285714285714285714));
 		anleitungsbuttons[1].setText("Level 1");
 
+	}
+
+	private static void initManualButtons() {
+		// button of the navigational grid
+		int w0 = 64, h0 = 64;
+		manualbuttons[0] = new Button(Grid.getX(), Grid.getY(), w0, h0);
+
+		int w = 350;
+		int h = 85;
+		int x1 = Gui.getWidth() / 2 - w / 2;
+		int y1 = 570;
+		manualbuttons[1] = new Button(x1, y1, w, h);
+		manualbuttons[1].setText("Erfahre mehr darüber");
+		int x2 = Gui.getWidth() / 2 - w / 2;
+		int y2 = 735;
+		manualbuttons[2] = new Button(x2, y2, w, h);
+		manualbuttons[2].setText("Leg gleich los!");
 	}
 
 	public static int getWidth() {

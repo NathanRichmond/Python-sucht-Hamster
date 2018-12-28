@@ -70,6 +70,30 @@ public class MouseMoved implements EventHandler<MouseEvent> {
 
 			}
 		}
+		
+		/*
+		 * MANUAL Buttons
+		 */
+		for (int i = 0; i < Gui.manualbuttons.length; i++) {
+			if (Collision.cButton(Gui.manualbuttons[i], x, y)) {
+				Gui.manualbuttons[i].setHover(true);
+			} else {
+				Gui.manualbuttons[i].setHover(false);
+
+			}
+		}
+		
+		/*
+		 * ANLEITUNG Buttons
+		 */
+		for (int i = 0; i < Gui.anleitungsbuttons.length; i++) {
+			if (Collision.cButton(Gui.anleitungsbuttons[i], x, y)) {
+				Gui.anleitungsbuttons[i].setHover(true);
+			} else {
+				Gui.anleitungsbuttons[i].setHover(false);
+
+			}
+		}
 	}
 
 }
