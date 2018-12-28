@@ -50,8 +50,8 @@ public class Draw_Main {
 		/*
 		 * ANLEITUNGS SCREEN
 		 */
-		if (Gamestate.state == Gamestate_e.anleitung) {
-			drawAnleitung(g);
+		if (Gamestate.state == Gamestate_e.manual || Gamestate.state == Gamestate_e.anleitung) {
+			drawManual(g);
 		}
 
 		/*
@@ -1921,59 +1921,123 @@ public class Draw_Main {
 		}
 	}
 
-	public void drawAnleitung(GraphicsContext g) {
-		g.drawImage(IL.bgfeld, 0, 0, Gui.getWidth(), Gui.getHeight());
+	public void drawManual(GraphicsContext g) {
+		if (Game.isAltManual() == true) {
+			/*
+			 * Revamped (but unfinished) Manual
+			 */
+			int tile = Gui.manualbuttons[0].getWidth();
 
-		Button b = Gui.anleitungsbuttons[0];
-		g.strokeRect(b.getX(), b.getY(), b.getWidth(), b.getHeight());
+			switch (Game.getManualpage()) {
+			case 0:
+				g.drawImage(IL.imanual0, 0, 0, Gui.getWidth(), Gui.getHeight());
+				Button b;
+				for (int i = 1; i < 3; i++) {
+					b = Gui.manualbuttons[i];
+					g.setStroke(Color.BLACK);
+					g.strokeRect(b.getX(), b.getY(), b.getWidth(), b.getHeight());
 
-		g.setFill(new Color(1, 1, 1, 0.2));
-		g.fillRect(b.getX(), b.getY(), b.getWidth(), b.getHeight());
+					g.setFill(new Color(1, 1, 1, 0.1));
+					g.fillRect(b.getX(), b.getY(), b.getWidth(), b.getHeight());
 
-		g.setTextAlign(TextAlignment.CENTER);
-		g.setTextBaseline(VPos.CENTER);
-		g.setFont(new Font("Constantia", ((Gui.getWidth() * Gui.getHeight()) / 41472) / 2));
-		g.setFill(Color.BLACK);
-		g.fillText(b.getText(), b.getX() + b.getWidth() / 2, b.getY() + b.getHeight() / 2);
-		/*
-		 * Level 1 Button
-		 */
-		b = Gui.anleitungsbuttons[1];
-		g.strokeRect(b.getX(), b.getY(), b.getWidth(), b.getHeight());
+					g.setTextAlign(TextAlignment.CENTER);
+					g.setTextBaseline(VPos.CENTER);
+					g.setFont(new Font("Constantia Italic", ((Gui.getWidth() * Gui.getHeight()) / 20000) / 2));
+					g.setFill(Color.BLACK);
+					g.fillText(b.getText(), b.getX() + b.getWidth() / 2, b.getY() + b.getHeight() / 2);
+					if (b.isHover()) {
+						g.setFill(new Color(0, 0, 0, 0.2));
+						g.fillRect(b.getX(), b.getY(), b.getWidth(), b.getHeight());
+					}
+				}
+				break;
+			case 1:
+				g.drawImage(IL.bgfeld, 0, 0, Gui.getWidth(), Gui.getHeight());
+				g.setFill(new Color(1, 1, 1, 0.2));
+				g.fillRect(0, 0, Gui.getWidth(), Gui.getHeight());
 
-		if (b.isHover() == true) {
+				break;
+			default:
+				break;
+			}
+
+			if (Game.getManualpage() != 0) {
+				// navigational grid at the bottom
+				new Grid(794, 134, Gui.getWidth() / 2 - Grid.getWidth() / 2, 670);
+
+				g.setFill(new Color(1, 1, 1, 0.7)); // semi-transparent layer underneath the grid
+				g.fillRect(Grid.getX(), Grid.getY(), Grid.getWidth(), Grid.getHeight());
+				g.drawImage(IL.igrid_12x02_large, Grid.getX(), Grid.getY(), Grid.getWidth(), Grid.getHeight());
+
+				Button b = Gui.manualbuttons[0];
+				b.setX(Grid.getX() + 3);
+				b.setY(Grid.getY() + 4 + tile);
+				g.drawImage(IL.iplayer0_0, b.getX(), b.getY(), b.getWidth(), b.getHeight());
+				drawButtonHover(g, b, null);
+
+				// icons for manual page selection
+				g.drawImage(IL.ienemy0_0, Grid.getX() + 3, Grid.getY() + 3, tile, tile);
+				g.drawImage(IL.ikeys, Grid.getX() + 3 + tile + 2, Grid.getY() + 3, tile, tile);
+			}
+
+		} else {
+			/*
+			 * Old Anleitung
+			 */
+			g.drawImage(IL.bgfeld, 0, 0, Gui.getWidth(), Gui.getHeight());
+
+			Button b = Gui.anleitungsbuttons[0];
+			g.strokeRect(b.getX(), b.getY(), b.getWidth(), b.getHeight());
+
 			g.setFill(new Color(1, 1, 1, 0.2));
 			g.fillRect(b.getX(), b.getY(), b.getWidth(), b.getHeight());
-		}
-		g.setFill(Color.DARKRED);
-		g.fillRect(b.getX(), b.getY(), b.getWidth(), b.getHeight());
-		g.setTextAlign(TextAlignment.CENTER);
-		g.setTextBaseline(VPos.CENTER);
-		g.setFont(new Font("Constantia", ((Gui.getWidth() * Gui.getHeight()) / 41472) / 2));
-		g.setFill(Color.WHITE);
-		g.fillText(b.getText(), b.getX() + b.getWidth() / 2, b.getY() + b.getHeight() / 2);
 
-		g.drawImage(IL.iplayer0_0, (Gui.getWidth() / 2.0210526315789473684210526315789),
-				(Gui.getHeight() / 4.5473684210526315789473684210526), (Gui.getWidth() / 51.2),
-				(Gui.getHeight() / 28.8));
-		g.drawImage(IL.ienemy0_0, (Gui.getWidth() / 2.0700808625336927223719676549865),
-				(Gui.getHeight() / 3.7565217391304347826086956521739), (Gui.getWidth() / 51.2),
-				(Gui.getHeight() / 28.8));
-		g.drawImage(IL.ipicture, (Gui.getWidth() / 1.3298701298701298701298701298701),
-				(Gui.getHeight() / 3.3230769230769230769230769230769), (Gui.getWidth() / 6144),
-				(Gui.getHeight() / 3456));
-		g.drawImage(IL.iupKey, (Gui.getWidth() / 1.8007033997655334114888628370457),
-				(Gui.getHeight() / 1.9862068965517241379310344827586), (Gui.getWidth() / 38.4),
-				(Gui.getHeight() / 21.6));
-		g.drawImage(IL.idownKey, (Gui.getWidth() / 2.0700808625336927223719676549865),
-				(Gui.getHeight() / 1.788819875776397515527950310559), (Gui.getWidth() / 38.4),
-				(Gui.getHeight() / 21.6));
-		g.drawImage(IL.ileftKey, (Gui.getWidth() / 2.0897959183673469387755102040816),
-				(Gui.getHeight() / 1.9862068965517241379310344827586), (Gui.getWidth() / 38.4),
-				(Gui.getHeight() / 21.6));
-		g.drawImage(IL.irightKey, (Gui.getWidth() / 1.7066666666666666666666666666667),
-				(Gui.getHeight() / 2.1984732824427480916030534351145), (Gui.getWidth() / 38.4),
-				(Gui.getHeight() / 21.6));
+			g.setTextAlign(TextAlignment.CENTER);
+			g.setTextBaseline(VPos.CENTER);
+			g.setFont(new Font("Constantia", ((Gui.getWidth() * Gui.getHeight()) / 41472) / 2));
+			g.setFill(Color.BLACK);
+			g.fillText(b.getText(), b.getX() + b.getWidth() / 2, b.getY() + b.getHeight() / 2);
+			/*
+			 * Level 1 Button
+			 */
+			b = Gui.anleitungsbuttons[1];
+			g.strokeRect(b.getX(), b.getY(), b.getWidth(), b.getHeight());
+
+			if (b.isHover() == true) {
+				g.setFill(new Color(1, 1, 1, 0.2));
+				g.fillRect(b.getX(), b.getY(), b.getWidth(), b.getHeight());
+			}
+			g.setFill(Color.DARKRED);
+			g.fillRect(b.getX(), b.getY(), b.getWidth(), b.getHeight());
+			g.setTextAlign(TextAlignment.CENTER);
+			g.setTextBaseline(VPos.CENTER);
+			g.setFont(new Font("Constantia", ((Gui.getWidth() * Gui.getHeight()) / 41472) / 2));
+			g.setFill(Color.WHITE);
+			g.fillText(b.getText(), b.getX() + b.getWidth() / 2, b.getY() + b.getHeight() / 2);
+
+			g.drawImage(IL.iplayer0_0, (Gui.getWidth() / 2.0210526315789473684210526315789),
+					(Gui.getHeight() / 4.5473684210526315789473684210526), (Gui.getWidth() / 51.2),
+					(Gui.getHeight() / 28.8));
+			g.drawImage(IL.ienemy0_0, (Gui.getWidth() / 2.0700808625336927223719676549865),
+					(Gui.getHeight() / 3.7565217391304347826086956521739), (Gui.getWidth() / 51.2),
+					(Gui.getHeight() / 28.8));
+			g.drawImage(IL.ipicture, (Gui.getWidth() / 1.3298701298701298701298701298701),
+					(Gui.getHeight() / 3.3230769230769230769230769230769), (Gui.getWidth() / 6144),
+					(Gui.getHeight() / 3456));
+			g.drawImage(IL.iupKey, (Gui.getWidth() / 1.8007033997655334114888628370457),
+					(Gui.getHeight() / 1.9862068965517241379310344827586), (Gui.getWidth() / 38.4),
+					(Gui.getHeight() / 21.6));
+			g.drawImage(IL.idownKey, (Gui.getWidth() / 2.0700808625336927223719676549865),
+					(Gui.getHeight() / 1.788819875776397515527950310559), (Gui.getWidth() / 38.4),
+					(Gui.getHeight() / 21.6));
+			g.drawImage(IL.ileftKey, (Gui.getWidth() / 2.0897959183673469387755102040816),
+					(Gui.getHeight() / 1.9862068965517241379310344827586), (Gui.getWidth() / 38.4),
+					(Gui.getHeight() / 21.6));
+			g.drawImage(IL.irightKey, (Gui.getWidth() / 1.7066666666666666666666666666667),
+					(Gui.getHeight() / 2.1984732824427480916030534351145), (Gui.getWidth() / 38.4),
+					(Gui.getHeight() / 21.6));
+		}
+
 	}
 
 	public void drawPfeiltasten(GraphicsContext g) {

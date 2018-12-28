@@ -2,6 +2,6 @@ package game;
 
 public enum Gamestate_e {
 
-	startmenu, ingame, pause, victory, defeat, tutorialmenu, anleitung
+	startmenu, ingame, pause, victory, defeat, tutorialmenu, anleitung, manual
 
 }

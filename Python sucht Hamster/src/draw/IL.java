@@ -24,8 +24,10 @@ public class IL {
 	public static Image igrid_08x08 = new Image("file:rsc/bg/grid/grid_08x08.png");
 	public static Image igrid_10x05 = new Image("file:rsc/bg/grid/grid_10x05.png");
 	public static Image igrid_10x10 = new Image("file:rsc/bg/grid/grid_10x10.png");
+	public static Image igrid_12x01_large = new Image("file:rsc/bg/grid/grid_12x01_large.png");
+	public static Image igrid_12x02_large = new Image("file:rsc/bg/grid/grid_12x02_large.png"); // for manual
 	public static Image igrid_12x04 = new Image("file:rsc/bg/grid/grid_12x04.png");
-	public static Image igrid_12x04_large = new Image("file:rsc/bg/grid/grid_12x04_large.png");
+	public static Image igrid_12x04_large = new Image("file:rsc/bg/grid/grid_12x04_large.png"); // for start menu
 	public static Image igrid_12x05 = new Image("file:rsc/bg/grid/grid_12x05.png");
 	public static Image igrid_14x03 = new Image("file:rsc/bg/grid/grid_14x03.png");
 	public static Image igrid_15x01 = new Image("file:rsc/bg/grid/grid_15x01.png");
@@ -108,32 +110,18 @@ public class IL {
 	/*
 	 * ============================= SPECIAL TILES =============================
 	 */
-	/*
-	 * Wall
-	 */
+	// Wall
 	public static Image iwall = new Image("file:rsc/game/wall.png");
 	public static Image iwalllarge = new Image("file:rsc/game/wall_large.png");
-
-	/*
-	 * Korn
-	 */
+	// Korn
 	public static Image ispecialtile_korn = new Image("file:rsc/game/specialtiles/korn.png");
-
-	/*
-	 * Babyhamster
-	 */
+	// Babyhamster
 	public static Image ispecialtile_babyhamsterTwo = new Image("file:rsc/game/specialtiles/babyhamster_two.png");
 	public static Image ispecialtile_babyhamsterThree = new Image("file:rsc/game/specialtiles/babyhamster_three.png");
 	public static Image ispecialtile_babyhamsterFour = new Image("file:rsc/game/specialtiles/babyhamster_four.png");
-
-	/*
-	 * Hourglass
-	 */
+	// Hourglass
 	public static Image ispecialtile_hourglass = new Image("file:rsc/game/specialtiles/hourglass.png");
-
-	/*
-	 * Hammer
-	 */
+	// Hammer
 	public static Image ispecialtile_hammer = new Image("file:rsc/game/specialtiles/hammer.png");
 
 	/*
@@ -148,7 +136,7 @@ public class IL {
 	public static Image ilvltitle7 = new Image("file:rsc/game/ui/lvl_title/level7.png");
 	public static Image ilvltitle8 = new Image("file:rsc/game/ui/lvl_title/level8.png");
 	public static Image ilvltitle9 = new Image("file:rsc/game/ui/lvl_title/level9.png");
-	public static Image ilvltitle10 = new Image("file:rsc/game/ui/lvl_title/level10.png");
+	public static Image ilvltitle10 = new Image("file:rsc/game/ui/lvl_title/level9.png");  // level10 image currently absent
 	public static Image ilvltitle11 = new Image("file:rsc/game/ui/lvl_title/level11.png");
 	public static Image ilvltitle12 = new Image("file:rsc/game/ui/lvl_title/level12.png");
 
@@ -203,7 +191,7 @@ public class IL {
 	public static Image ibzeitleiste = new Image("file:rsc/game/ui/buttons/button_zeitleiste.png");
 	public static Image ibclipboard = new Image("file:rsc/game/ui/buttons/button_clipboard.png");
 	public static Image ibcompiler = new Image("file:rsc/game/ui/buttons/button_compiler.png");
-	public static Image ibback = new Image("file:rsc/game/ui/back.png");
+//	public static Image ibback = new Image("file:rsc/game/ui/back.png");
 
 	/*
 	 * Anleitung Buttons
@@ -239,6 +227,7 @@ public class IL {
 	/*
 	 * ============================= ANLEITUNG IMAGES =============================
 	 */
+	public static Image imanual0 = new Image("file:rsc/manual/manual0.png");
 	public static Image ipicture = new Image("file:rsc/manual/CutOut.png");
 	public static Image idownKey = new Image("file:rsc/manual/downKey.png");
 	public static Image iupKey = new Image("file:rsc/manual/upKey.png");

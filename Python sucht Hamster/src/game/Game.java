@@ -25,6 +25,9 @@ public class Game {
 
 	public static int hamstercount = 0; // number of devoured Hamster
 	private static int hamsterinflationCounter = 0; // counter for hamsterinflation()
+	
+	private static boolean altManual = false; // alternative, revamped manual
+	private static int manualpage = 0; // manual page that is shown
 
 	/*
 	 * Level Properties:
@@ -504,6 +507,22 @@ public class Game {
 
 	public static void setFirstKeyPressInGame(boolean keyPressedFirstTime) {
 		Game.firstKeyPressInGame = keyPressedFirstTime;
+	}
+
+	public static boolean isAltManual() {
+		return altManual;
+	}
+
+	public static void setAltManual(boolean altManual) {
+		Game.altManual = altManual;
+	}
+
+	public static int getManualpage() {
+		return manualpage;
+	}
+
+	public static void setManualpage(int manualpage) {
+		Game.manualpage = manualpage;
 	}
 
 	public static String getGridsize() {
